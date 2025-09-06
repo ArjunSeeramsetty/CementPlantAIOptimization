@@ -1,0 +1,1567 @@
+id: 22685ee7-c317-4938-8cd6-16009a57eb19
+name: CementPlantAIOptimization
+project_id: 6ae6aa79-1753-4a08-b82d-365b257ae6fc
+global_imports: []
+python_global_imports: ''
+r_global_imports: ''
+requirements: []
+linux_packages: []
+environment_variables: []
+is_public: false
+workspace_id: null
+layers:
+- blocks:
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 0ba91744-31b7-4cb3-a648-5e6fc126b5c7
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: validation.temperature_profile_consistency
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 34200
+    y: 3300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 1409b6df-53f9-40ba-ae44-ded14d5fc9d3
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: dwsim.process_units
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 1800
+    y: 9300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 163567a3-b5e5-4626-bf03-a301d2c20dad
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: validation.temporal_data_integrity
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 37800
+    y: 3300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 1dacffcb-e1e2-410b-9c81-ba7edf6726b0
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: quality.temporal_consistency
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 32400
+    y: 4400
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 20163929-085f-45db-a6a0-8acc7eda1ad4
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: pinn.interpretability_analysis
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 32400
+    y: 19400
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 22a85917-a50a-434e-ad43-ef29d0043d15
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: dwsim.framework_integration
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 9300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 30ee5c18-088c-49d3-996c-f0e5d6d266e6
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: ensemble.weighted_stacking_ensemble
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 30600
+    y: 6600
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 31692ac5-c149-4660-bb71-21b13466502e
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: time_validation.walk_forward_implementation
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 32400
+    y: 9900
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 34a48d3f-e1c0-4eb5-9de7-43dd43847b88
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: advanced_models.xgboost
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 16200
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 3fb9a87d-1ab5-4924-bdef-317d59cf985e
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: baseline_models.random_forest
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 12600
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 4168af74-c18e-4ecc-a63f-f481acc45415
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: quality.anomaly_tracking_dashboard
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 34200
+    y: 4400
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 422ebe50-2f78-42c7-ba06-3400c1b417f1
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: pinn.neural_network
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 18300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 4234e703-6ae2-4af0-a651-c8bbb423ccfd
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: data_prep.inject_missing
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 0
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 439e0477-5fdc-4745-a7a8-2ec3d48a7eb6
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: data_prep.explore_data
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 1800
+    y: 0
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 46f3d43e-9d56-4e2a-8dc2-958fc712508b
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: evaluation.feature_importance
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 25200
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 48ab75ab-713c-43d1-894e-1f5eb5c65ca0
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: time_validation.ab_testing_framework
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 36000
+    y: 9900
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 4a585b53-af57-4365-b18b-6796b14d3d02
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: time_validation.walk_forward_validation
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 30600
+    y: 7700
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 53eb4d01-ed52-43b2-805e-11f795e9e42c
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: advanced_models.extra_trees
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 18000
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 5420b018-a2e3-4590-931c-b4f9931e3dfb
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: dwsim.data_generator
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 9300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 542675fb-6098-4710-bdd9-d421565959a3
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: evaluation.prediction_plots
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 27000
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 553e8d32-601e-486b-81f6-de913376590c
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: optimization.bayesian_hyperparameter_tuning
+    parent_id: null
+    properties: {}
+    status: 4
+    type: 1
+    variables: null
+    width: 1600
+    x: 30600
+    y: 5500
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 58fe0a4c-e4e8-4c23-9223-a0619e3c1dce
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: data_prep.feature_scaling
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 7200
+    y: 0
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 5919baca-ead4-4a1f-b7e9-8054b309ccc9
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: advanced_models.neural_network
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 19800
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 5cd84312-45a7-4349-af60-48573a0df216
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: bigquery.sample_queries_benchmarks
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 14200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 6872d6bb-3ff2-4242-9935-b85f2cf035d0
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: evaluation.performance_metrics
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 23400
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 6a51304f-6f35-42ba-8a0c-6d26529943f4
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: bigquery.ingestion_pipeline
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 1800
+    y: 14200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 7df4b068-ba4a-4668-8d50-d55fbd37872e
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: real_data.design_unified_schema
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 6300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 7f9a4780-a69b-4547-a27e-b18e4419f320
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: evaluation.final_report
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 30600
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 81d4ca6a-817b-48c6-9937-f6eea261a7b4
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: time_validation.drift_detection
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 34200
+    y: 9900
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 829bd40f-e4a9-440a-b62e-cea517019188
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: real_data.validate_physics_constraints
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 7200
+    y: 6300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 8b3fa469-9dc6-4bc4-a3ab-ae5c25c030ce
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: data_prep.final_summary
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 10800
+    y: 0
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 95bf1be4-01d9-4f40-9be4-ef543853422f
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: baseline_models.decision_tree
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 12600
+    y: 1100
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 961fce81-6a5d-458f-85a2-3dacd0a817f1
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: real_data.integrate_datasets
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 6300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 97685bc5-424f-47a9-9825-f1b45e4003d8
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: time_validation.comprehensive_summary
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 37800
+    y: 9900
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 9d8d69a3-ca7f-49e3-befc-1452943b16ec
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: real_data.analyze_datasets
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 1800
+    y: 6300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: abea277b-d125-4486-8ff3-b4ac4fef142c
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: advanced_models.performance_comparison
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 21600
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: ac8aa951-b0b0-4827-b23f-65fe162fdde5
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: validation.mass_balance_constraints
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 32400
+    y: 3300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: affdaa54-5805-43e6-bf0c-7ac0dcd5b640
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: dwsim.heat_mass_balance
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 1800
+    y: 8200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: b2c59fb3-95a4-4b5a-a454-d3c0441c583e
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: validation.energy_consumption_alignment
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 36000
+    y: 3300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: b3c02f25-e2c0-49bf-af55-b64859ff8aa3
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: cement_plant.validation_report
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 1800
+    y: 11200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: b54cca7d-e414-4a17-a0a8-d363db47969c
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: pinn.physics_informed_neural_network
+    parent_id: null
+    properties: {}
+    status: 4
+    type: 1
+    variables: null
+    width: 1600
+    x: 32400
+    y: 6600
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: b776e006-7026-4790-9403-551abc1f999f
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: real_data.load_kaggle_cement
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 6300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: b851dfbd-458c-4d28-a730-3b9796614f6d
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: pinn.physics_validation
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 30600
+    y: 19400
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: bca2c10c-ebb1-4aee-8ba9-9d3028ec676d
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: bigquery.data_validation
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 14200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: c1b218f5-2bc4-406e-ae2b-5523fcaea787
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: data_prep.train_test_split
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 9000
+    y: 0
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: c543b65f-9513-45e3-976f-d91e4d4a617c
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: dwsim.thermodynamic_framework
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 8200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: c962387c-ca72-4ff6-8885-1e5a2509e12c
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: validation.data_completeness_check
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 30600
+    y: 3300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: cc291e0c-b18c-4d48-b159-01d4dab94ac9
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: bigquery.final_summary
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 7200
+    y: 14200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: d02b0a4d-67a4-4ef6-93c3-0af3dc409908
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: quality.mass_energy_diagnostics
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 30600
+    y: 4400
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: d42f553b-ef97-4285-aa6a-5cd3c58fd700
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: data_prep.handle_missing
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 0
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: da72097a-2c12-463a-9102-a455c9b017ad
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: cement_plant.generate_dataset
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 11200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: dd7d759c-bf47-4310-acbe-cfa60d6f0f9c
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: quality.adaptive_imputation
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 36000
+    y: 4400
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: dff4b446-bd09-4852-b679-01d5ca38c738
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: optimization.final_comprehensive_summary
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 32400
+    y: 8800
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: e2e5fced-b576-42ff-903a-af35c455e771
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: baseline_models.performance_summary
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 14400
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: e39b9ebf-9c37-47a6-b42c-470bba30c2b7
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: data_prep.generate_synthetic
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 0
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: e3e6340e-4482-4156-8868-25fc5acd0a10
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: pinn.physics_constraints
+    parent_id: null
+    properties: {}
+    status: 4
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 17200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: e7775640-39d0-453c-9099-9aa7ef51ab9a
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: bigquery.schema_design
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 14200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: ec0d0b7c-c2e8-4079-a645-93ee8d26234a
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: quality.comprehensive_report
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 37800
+    y: 4400
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: f143aad0-ba4e-40f8-94bb-428f3aaaa053
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: evaluation.cross_validation
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 28800
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: f1dc3d95-5a30-4e48-b0b7-bdcac610501a
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: final.comprehensive_results_summary
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 32400
+    y: 7700
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: f7f8c4ce-421d-474c-a31c-4e0dc6bf303a
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: validation.comprehensive_report
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 39600
+    y: 3300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: f89de265-c93b-4a45-b2f7-0b7fd4621f47
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: dwsim.visualization_summary
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 7200
+    y: 9300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: f91e5090-8766-497d-96d6-fdf15a20f354
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: real_data.final_quality_report
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 9000
+    y: 6300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: f93d6080-d865-4446-8d73-78e714fff73a
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: real_data.load_global_cement
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 5200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: ff9fa6fb-1099-43c8-9406-871ed6646095
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: baseline_models.linear_regression
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 12600
+    y: 0
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: fff421f9-8a05-4428-8f1d-41bb7cb9ad71
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    name: pinn.train_model
+    parent_id: null
+    properties: {}
+    status: 4
+    type: 1
+    variables: null
+    width: 1600
+    x: 30600
+    y: 18300
+  canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+  edges:
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 000f1be4-91c6-4eaa-9bd2-0dba7377607d
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: ff9fa6fb-1099-43c8-9406-871ed6646095
+    target: e2e5fced-b576-42ff-903a-af35c455e771
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 01cb621e-ca71-4cfd-8b34-97daf4495aa4
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: ac8aa951-b0b0-4827-b23f-65fe162fdde5
+    target: 0ba91744-31b7-4cb3-a648-5e6fc126b5c7
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 05189e0b-2fd8-43d4-bed2-9b587caca9aa
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 46f3d43e-9d56-4e2a-8dc2-958fc712508b
+    target: 542675fb-6098-4710-bdd9-d421565959a3
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 0561f70f-d91a-423a-bde9-961a7bf2d2c0
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: f143aad0-ba4e-40f8-94bb-428f3aaaa053
+    target: 30ee5c18-088c-49d3-996c-f0e5d6d266e6
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 08bafd0e-8bf1-4d79-96ab-1e576719adf1
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: f143aad0-ba4e-40f8-94bb-428f3aaaa053
+    target: d02b0a4d-67a4-4ef6-93c3-0af3dc409908
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 0ad87e4d-7180-4baa-a3f3-a33fe70193d0
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 22a85917-a50a-434e-ad43-ef29d0043d15
+    target: f89de265-c93b-4a45-b2f7-0b7fd4621f47
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 0b0edbd1-41f2-4865-aca5-0769f7aa1f08
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 4234e703-6ae2-4af0-a651-c8bbb423ccfd
+    target: d42f553b-ef97-4285-aa6a-5cd3c58fd700
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 0eea0091-dcb8-46a9-b178-8020e900b694
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: f143aad0-ba4e-40f8-94bb-428f3aaaa053
+    target: c962387c-ca72-4ff6-8885-1e5a2509e12c
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 14b0b841-9329-4789-b00e-11bb0cf18b8d
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: affdaa54-5805-43e6-bf0c-7ac0dcd5b640
+    target: 22a85917-a50a-434e-ad43-ef29d0043d15
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 160e39a2-09e1-4875-8ea4-73499dc0df59
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 422ebe50-2f78-42c7-ba06-3400c1b417f1
+    target: b851dfbd-458c-4d28-a730-3b9796614f6d
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 1a21d666-d07d-4dbe-ae3e-0d135dce1da4
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: b776e006-7026-4790-9403-551abc1f999f
+    target: 9d8d69a3-ca7f-49e3-befc-1452943b16ec
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 1ae25180-e286-488a-9691-42a67dafc5ca
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: f143aad0-ba4e-40f8-94bb-428f3aaaa053
+    target: 4a585b53-af57-4365-b18b-6796b14d3d02
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 1b6266b3-8f8a-4ca9-8428-66bb3def051b
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: bca2c10c-ebb1-4aee-8ba9-9d3028ec676d
+    target: 5cd84312-45a7-4349-af60-48573a0df216
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 1fd38f48-1c3a-479d-9f7c-15bf64f75272
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 30ee5c18-088c-49d3-996c-f0e5d6d266e6
+    target: dff4b446-bd09-4852-b679-01d5ca38c738
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 1fe0ce58-dc2c-4804-99bd-c82417e42094
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 31692ac5-c149-4660-bb71-21b13466502e
+    target: 81d4ca6a-817b-48c6-9937-f6eea261a7b4
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 21c954a4-6df4-46d7-a422-3b191ec97695
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: f143aad0-ba4e-40f8-94bb-428f3aaaa053
+    target: 7f9a4780-a69b-4547-a27e-b18e4419f320
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 2392c50f-b995-45a2-be31-d22efa4fccc5
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: c543b65f-9513-45e3-976f-d91e4d4a617c
+    target: 22a85917-a50a-434e-ad43-ef29d0043d15
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 24e00953-c927-488e-b41a-3e90c28f7408
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 5cd84312-45a7-4349-af60-48573a0df216
+    target: cc291e0c-b18c-4d48-b159-01d4dab94ac9
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 26366f7e-3ff8-484f-881e-b80d4afb6864
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: c1b218f5-2bc4-406e-ae2b-5523fcaea787
+    target: 8b3fa469-9dc6-4bc4-a3ab-ae5c25c030ce
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 276ceb9f-b787-41c1-98b8-e62da4fc41dc
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: f143aad0-ba4e-40f8-94bb-428f3aaaa053
+    target: b851dfbd-458c-4d28-a730-3b9796614f6d
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 29233399-505a-4c6b-86b4-13ab51fd35f4
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 9d8d69a3-ca7f-49e3-befc-1452943b16ec
+    target: 7df4b068-ba4a-4668-8d50-d55fbd37872e
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 3c73c79d-7d53-4bf0-b0d2-de86daf5ace5
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 163567a3-b5e5-4626-bf03-a301d2c20dad
+    target: f7f8c4ce-421d-474c-a31c-4e0dc6bf303a
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 423b4977-d463-46db-9f03-3d7030437f36
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 4a585b53-af57-4365-b18b-6796b14d3d02
+    target: 31692ac5-c149-4660-bb71-21b13466502e
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 42ee9e0e-a454-4480-96b6-d33f90c764c2
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: affdaa54-5805-43e6-bf0c-7ac0dcd5b640
+    target: f89de265-c93b-4a45-b2f7-0b7fd4621f47
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 43d218c9-1a2b-431b-acc6-987ae3b20de3
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 439e0477-5fdc-4745-a7a8-2ec3d48a7eb6
+    target: 4234e703-6ae2-4af0-a651-c8bbb423ccfd
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 464ffe6b-7ae0-4d92-b47c-88eb6a71cab7
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 5420b018-a2e3-4590-931c-b4f9931e3dfb
+    target: 22a85917-a50a-434e-ad43-ef29d0043d15
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 46c0a9af-f79f-4902-b99a-a4789ae3ccc7
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 48ab75ab-713c-43d1-894e-1f5eb5c65ca0
+    target: 97685bc5-424f-47a9-9825-f1b45e4003d8
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 49576feb-3f72-43ff-be7b-716db56f2aae
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 8b3fa469-9dc6-4bc4-a3ab-ae5c25c030ce
+    target: ff9fa6fb-1099-43c8-9406-871ed6646095
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 498c34f1-da04-453e-b983-b7c07eb297c5
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 6a51304f-6f35-42ba-8a0c-6d26529943f4
+    target: bca2c10c-ebb1-4aee-8ba9-9d3028ec676d
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 58765e81-63ac-4fb0-a310-f2a8dbc2e6d1
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 30ee5c18-088c-49d3-996c-f0e5d6d266e6
+    target: b54cca7d-e414-4a17-a0a8-d363db47969c
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 5b016074-5073-4c3a-88af-9100e9ca83da
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 30ee5c18-088c-49d3-996c-f0e5d6d266e6
+    target: f1dc3d95-5a30-4e48-b0b7-bdcac610501a
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 5e4a034f-1686-4110-8624-ae1fa8d45893
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: f93d6080-d865-4446-8d73-78e714fff73a
+    target: 9d8d69a3-ca7f-49e3-befc-1452943b16ec
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 637819cb-4a5a-4a44-898f-312dcca6a810
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 422ebe50-2f78-42c7-ba06-3400c1b417f1
+    target: fff421f9-8a05-4428-8f1d-41bb7cb9ad71
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 63bae6b1-f89b-4764-ae62-acf9d051e720
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 8b3fa469-9dc6-4bc4-a3ab-ae5c25c030ce
+    target: 95bf1be4-01d9-4f40-9be4-ef543853422f
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 66a14a7e-59b7-4807-ba02-c31116cbc75f
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: affdaa54-5805-43e6-bf0c-7ac0dcd5b640
+    target: 5420b018-a2e3-4590-931c-b4f9931e3dfb
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 68c56a05-7eb7-45fe-8987-fc7aad618e19
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 58fe0a4c-e4e8-4c23-9223-a0619e3c1dce
+    target: c1b218f5-2bc4-406e-ae2b-5523fcaea787
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 6aa69c6d-7ed8-4874-b3a6-7a76690a709f
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 1409b6df-53f9-40ba-ae44-ded14d5fc9d3
+    target: f89de265-c93b-4a45-b2f7-0b7fd4621f47
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 6aade4be-46b4-40db-b19c-3892700db6cf
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 5420b018-a2e3-4590-931c-b4f9931e3dfb
+    target: f89de265-c93b-4a45-b2f7-0b7fd4621f47
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 7599918e-d6f6-4e9a-8dfa-e4c690f8f29f
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 95bf1be4-01d9-4f40-9be4-ef543853422f
+    target: e2e5fced-b576-42ff-903a-af35c455e771
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 7a456758-6666-48b2-b303-0a5be382d950
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: e2e5fced-b576-42ff-903a-af35c455e771
+    target: 34a48d3f-e1c0-4eb5-9de7-43dd43847b88
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 81c4ac09-8242-4a9d-8224-ae3f50195c41
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 1409b6df-53f9-40ba-ae44-ded14d5fc9d3
+    target: 5420b018-a2e3-4590-931c-b4f9931e3dfb
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 8341cd6e-c572-4372-b400-e1ce4a0785fb
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 6872d6bb-3ff2-4242-9935-b85f2cf035d0
+    target: 46f3d43e-9d56-4e2a-8dc2-958fc712508b
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 8685f9cd-25b7-4a53-9122-16f3ca3d8b64
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 53eb4d01-ed52-43b2-805e-11f795e9e42c
+    target: 5919baca-ead4-4a1f-b7e9-8054b309ccc9
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 8af53c05-4584-4a01-97c4-4a95bf29c0f6
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: c543b65f-9513-45e3-976f-d91e4d4a617c
+    target: 1409b6df-53f9-40ba-ae44-ded14d5fc9d3
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 8c723089-06b0-49dc-a318-eb871ec1ea90
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 961fce81-6a5d-458f-85a2-3dacd0a817f1
+    target: 829bd40f-e4a9-440a-b62e-cea517019188
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 92cadf0e-d842-4cf2-80d5-ce82fe71543f
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: abea277b-d125-4486-8ff3-b4ac4fef142c
+    target: 6872d6bb-3ff2-4242-9935-b85f2cf035d0
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 92d34959-0287-4c3d-a793-d2202d0e1192
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 0ba91744-31b7-4cb3-a648-5e6fc126b5c7
+    target: b2c59fb3-95a4-4b5a-a454-d3c0441c583e
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 997d1402-a958-4d99-b92f-92dab5b38635
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: c962387c-ca72-4ff6-8885-1e5a2509e12c
+    target: ac8aa951-b0b0-4827-b23f-65fe162fdde5
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 9c267c47-a696-4b14-9ffe-257f4f631b83
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 7df4b068-ba4a-4668-8d50-d55fbd37872e
+    target: 961fce81-6a5d-458f-85a2-3dacd0a817f1
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 9dc11f6a-a5ef-4a66-ac9e-3d48416ab128
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 4168af74-c18e-4ecc-a63f-f481acc45415
+    target: dd7d759c-bf47-4310-acbe-cfa60d6f0f9c
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: a040164b-48d9-4e23-910e-3bb400e2e9fd
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: f143aad0-ba4e-40f8-94bb-428f3aaaa053
+    target: 553e8d32-601e-486b-81f6-de913376590c
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: a3900692-45e6-4565-a79f-ce7f0994f81c
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 1409b6df-53f9-40ba-ae44-ded14d5fc9d3
+    target: 22a85917-a50a-434e-ad43-ef29d0043d15
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: a3e56653-0b75-485a-8d00-a8fa7b3b07a3
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 34a48d3f-e1c0-4eb5-9de7-43dd43847b88
+    target: 53eb4d01-ed52-43b2-805e-11f795e9e42c
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: a405f7d3-3454-4c9e-8a3f-a1eef560e0db
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 1dacffcb-e1e2-410b-9c81-ba7edf6726b0
+    target: 4168af74-c18e-4ecc-a63f-f481acc45415
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: ab6d9a23-6eff-4c92-b6c1-98f0ac3fd737
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: f143aad0-ba4e-40f8-94bb-428f3aaaa053
+    target: fff421f9-8a05-4428-8f1d-41bb7cb9ad71
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: ad54d511-aeb8-4501-9d9b-bd78e30676fe
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: e39b9ebf-9c37-47a6-b42c-470bba30c2b7
+    target: 439e0477-5fdc-4745-a7a8-2ec3d48a7eb6
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: b452bc0a-31b0-462c-8f0e-092277dd311f
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: d42f553b-ef97-4285-aa6a-5cd3c58fd700
+    target: 58fe0a4c-e4e8-4c23-9223-a0619e3c1dce
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: b6da8857-08f4-438c-a624-eb62b075d018
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 81d4ca6a-817b-48c6-9937-f6eea261a7b4
+    target: 48ab75ab-713c-43d1-894e-1f5eb5c65ca0
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: bb5bdda8-915c-4083-9658-9f8bc3115242
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 8b3fa469-9dc6-4bc4-a3ab-ae5c25c030ce
+    target: 3fb9a87d-1ab5-4924-bdef-317d59cf985e
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: c0e15eea-1963-427d-8de2-44b91fee2182
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: e7775640-39d0-453c-9099-9aa7ef51ab9a
+    target: 6a51304f-6f35-42ba-8a0c-6d26529943f4
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: c19e81f5-2f77-438d-928f-10e6d8929afa
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: c543b65f-9513-45e3-976f-d91e4d4a617c
+    target: affdaa54-5805-43e6-bf0c-7ac0dcd5b640
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: c7d8d92d-6aed-4012-ac60-0e84d6ff2af4
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 5919baca-ead4-4a1f-b7e9-8054b309ccc9
+    target: abea277b-d125-4486-8ff3-b4ac4fef142c
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: cf726e91-d677-4c35-b641-5b59c0afa48c
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 829bd40f-e4a9-440a-b62e-cea517019188
+    target: f91e5090-8766-497d-96d6-fdf15a20f354
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: cfea8663-4158-4995-ab49-882e5e901a70
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: dd7d759c-bf47-4310-acbe-cfa60d6f0f9c
+    target: ec0d0b7c-c2e8-4079-a645-93ee8d26234a
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: d701b642-28a5-417b-b362-20b73cefe7d3
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: c543b65f-9513-45e3-976f-d91e4d4a617c
+    target: f89de265-c93b-4a45-b2f7-0b7fd4621f47
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: dc2191b1-d761-4f62-b0a8-567157b75728
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: b851dfbd-458c-4d28-a730-3b9796614f6d
+    target: 20163929-085f-45db-a6a0-8acc7eda1ad4
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: df4e0dbf-ae02-4c96-b5f8-91ffcac7284b
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: b2c59fb3-95a4-4b5a-a454-d3c0441c583e
+    target: 163567a3-b5e5-4626-bf03-a301d2c20dad
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: dfb211ba-cf93-486e-8da7-be6df350d423
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: d02b0a4d-67a4-4ef6-93c3-0af3dc409908
+    target: 1dacffcb-e1e2-410b-9c81-ba7edf6726b0
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: e55a9e06-dfb4-45e9-b660-49f04ddeed73
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 3fb9a87d-1ab5-4924-bdef-317d59cf985e
+    target: e2e5fced-b576-42ff-903a-af35c455e771
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: f6e9cd48-186e-4f98-b4a1-87f259750b04
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: 542675fb-6098-4710-bdd9-d421565959a3
+    target: f143aad0-ba4e-40f8-94bb-428f3aaaa053
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: fb90f6c6-71da-4912-8968-51081b71b44d
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: c543b65f-9513-45e3-976f-d91e4d4a617c
+    target: 5420b018-a2e3-4590-931c-b4f9931e3dfb
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: fe373db1-ba31-4047-873c-74ee006955f1
+    layer_id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+    source: da72097a-2c12-463a-9102-a455c9b017ad
+    target: b3c02f25-e2c0-49bf-af55-b64859ff8aa3
+  id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
+  name: Development
+  type: 1
+assets: []
