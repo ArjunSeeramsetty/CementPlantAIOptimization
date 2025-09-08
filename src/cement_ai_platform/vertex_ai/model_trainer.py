@@ -1,19 +1,22 @@
-from typing import Optional
+from typing import Dict, Optional
 
 from ..config.google_cloud_config import init_vertex_ai
 
 
 def submit_custom_training_job(
     display_name: str,
-    script_path: str,
+    package_gcs_uri: str,
+    module_name: str,
     container_uri: str,
     project_id: Optional[str] = None,
     location: Optional[str] = None,
     staging_bucket: Optional[str] = None,
+    worker_pool_specs: Optional[list] = None,
+    args: Optional[list] = None,
 ):
-    """Submit a custom training job to Vertex AI.
+    """Create and run a custom training job on Vertex AI.
 
-    Note: This is a minimal scaffold; extend with datasets, machine types, etc.
+    Returns the Job object after submission. Caller may inspect `job.resource_name`.
     """
     try:
         from google.cloud import aiplatform  # type: ignore
@@ -24,10 +27,20 @@ def submit_custom_training_job(
 
     job = aiplatform.CustomPythonPackageTrainingJob(
         display_name=display_name,
-        python_package_gcs_uri=script_path,
-        python_module_name="trainer.task",
+        python_package_gcs_uri=package_gcs_uri,
+        python_module_name=module_name,
         container_uri=container_uri,
     )
+
+    # Defaults suitable for a quick run if not provided
+    run_kwargs: Dict[str, object] = {
+        "replica_count": 1,
+        "args": args or [],
+    }
+    if worker_pool_specs is not None:
+        run_kwargs["worker_pool_specs"] = worker_pool_specs
+
+    job = job.run(sync=False, **run_kwargs)  # non-blocking submit
     return job
 
 
