@@ -2,10 +2,8 @@ from __future__ import annotations
 
 from typing import Any, Dict
 
-from ..data.data_pipeline.chemistry_data_generator import (
-    EnhancedCementDataGenerator,
-    OptimizationDataPrep,
-)
+from ..data.data_pipeline.chemistry_data_generator import EnhancedCementDataGenerator
+from ..models.optimization.multi_objective_prep import OptimizationDataPrep
 from ..models.timegan.complete_timegan import CompleteCementTimeGAN
 from ..models.predictive import CementEnergyPredictor, CementQualityPredictor
 
@@ -35,10 +33,10 @@ class CementPlantPOCPipeline:
         synthetic_sequences = self.timegan.generate_synthetic_sequences(200)
 
         opt_prep = OptimizationDataPrep(base_data)
-        optimization_data = opt_prep.create_targets()
+        optimization_data = opt_prep.create_optimization_dataset()
 
-        quality_results = self.quality_predictor.prepare(optimization_data)
-        energy_results = self.energy_predictor.train(optimization_data)
+        quality_results = self.quality_predictor.prepare(base_data)
+        energy_results = self.energy_predictor.train(base_data)
 
         return {
             "summary": {
