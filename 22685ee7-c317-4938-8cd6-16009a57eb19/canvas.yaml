@@ -23,7 +23,7 @@ layers:
     name: validation.temperature_profile_consistency
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -41,7 +41,7 @@ layers:
     name: dwsim.process_units
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -59,7 +59,7 @@ layers:
     name: validation.temporal_data_integrity
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -77,7 +77,7 @@ layers:
     name: quality.temporal_consistency
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -113,7 +113,7 @@ layers:
     name: dwsim.framework_integration
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -131,7 +131,7 @@ layers:
     name: ensemble.weighted_stacking_ensemble
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -149,7 +149,7 @@ layers:
     name: time_validation.walk_forward_implementation
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -167,7 +167,7 @@ layers:
     name: advanced_models.xgboost
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -185,7 +185,7 @@ layers:
     name: baseline_models.random_forest
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -203,7 +203,7 @@ layers:
     name: quality.anomaly_tracking_dashboard
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -221,7 +221,7 @@ layers:
     name: pinn.neural_network
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -275,7 +275,7 @@ layers:
     name: evaluation.feature_importance
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -293,7 +293,7 @@ layers:
     name: time_validation.ab_testing_framework
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -311,7 +311,7 @@ layers:
     name: time_validation.walk_forward_validation
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -329,7 +329,7 @@ layers:
     name: advanced_models.extra_trees
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -347,7 +347,7 @@ layers:
     name: dwsim.data_generator
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -365,7 +365,7 @@ layers:
     name: evaluation.prediction_plots
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -383,7 +383,7 @@ layers:
     name: optimization.bayesian_hyperparameter_tuning
     parent_id: null
     properties: {}
-    status: 4
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -419,7 +419,7 @@ layers:
     name: advanced_models.neural_network
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -437,7 +437,7 @@ layers:
     name: bigquery.sample_queries_benchmarks
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -455,7 +455,7 @@ layers:
     name: evaluation.performance_metrics
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -473,7 +473,7 @@ layers:
     name: bigquery.ingestion_pipeline
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -491,7 +491,7 @@ layers:
     name: real_data.design_unified_schema
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -509,7 +509,7 @@ layers:
     name: evaluation.final_report
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -527,7 +527,7 @@ layers:
     name: time_validation.drift_detection
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -545,7 +545,7 @@ layers:
     name: real_data.validate_physics_constraints
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -563,7 +563,7 @@ layers:
     name: data_prep.final_summary
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -581,7 +581,7 @@ layers:
     name: baseline_models.decision_tree
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -599,7 +599,7 @@ layers:
     name: real_data.integrate_datasets
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -617,7 +617,7 @@ layers:
     name: time_validation.comprehensive_summary
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -635,7 +635,7 @@ layers:
     name: real_data.analyze_datasets
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -653,7 +653,7 @@ layers:
     name: advanced_models.performance_comparison
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -671,7 +671,7 @@ layers:
     name: validation.mass_balance_constraints
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -689,7 +689,7 @@ layers:
     name: dwsim.heat_mass_balance
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -707,7 +707,7 @@ layers:
     name: validation.energy_consumption_alignment
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -725,7 +725,7 @@ layers:
     name: cement_plant.validation_report
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -743,7 +743,7 @@ layers:
     name: pinn.physics_informed_neural_network
     parent_id: null
     properties: {}
-    status: 4
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -761,7 +761,7 @@ layers:
     name: real_data.load_kaggle_cement
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -779,7 +779,7 @@ layers:
     name: pinn.physics_validation
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -797,7 +797,7 @@ layers:
     name: bigquery.data_validation
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -833,7 +833,7 @@ layers:
     name: dwsim.thermodynamic_framework
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -851,7 +851,7 @@ layers:
     name: validation.data_completeness_check
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -869,7 +869,7 @@ layers:
     name: bigquery.final_summary
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -887,7 +887,7 @@ layers:
     name: quality.mass_energy_diagnostics
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -923,7 +923,7 @@ layers:
     name: cement_plant.generate_dataset
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -941,7 +941,7 @@ layers:
     name: quality.adaptive_imputation
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -959,7 +959,7 @@ layers:
     name: optimization.final_comprehensive_summary
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -977,7 +977,7 @@ layers:
     name: baseline_models.performance_summary
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -995,7 +995,7 @@ layers:
     name: data_prep.generate_synthetic
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -1013,7 +1013,7 @@ layers:
     name: pinn.physics_constraints
     parent_id: null
     properties: {}
-    status: 4
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -1031,7 +1031,7 @@ layers:
     name: bigquery.schema_design
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -1049,7 +1049,7 @@ layers:
     name: quality.comprehensive_report
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -1067,7 +1067,7 @@ layers:
     name: evaluation.cross_validation
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -1085,7 +1085,7 @@ layers:
     name: final.comprehensive_results_summary
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -1103,7 +1103,7 @@ layers:
     name: validation.comprehensive_report
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -1121,7 +1121,7 @@ layers:
     name: dwsim.visualization_summary
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -1157,7 +1157,7 @@ layers:
     name: real_data.load_global_cement
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -1175,7 +1175,7 @@ layers:
     name: baseline_models.linear_regression
     parent_id: null
     properties: {}
-    status: 3
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -1193,7 +1193,7 @@ layers:
     name: pinn.train_model
     parent_id: null
     properties: {}
-    status: 4
+    status: 1
     type: 1
     variables: null
     width: 1600
@@ -1563,5 +1563,795 @@ layers:
     target: b3c02f25-e2c0-49bf-af55-b64859ff8aa3
   id: 6283c78c-ad11-4a52-a6ac-067ed24dddfe
   name: Development
+  type: 1
+- blocks:
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 06426b26-6772-401f-b30f-0045d0cb1006
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: cement_timegan_core
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 14500
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 0f2f04eb-ab47-4d8f-9c72-4ce08d69fc98
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: energy.prediction_models
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 9900
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 11934302-a06a-4070-88a8-9ce8e6cd5db2
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: timegan.complete_implementation
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 11800
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 161e7ae7-9cc0-4dc8-9511-3b731d363ab3
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: optimization_data_prep.core
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 7700
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 199de760-2770-4d3c-ba37-a5248bb4ffae
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: generate_dataset
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 1100
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 1e00ab2f-6b55-4396-9784-dd173ca8cc77
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: objectives_and_constraints
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 7700
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 26e7fd46-cd5d-490f-9ce7-4a3acc9c7441
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: quality.final_summary
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 9000
+    y: 14300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 3270d024-67ff-4987-839a-81e15ac001ea
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: data_generator
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 2200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 3b23f82f-f579-4e86-924d-5511c5d3b3e8
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: multi_objective_framework
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 6600
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 3bb63f07-9d78-426e-adab-a5967fe20049
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: multi_objective.optimization_prep
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 9900
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 3d63f7cc-50bd-4d8e-816f-56a7399e7daf
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: timegan_model
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 8800
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 456d474f-fbec-4cfa-982a-29654a602e4b
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: process_disturbance.core
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 9900
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 5e5e598f-2168-4603-b085-6a5d8496ab1e
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: cement_timegan
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 4400
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 5ef5f884-0e6e-4534-a2fd-0d764176b118
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: timegan.core
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 1800
+    y: 1100
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 6d15a100-e340-4149-90c4-956362da0a78
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: process_disturbance.analysis
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 7200
+    y: 13200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 7a0b5065-2841-4dbf-a6c3-5b7abaf60e6f
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: cement_generator.enhanced
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 1800
+    y: 0
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 82480204-0405-440b-b239-0d1bf35e3ece
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: multi_objective.analysis_demo
+    parent_id: null
+    properties: {}
+    status: 4
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 15400
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 8575b3da-dbab-4a8b-a6bd-3273450fa09a
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: timegan.implementation
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 8500
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 8819a7dd-58c4-4d30-a9a8-5dd91d4d4410
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: timegan_complete
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 17500
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 8a119be7-7725-4267-bebc-ae513ece11bc
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: process_disturbance.scenarios
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 13200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 8bc276cc-5ce6-49a1-a4d3-dd4a5dee3752
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: timegan_methods
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 1800
+    y: 8500
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 8bf48d4f-d1d9-4609-b91c-4e8d04615f55
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: process_disturbance.application
+    parent_id: null
+    properties: {}
+    status: 4
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 9900
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 912437ff-f246-4e48-95c6-24675389cdb9
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: optimization_summary
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 20500
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 96ee2f6a-92af-4fdb-a1fd-43213596f70e
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: optimization_data_prep.core
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 3300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 976389cb-c396-4e51-bee8-020d9ba67021
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: energy.predictor_framework
+    parent_id: null
+    properties: {}
+    status: 4
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 16500
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: 9c6ca139-61e9-4e86-b781-917bf5d157d6
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: timegan_demo
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 10700
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: acf420b1-8a95-4223-a9c5-bd1c5b735eb4
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: optimization.framework
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 5500
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: ba351016-7ebc-434c-b00b-f4ca92a44410
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: optimization_framework
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 11500
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: be2c88fd-9828-4ffc-a95f-659eb0a26a6c
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: cement_data.generate_samples
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 0
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: be89b927-530d-4f10-a7c0-4ae66d1cf749
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: quality.model_optimization
+    parent_id: null
+    properties: {}
+    status: 4
+    type: 1
+    variables: null
+    width: 1600
+    x: 7200
+    y: 14300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: c3eb7eb2-fec0-48a4-9499-f1b21a7ca340
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: cement_chemistry.core
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 0
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: c89125df-5211-4662-be70-2ff3994573f9
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: quality.model_training
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 14300
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: d5cbfb58-1565-461a-9ee7-036fa4ab27b2
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: timegan.sequence_preparation
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 11800
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: dcf013fc-1875-4005-a296-345c966c1c1a
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: timegan.final_demonstration
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 9000
+    y: 11800
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: e762fa7e-bef8-4069-99c4-a3fe1b9745da
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: energy.predictor_framework
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 5400
+    y: 17600
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: ef511fa6-60a2-4099-84d4-9f7c79275728
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: quality.prediction_framework
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 3600
+    y: 9900
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: f4a00179-9500-47d7-b4d0-1c308af151f1
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: data_generator
+    parent_id: null
+    properties: {}
+    status: 1
+    type: 1
+    variables: null
+    width: 1600
+    x: 0
+    y: 5200
+  - auto_size: false
+    canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    compute_settings:
+      compute_environment_type: 1
+      executor_image_id: null
+    description: ''
+    height: 1000
+    id: fb68e480-787b-4660-bd7e-b2195179f724
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    name: timegan.generate_synthetic_data
+    parent_id: null
+    properties: {}
+    status: 3
+    type: 1
+    variables: null
+    width: 1600
+    x: 7200
+    y: 11800
+  canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+  edges:
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 0c0d652e-7bef-4a5b-bc14-d429dba48e5c
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 0f2f04eb-ab47-4d8f-9c72-4ce08d69fc98
+    target: 976389cb-c396-4e51-bee8-020d9ba67021
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 123c6e06-72f6-43b8-a8a6-6cf0c6488c06
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 0f2f04eb-ab47-4d8f-9c72-4ce08d69fc98
+    target: e762fa7e-bef8-4069-99c4-a3fe1b9745da
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 1ad532b5-34ba-418f-8e8e-685a6386a0b3
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 8575b3da-dbab-4a8b-a6bd-3273450fa09a
+    target: d5cbfb58-1565-461a-9ee7-036fa4ab27b2
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 45c76871-fceb-4fa9-a880-f7c5f3c3f27f
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 7a0b5065-2841-4dbf-a6c3-5b7abaf60e6f
+    target: ef511fa6-60a2-4099-84d4-9f7c79275728
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 4efc8a0f-60f4-4db8-9787-40f274684bd4
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 11934302-a06a-4070-88a8-9ce8e6cd5db2
+    target: fb68e480-787b-4660-bd7e-b2195179f724
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 5b68f4f9-1f37-479e-af05-ea32f6710a31
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 7a0b5065-2841-4dbf-a6c3-5b7abaf60e6f
+    target: 3bb63f07-9d78-426e-adab-a5967fe20049
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 5bf61cb2-2c62-48ec-b781-6cfd181cd447
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 7a0b5065-2841-4dbf-a6c3-5b7abaf60e6f
+    target: d5cbfb58-1565-461a-9ee7-036fa4ab27b2
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 6616267f-892e-40ee-82ad-56d570d97d8e
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 456d474f-fbec-4cfa-982a-29654a602e4b
+    target: 8bf48d4f-d1d9-4609-b91c-4e8d04615f55
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 744c6248-880c-4e15-8c65-abd27fc5415e
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 456d474f-fbec-4cfa-982a-29654a602e4b
+    target: 8a119be7-7725-4267-bebc-ae513ece11bc
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: 93f87b3c-73fb-4bd2-b429-8d869854598f
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 8a119be7-7725-4267-bebc-ae513ece11bc
+    target: 6d15a100-e340-4149-90c4-956362da0a78
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: a4ad46ab-639f-4c5c-85a9-32ebd56573c3
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 3bb63f07-9d78-426e-adab-a5967fe20049
+    target: 82480204-0405-440b-b239-0d1bf35e3ece
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: b391ff1e-f2d3-4605-9c74-d847074fbf76
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 7a0b5065-2841-4dbf-a6c3-5b7abaf60e6f
+    target: 456d474f-fbec-4cfa-982a-29654a602e4b
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: b473a2de-5e03-4e3c-9ddb-2151f4f9f3dd
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 7a0b5065-2841-4dbf-a6c3-5b7abaf60e6f
+    target: 161e7ae7-9cc0-4dc8-9511-3b731d363ab3
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: c5695bcb-fa2c-4310-9aa5-cd036704b8dc
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: c3eb7eb2-fec0-48a4-9499-f1b21a7ca340
+    target: 7a0b5065-2841-4dbf-a6c3-5b7abaf60e6f
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: db683d2d-da3a-453c-a569-4547c98b7fa4
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: d5cbfb58-1565-461a-9ee7-036fa4ab27b2
+    target: 11934302-a06a-4070-88a8-9ce8e6cd5db2
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: ddc4a518-13a3-47c1-b5cf-9e993fd7af23
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: ef511fa6-60a2-4099-84d4-9f7c79275728
+    target: c89125df-5211-4662-be70-2ff3994573f9
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: df3325a2-2692-4316-81e2-bc40c8e47d21
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: be89b927-530d-4f10-a7c0-4ae66d1cf749
+    target: 26e7fd46-cd5d-490f-9ce7-4a3acc9c7441
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: df385e3d-fce9-45c3-9d45-a7052b80c78f
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: 7a0b5065-2841-4dbf-a6c3-5b7abaf60e6f
+    target: 0f2f04eb-ab47-4d8f-9c72-4ce08d69fc98
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: efe26edb-4e36-4ad3-8ae0-19c4f0fe8333
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: c89125df-5211-4662-be70-2ff3994573f9
+    target: be89b927-530d-4f10-a7c0-4ae66d1cf749
+  - canvas_id: 22685ee7-c317-4938-8cd6-16009a57eb19
+    id: f6c73e84-0717-4bf5-86dd-6565df5df8a4
+    layer_id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+    source: fb68e480-787b-4660-bd7e-b2195179f724
+    target: dcf013fc-1875-4005-a296-345c966c1c1a
+  id: 9445ea4b-ee98-4e3e-88ea-c75141c3e7a8
+  name: development_1
   type: 1
 assets: []

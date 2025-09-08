@@ -15,7 +15,7 @@ blocks:
   name: validation.temperature_profile_consistency
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -33,7 +33,7 @@ blocks:
   name: dwsim.process_units
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -51,7 +51,7 @@ blocks:
   name: validation.temporal_data_integrity
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -69,7 +69,7 @@ blocks:
   name: quality.temporal_consistency
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -105,7 +105,7 @@ blocks:
   name: dwsim.framework_integration
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -123,7 +123,7 @@ blocks:
   name: ensemble.weighted_stacking_ensemble
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -141,7 +141,7 @@ blocks:
   name: time_validation.walk_forward_implementation
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -159,7 +159,7 @@ blocks:
   name: advanced_models.xgboost
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -177,7 +177,7 @@ blocks:
   name: baseline_models.random_forest
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -195,7 +195,7 @@ blocks:
   name: quality.anomaly_tracking_dashboard
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -213,7 +213,7 @@ blocks:
   name: pinn.neural_network
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -267,7 +267,7 @@ blocks:
   name: evaluation.feature_importance
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -285,7 +285,7 @@ blocks:
   name: time_validation.ab_testing_framework
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -303,7 +303,7 @@ blocks:
   name: time_validation.walk_forward_validation
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -321,7 +321,7 @@ blocks:
   name: advanced_models.extra_trees
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -339,7 +339,7 @@ blocks:
   name: dwsim.data_generator
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -357,7 +357,7 @@ blocks:
   name: evaluation.prediction_plots
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -375,7 +375,7 @@ blocks:
   name: optimization.bayesian_hyperparameter_tuning
   parent_id: null
   properties: {}
-  status: 4
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -411,7 +411,7 @@ blocks:
   name: advanced_models.neural_network
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -429,7 +429,7 @@ blocks:
   name: bigquery.sample_queries_benchmarks
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -447,7 +447,7 @@ blocks:
   name: evaluation.performance_metrics
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -465,7 +465,7 @@ blocks:
   name: bigquery.ingestion_pipeline
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -483,7 +483,7 @@ blocks:
   name: real_data.design_unified_schema
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -501,7 +501,7 @@ blocks:
   name: evaluation.final_report
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -519,7 +519,7 @@ blocks:
   name: time_validation.drift_detection
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -537,7 +537,7 @@ blocks:
   name: real_data.validate_physics_constraints
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -555,7 +555,7 @@ blocks:
   name: data_prep.final_summary
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -573,7 +573,7 @@ blocks:
   name: baseline_models.decision_tree
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -591,7 +591,7 @@ blocks:
   name: real_data.integrate_datasets
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -609,7 +609,7 @@ blocks:
   name: time_validation.comprehensive_summary
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -627,7 +627,7 @@ blocks:
   name: real_data.analyze_datasets
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -645,7 +645,7 @@ blocks:
   name: advanced_models.performance_comparison
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -663,7 +663,7 @@ blocks:
   name: validation.mass_balance_constraints
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -681,7 +681,7 @@ blocks:
   name: dwsim.heat_mass_balance
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -699,7 +699,7 @@ blocks:
   name: validation.energy_consumption_alignment
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -717,7 +717,7 @@ blocks:
   name: cement_plant.validation_report
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -735,7 +735,7 @@ blocks:
   name: pinn.physics_informed_neural_network
   parent_id: null
   properties: {}
-  status: 4
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -753,7 +753,7 @@ blocks:
   name: real_data.load_kaggle_cement
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -771,7 +771,7 @@ blocks:
   name: pinn.physics_validation
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -789,7 +789,7 @@ blocks:
   name: bigquery.data_validation
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -825,7 +825,7 @@ blocks:
   name: dwsim.thermodynamic_framework
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -843,7 +843,7 @@ blocks:
   name: validation.data_completeness_check
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -861,7 +861,7 @@ blocks:
   name: bigquery.final_summary
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -879,7 +879,7 @@ blocks:
   name: quality.mass_energy_diagnostics
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -915,7 +915,7 @@ blocks:
   name: cement_plant.generate_dataset
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -933,7 +933,7 @@ blocks:
   name: quality.adaptive_imputation
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -951,7 +951,7 @@ blocks:
   name: optimization.final_comprehensive_summary
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -969,7 +969,7 @@ blocks:
   name: baseline_models.performance_summary
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -987,7 +987,7 @@ blocks:
   name: data_prep.generate_synthetic
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -1005,7 +1005,7 @@ blocks:
   name: pinn.physics_constraints
   parent_id: null
   properties: {}
-  status: 4
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -1023,7 +1023,7 @@ blocks:
   name: bigquery.schema_design
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -1041,7 +1041,7 @@ blocks:
   name: quality.comprehensive_report
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -1059,7 +1059,7 @@ blocks:
   name: evaluation.cross_validation
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -1077,7 +1077,7 @@ blocks:
   name: final.comprehensive_results_summary
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -1095,7 +1095,7 @@ blocks:
   name: validation.comprehensive_report
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -1113,7 +1113,7 @@ blocks:
   name: dwsim.visualization_summary
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -1149,7 +1149,7 @@ blocks:
   name: real_data.load_global_cement
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -1167,7 +1167,7 @@ blocks:
   name: baseline_models.linear_regression
   parent_id: null
   properties: {}
-  status: 3
+  status: 1
   type: 1
   variables: null
   width: 1600
@@ -1185,7 +1185,7 @@ blocks:
   name: pinn.train_model
   parent_id: null
   properties: {}
-  status: 4
+  status: 1
   type: 1
   variables: null
   width: 1600
