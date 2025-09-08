@@ -250,6 +250,50 @@ class UnifiedCementDataPlatform:
         res["validate"] = self._safe_call(valid_mod, ["validate_pinn", "validate", "main"], data)
         return res
 
+    # ------------------------- real-data entrypoints -------------------------
+    def load_real_data_global(self, *args, **kwargs):
+        mod = self._safe_import("cement_ai_platform.data.data_pipeline.real_data.load_global_cement")
+        return self._safe_call(mod, ["load_global_cement", "load_dataset"], *args, **kwargs)
+
+    def load_real_data_kaggle(self, *args, **kwargs):
+        mod = self._safe_import("cement_ai_platform.data.data_pipeline.real_data.load_kaggle")
+        return self._safe_call(mod, ["load_kaggle_cement", "load_dataset"], *args, **kwargs)
+
+    def integrate_real_datasets(self, *args, **kwargs):
+        mod = self._safe_import("cement_ai_platform.data.data_pipeline.real_data.integrate_datasets")
+        return self._safe_call(mod, ["integrate_datasets", "integrate"], *args, **kwargs)
+
+    def analyze_real_datasets(self, *args, **kwargs):
+        mod = self._safe_import("cement_ai_platform.data.data_pipeline.real_data.analyze_datasets")
+        return self._safe_call(mod, ["analyze_datasets", "analyze"], *args, **kwargs)
+
+    def final_quality_report(self, *args, **kwargs):
+        mod = self._safe_import("cement_ai_platform.data.data_pipeline.real_data.final_quality_report")
+        return self._safe_call(mod, ["generate_final_quality_report", "final_quality_report"], *args, **kwargs)
+
+    # --------------------- optimization reporting outputs ---------------------
+    def optimization_report(self, optimization_dataset_or_df) -> Dict[str, Any]:
+        """Produce optimization reporting artifacts if wrappers exist.
+
+        Accepts either the full dict returned by OptimizationDataPrep.create_optimization_dataset()
+        or a dataframe of objectives.
+        """
+        final_mod = self._safe_import("cement_ai_platform.models.optimization.reporting.final_summary")
+        opt_mod = self._safe_import("cement_ai_platform.models.optimization.reporting.optimization_summary")
+
+        payload = optimization_dataset_or_df
+        if isinstance(optimization_dataset_or_df, dict) and "objectives" in optimization_dataset_or_df:
+            payload = optimization_dataset_or_df["objectives"]
+
+        out: Dict[str, Any] = {}
+        out["final_summary"] = self._safe_call(
+            final_mod, ["generate_final_results_summary", "final_summary"], payload
+        )
+        out["optimization_summary"] = self._safe_call(
+            opt_mod, ["generate_optimization_summary", "optimization_summary"], payload
+        )
+        return out
+
 
 def create_unified_platform(seed: int = 42) -> UnifiedCementDataPlatform:
     return UnifiedCementDataPlatform(seed=seed)
