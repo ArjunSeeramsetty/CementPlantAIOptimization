@@ -1,0 +1,25 @@
+# Core
+pandas>=2.0
+numpy>=1.24
+scipy>=1.11
+pydantic>=2.5
+python-dotenv>=1.0
+
+# Google Cloud
+google-cloud-bigquery>=3.14
+google-cloud-storage>=2.14
+google-cloud-aiplatform>=1.66
+google-auth>=2.30
+PyYAML>=6.0
+
+# ML (optional scaffolds)
+tensorflow>=2.15; platform_system != "Windows" or platform_machine != "ARM64"
+torch>=2.2; platform_system != "Windows" or platform_machine != "ARM64"
+
+# Dev
+pytest>=7.4
+black>=24.3
+isort>=5.13
+mypy>=1.10
+
+

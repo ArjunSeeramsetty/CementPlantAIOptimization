@@ -1,0 +1,379 @@
+{
+  "migrated": {
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\0ba91744-31b7-4cb3-a648-5e6fc126b5c7.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\validation_temperature_profile_consistency.py",
+      "timestamp": "2025-09-06T22:03:31.597088Z",
+      "yaml_name": "validation.temperature_profile_consistency"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\1409b6df-53f9-40ba-ae44-ded14d5fc9d3.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator_migrated.py",
+      "timestamp": "2025-09-06T22:03:31.597088Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\163567a3-b5e5-4626-bf03-a301d2c20dad.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\validation_temporal_data_integrity.py",
+      "timestamp": "2025-09-06T22:03:31.603250Z",
+      "yaml_name": "validation.temporal_data_integrity"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\1dacffcb-e1e2-410b-9c81-ba7edf6726b0.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_temporal_consistency.py",
+      "timestamp": "2025-09-06T22:03:31.603250Z",
+      "yaml_name": "quality.temporal_consistency"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\20163929-085f-45db-a6a0-8acc7eda1ad4.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:03:31.607577Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\22a85917-a50a-434e-ad43-ef29d0043d15.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator_migrated.py",
+      "timestamp": "2025-09-06T22:03:31.608379Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\30ee5c18-088c-49d3-996c-f0e5d6d266e6.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:03:31.611480Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\31692ac5-c149-4660-bb71-21b13466502e.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:03:31.612626Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\34a48d3f-e1c0-4eb5-9de7-43dd43847b88.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:03:31.612626Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\3fb9a87d-1ab5-4924-bdef-317d59cf985e.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:03:31.618093Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\4168af74-c18e-4ecc-a63f-f481acc45415.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:12:10.541256Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\422ebe50-2f78-42c7-ba06-3400c1b417f1.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator_migrated.py",
+      "timestamp": "2025-09-06T22:12:10.541566Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\4234e703-6ae2-4af0-a651-c8bbb423ccfd.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:12:10.541566Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\439e0477-5fdc-4745-a7a8-2ec3d48a7eb6.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:12:10.545300Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\46f3d43e-9d56-4e2a-8dc2-958fc712508b.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:12:10.546299Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\48ab75ab-713c-43d1-894e-1f5eb5c65ca0.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:12:10.546299Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\4a585b53-af57-4365-b18b-6796b14d3d02.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:12:10.548834Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\53eb4d01-ed52-43b2-805e-11f795e9e42c.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:12:10.549546Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\5420b018-a2e3-4590-931c-b4f9931e3dfb.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:12:10.550575Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\542675fb-6098-4710-bdd9-d421565959a3.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-06T22:12:10.552573Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\553e8d32-601e-486b-81f6-de913376590c.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-07T06:20:23.684722Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\58fe0a4c-e4e8-4c23-9223-a0619e3c1dce.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-07T06:20:23.687446Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\5919baca-ead4-4a1f-b7e9-8054b309ccc9.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-07T06:20:23.689596Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\5cd84312-45a7-4349-af60-48573a0df216.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator_migrated.py",
+      "timestamp": "2025-09-07T06:20:23.691781Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\6872d6bb-3ff2-4242-9935-b85f2cf035d0.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-07T06:20:23.694303Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\6a51304f-6f35-42ba-8a0c-6d26529943f4.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator_migrated.py",
+      "timestamp": "2025-09-07T06:20:23.697262Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\7df4b068-ba4a-4668-8d50-d55fbd37872e.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator_migrated.py",
+      "timestamp": "2025-09-07T06:20:23.700566Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\7f9a4780-a69b-4547-a27e-b18e4419f320.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-07T06:20:23.702669Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\81d4ca6a-817b-48c6-9937-f6eea261a7b4.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-07T06:20:23.705394Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\829bd40f-e4a9-440a-b62e-cea517019188.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer_migrated.py",
+      "timestamp": "2025-09-07T06:20:23.708469Z"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\8b3fa469-9dc6-4bc4-a3ab-ae5c25c030ce.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\data_prep_final_summary.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "8b3fa469-9dc6-4bc4-a3ab-ae5c25c030ce",
+      "timestamp": "2025-09-07T06:53:57.890584Z",
+      "yaml_name": "data_prep.final_summary"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\95bf1be4-01d9-4f40-9be4-ef543853422f.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\baseline_models_decision_tree.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "95bf1be4-01d9-4f40-9be4-ef543853422f",
+      "timestamp": "2025-09-07T06:53:57.894100Z",
+      "yaml_name": "baseline_models.decision_tree"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\961fce81-6a5d-458f-85a2-3dacd0a817f1.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\real_data_integrate_datasets.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "961fce81-6a5d-458f-85a2-3dacd0a817f1",
+      "timestamp": "2025-09-07T06:53:57.894100Z",
+      "yaml_name": "real_data.integrate_datasets"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\97685bc5-424f-47a9-9825-f1b45e4003d8.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\time_validation_comprehensive_summary.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "97685bc5-424f-47a9-9825-f1b45e4003d8",
+      "timestamp": "2025-09-07T06:53:57.900242Z",
+      "yaml_name": "time_validation.comprehensive_summary"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\9d8d69a3-ca7f-49e3-befc-1452943b16ec.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\real_data_analyze_datasets.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "9d8d69a3-ca7f-49e3-befc-1452943b16ec",
+      "timestamp": "2025-09-07T06:53:57.902633Z",
+      "yaml_name": "real_data.analyze_datasets"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\abea277b-d125-4486-8ff3-b4ac4fef142c.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\advanced_models_performance_comparison.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "abea277b-d125-4486-8ff3-b4ac4fef142c",
+      "timestamp": "2025-09-07T06:53:57.904680Z",
+      "yaml_name": "advanced_models.performance_comparison"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\ac8aa951-b0b0-4827-b23f-65fe162fdde5.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\validation_mass_balance_constraints.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "ac8aa951-b0b0-4827-b23f-65fe162fdde5",
+      "timestamp": "2025-09-07T06:53:57.910427Z",
+      "yaml_name": "validation.mass_balance_constraints"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\affdaa54-5805-43e6-bf0c-7ac0dcd5b640.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\dwsim_heat_mass_balance.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator.py",
+      "source_uuid": "affdaa54-5805-43e6-bf0c-7ac0dcd5b640",
+      "timestamp": "2025-09-07T06:53:57.912172Z",
+      "yaml_name": "dwsim.heat_mass_balance"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\b2c59fb3-95a4-4b5a-a454-d3c0441c583e.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\validation_energy_consumption_alignment.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "b2c59fb3-95a4-4b5a-a454-d3c0441c583e",
+      "timestamp": "2025-09-07T06:53:57.916176Z",
+      "yaml_name": "validation.energy_consumption_alignment"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\b3c02f25-e2c0-49bf-af55-b64859ff8aa3.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\cement_plant_validation_report.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator.py",
+      "source_uuid": "b3c02f25-e2c0-49bf-af55-b64859ff8aa3",
+      "timestamp": "2025-09-07T06:53:57.918557Z",
+      "yaml_name": "cement_plant.validation_report"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\b54cca7d-e414-4a17-a0a8-d363db47969c.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\pinn_physics_informed_neural_network.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator.py",
+      "source_uuid": "b54cca7d-e414-4a17-a0a8-d363db47969c",
+      "timestamp": "2025-09-07T06:55:08.654644Z",
+      "yaml_name": "pinn.physics_informed_neural_network"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\b776e006-7026-4790-9403-551abc1f999f.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\real_data_load_kaggle_cement.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "b776e006-7026-4790-9403-551abc1f999f",
+      "timestamp": "2025-09-07T06:55:08.662257Z",
+      "yaml_name": "real_data.load_kaggle_cement"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\b851dfbd-458c-4d28-a730-3b9796614f6d.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\pinn_physics_validation.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "b851dfbd-458c-4d28-a730-3b9796614f6d",
+      "timestamp": "2025-09-07T06:55:08.664416Z",
+      "yaml_name": "pinn.physics_validation"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\bca2c10c-ebb1-4aee-8ba9-9d3028ec676d.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\bigquery_data_validation.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator.py",
+      "source_uuid": "bca2c10c-ebb1-4aee-8ba9-9d3028ec676d",
+      "timestamp": "2025-09-07T06:55:08.667124Z",
+      "yaml_name": "bigquery.data_validation"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\c1b218f5-2bc4-406e-ae2b-5523fcaea787.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\data_prep_train_test_split.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "c1b218f5-2bc4-406e-ae2b-5523fcaea787",
+      "timestamp": "2025-09-07T06:55:08.670611Z",
+      "yaml_name": "data_prep.train_test_split"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\c543b65f-9513-45e3-976f-d91e4d4a617c.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\dwsim_thermodynamic_framework.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator.py",
+      "source_uuid": "c543b65f-9513-45e3-976f-d91e4d4a617c",
+      "timestamp": "2025-09-07T06:55:08.672617Z",
+      "yaml_name": "dwsim.thermodynamic_framework"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\c962387c-ca72-4ff6-8885-1e5a2509e12c.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\validation_data_completeness_check.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "c962387c-ca72-4ff6-8885-1e5a2509e12c",
+      "timestamp": "2025-09-07T06:55:08.678013Z",
+      "yaml_name": "validation.data_completeness_check"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\cc291e0c-b18c-4d48-b159-01d4dab94ac9.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\data_pipeline\\bigquery_final_summary.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\data_pipeline\\bigquery_connector.py",
+      "source_uuid": "cc291e0c-b18c-4d48-b159-01d4dab94ac9",
+      "timestamp": "2025-09-07T06:55:08.683609Z",
+      "yaml_name": "bigquery.final_summary"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\d02b0a4d-67a4-4ef6-93c3-0af3dc409908.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_mass_energy_diagnostics.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "d02b0a4d-67a4-4ef6-93c3-0af3dc409908",
+      "timestamp": "2025-09-07T06:55:08.687526Z",
+      "yaml_name": "quality.mass_energy_diagnostics"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\d42f553b-ef97-4285-aa6a-5cd3c58fd700.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\data_prep_handle_missing.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "d42f553b-ef97-4285-aa6a-5cd3c58fd700",
+      "timestamp": "2025-09-07T06:55:08.687526Z",
+      "yaml_name": "data_prep.handle_missing"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\da72097a-2c12-463a-9102-a455c9b017ad.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\cement_plant_generate_dataset.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator.py",
+      "source_uuid": "da72097a-2c12-463a-9102-a455c9b017ad",
+      "timestamp": "2025-09-07T06:55:08.696723Z",
+      "yaml_name": "cement_plant.generate_dataset"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\dd7d759c-bf47-4310-acbe-cfa60d6f0f9c.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_adaptive_imputation.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator.py",
+      "source_uuid": "dd7d759c-bf47-4310-acbe-cfa60d6f0f9c",
+      "timestamp": "2025-09-07T06:55:08.696723Z",
+      "yaml_name": "quality.adaptive_imputation"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\dff4b446-bd09-4852-b679-01d5ca38c738.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\optimization_final_comprehensive_summary.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "dff4b446-bd09-4852-b679-01d5ca38c738",
+      "timestamp": "2025-09-07T06:55:08.701104Z",
+      "yaml_name": "optimization.final_comprehensive_summary"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\e2e5fced-b576-42ff-903a-af35c455e771.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\baseline_models_performance_summary.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "e2e5fced-b576-42ff-903a-af35c455e771",
+      "timestamp": "2025-09-07T06:55:08.704265Z",
+      "yaml_name": "baseline_models.performance_summary"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\e39b9ebf-9c37-47a6-b42c-470bba30c2b7.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\data_prep_generate_synthetic.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "e39b9ebf-9c37-47a6-b42c-470bba30c2b7",
+      "timestamp": "2025-09-07T06:55:08.704265Z",
+      "yaml_name": "data_prep.generate_synthetic"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\e3e6340e-4482-4156-8868-25fc5acd0a10.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\pinn_physics_constraints.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator.py",
+      "source_uuid": "e3e6340e-4482-4156-8868-25fc5acd0a10",
+      "timestamp": "2025-09-07T06:55:08.708826Z",
+      "yaml_name": "pinn.physics_constraints"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\e7775640-39d0-453c-9099-9aa7ef51ab9a.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\bigquery_schema_design.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator.py",
+      "source_uuid": "e7775640-39d0-453c-9099-9aa7ef51ab9a",
+      "timestamp": "2025-09-07T06:55:08.714444Z",
+      "yaml_name": "bigquery.schema_design"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\ec0d0b7c-c2e8-4079-a645-93ee8d26234a.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_comprehensive_report.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "ec0d0b7c-c2e8-4079-a645-93ee8d26234a",
+      "timestamp": "2025-09-07T06:55:08.714444Z",
+      "yaml_name": "quality.comprehensive_report"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\f143aad0-ba4e-40f8-94bb-428f3aaaa053.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\evaluation_cross_validation.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "f143aad0-ba4e-40f8-94bb-428f3aaaa053",
+      "timestamp": "2025-09-07T06:55:08.714444Z",
+      "yaml_name": "evaluation.cross_validation"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\f1dc3d95-5a30-4e48-b0b7-bdcac610501a.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\final_comprehensive_results_summary.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "f1dc3d95-5a30-4e48-b0b7-bdcac610501a",
+      "timestamp": "2025-09-07T06:55:08.721283Z",
+      "yaml_name": "final.comprehensive_results_summary"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\f7f8c4ce-421d-474c-a31c-4e0dc6bf303a.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\validation_comprehensive_report.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator.py",
+      "source_uuid": "f7f8c4ce-421d-474c-a31c-4e0dc6bf303a",
+      "timestamp": "2025-09-07T06:55:08.724010Z",
+      "yaml_name": "validation.comprehensive_report"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\f89de265-c93b-4a45-b2f7-0b7fd4621f47.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\dwsim_visualization_summary.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\temperature_validator.py",
+      "source_uuid": "f89de265-c93b-4a45-b2f7-0b7fd4621f47",
+      "timestamp": "2025-09-07T06:55:08.727637Z",
+      "yaml_name": "dwsim.visualization_summary"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\f91e5090-8766-497d-96d6-fdf15a20f354.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\real_data_final_quality_report.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "f91e5090-8766-497d-96d6-fdf15a20f354",
+      "timestamp": "2025-09-07T06:55:08.729016Z",
+      "yaml_name": "real_data.final_quality_report"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\f93d6080-d865-4446-8d73-78e714fff73a.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\real_data_load_global_cement.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "f93d6080-d865-4446-8d73-78e714fff73a",
+      "timestamp": "2025-09-07T06:55:08.729016Z",
+      "yaml_name": "real_data.load_global_cement"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\ff9fa6fb-1099-43c8-9406-871ed6646095.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\baseline_models_linear_regression.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "ff9fa6fb-1099-43c8-9406-871ed6646095",
+      "timestamp": "2025-09-07T06:55:08.737499Z",
+      "yaml_name": "baseline_models.linear_regression"
+    },
+    "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\22685ee7-c317-4938-8cd6-16009a57eb19\\Development\\fff421f9-8a05-4428-8f1d-41bb7cb9ad71.py": {
+      "destination": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\pinn_train_model.py",
+      "canonical_target": "C:\\Users\\arjun\\Desktop\\CementPlantAIOptimization\\src\\cement_ai_platform\\data\\processors\\quality_analyzer.py",
+      "source_uuid": "fff421f9-8a05-4428-8f1d-41bb7cb9ad71",
+      "timestamp": "2025-09-07T06:55:08.740014Z",
+      "yaml_name": "pinn.train_model"
+    }
+  }
+}

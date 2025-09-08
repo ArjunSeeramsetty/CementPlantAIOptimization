@@ -1,0 +1,5 @@
+Metadata-Version: 2.1
+Name: cement-ai-platform
+Version: 0.1.0
+Summary: Generative AI-driven optimization platform for cement plants
+Requires-Python: >=3.10
