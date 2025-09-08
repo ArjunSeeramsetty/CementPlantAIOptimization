@@ -33,6 +33,34 @@ CementPlantAIOptimization/
 ```
 
 ## Quickstart
+### Unified data platform
+
+```python
+from cement_ai_platform.data import create_unified_platform
+
+platform = create_unified_platform()
+# Generate enhanced chemistry-based dataset
+data = platform.enhanced_generator.generate_complete_dataset(500)
+
+# Preprocess and validate
+pre = platform.preprocess(data, handle_missing=True, do_split=True)
+reports = platform.validate(pre["data"])  # dict of validation reports
+
+# Baselines & optimization prep
+base_models = platform.train_baselines(pre["data"], target="free_lime")
+opt_prep = platform.optimization_prep
+opt_ds = opt_prep.create_optimization_dataset()
+opt_report = platform.optimization_report(opt_ds)
+```
+
+### CLI
+
+```bash
+python scripts/run_preprocess.py --input path/to/input.csv --outdir artifacts --split
+python scripts/run_validate.py --input artifacts/preprocessed.csv --outdir artifacts
+python scripts/run_simulate_dwsim.py --input artifacts/preprocessed.csv --outdir artifacts
+```
+
 
 1) Python setup
 
