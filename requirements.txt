@@ -12,13 +12,19 @@ google-cloud-aiplatform>=1.66
 google-auth>=2.30
 PyYAML>=6.0
 
+# Google AI
+google-generativeai>=0.7.0
+
 # ML (optional scaffolds)
 tensorflow>=2.15; platform_system != "Windows" or platform_machine != "ARM64"
 torch>=2.2; platform_system != "Windows" or platform_machine != "ARM64"
+
+# Optimization / Frontend
+pymoo>=0.6.0
+streamlit>=1.28.0
 
 # Dev
 pytest>=7.4
 black>=24.3
 isort>=5.13
 mypy>=1.10
-
