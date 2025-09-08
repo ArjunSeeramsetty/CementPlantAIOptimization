@@ -1,3 +1,15 @@
 .venv/
 .env
 .secrets/
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.pytest_cache/
+.mypy_cache/
+*.egg-info/
+build/
+dist/
+artifacts/
+*.log
+*.DS_Store
