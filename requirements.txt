@@ -22,6 +22,8 @@ torch>=2.2; platform_system != "Windows" or platform_machine != "ARM64"
 # Advanced AI Features
 ydata-synthetic>=1.1.0  # TimeGAN implementation
 pina-torch>=0.1.0  # Physics-Informed Neural Networks
+pml-pinn>=0.1.0  # Alternative PINN implementation
+DWSIM>=6.0.0  # Chemical process simulator
 
 # Optimization / Frontend
 pymoo>=0.6.0
