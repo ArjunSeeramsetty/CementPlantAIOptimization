@@ -103,9 +103,13 @@ class AdvancedKilnModel:
         alumina_modulus = al2o3 / fe2o3 if fe2o3 > 0 else 1.0
         alumina_effect = (alumina_modulus - 1.5) * 2  # Optimal around 1.5
         
+        # MgO flux effect (industrial correlation)
+        mgo_content = raw_meal_composition.get('MgO', 2.0)
+        mgo_effect = (mgo_content - 2.0) * -0.5  # MgO acts as flux above 2%
+        
         # Calculate final burnability index
         burnability_index = (base_burnability + alkali_effect + fineness_effect + 
-                           coal_effect + alumina_effect)
+                           coal_effect + alumina_effect + mgo_effect)
         
         # Ensure reasonable bounds
         burnability_index = max(50, min(150, burnability_index))
@@ -117,9 +121,11 @@ class AdvancedKilnModel:
             'fineness_effect': fineness_effect,
             'coal_effect': coal_effect,
             'alumina_effect': alumina_effect,
+            'mgo_effect': mgo_effect,
             'silica_ratio': silica_ratio,
             'r2o_content': r2o,
-            'alumina_modulus': alumina_modulus
+            'alumina_modulus': alumina_modulus,
+            'mgo_content': mgo_content
         }
     
     def calculate_comprehensive_nox_formation(self,

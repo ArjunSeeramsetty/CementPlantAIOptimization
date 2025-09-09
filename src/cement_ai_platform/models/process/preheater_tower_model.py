@@ -32,7 +32,7 @@ class PreheaterTower:
         self.stage_gas_temps = [900, 750, 600, 450, 320]  # Exit gas temps per stage (°C)
         self.stage_meal_temps = [850, 700, 550, 400, 280]  # Exit meal temps per stage (°C)
         
-        # Pressure drops per stage (Pa)
+        # Pressure drops per stage (Pa) - will be calculated using Barth equation
         self.pressure_drops = [800, 600, 500, 400, 300]
         
         # Alkali buildup factor (critical for operational problems)
@@ -50,6 +50,7 @@ class PreheaterTower:
         
         print(f"🏗️ Preheater Tower Model initialized ({num_stages} stages)")
         print("📊 Heat exchange and alkali circulation modeling active")
+        print("📐 Barth equation for cyclone pressure drop calculations available")
     
     def calculate_heat_and_mass_balance(self,
                                        raw_meal_flow: float,
@@ -100,8 +101,15 @@ class PreheaterTower:
             current_meal_temp += meal_temp_rise
             current_gas_temp -= gas_temp_drop
             
-            # Pressure drop
-            stage_pressure_drop = self.pressure_drops[stage]
+            # Pressure drop calculation using Barth equation
+            # Typical gas velocities and dust loadings for cement preheater stages
+            typical_velocities = [25, 22, 20, 18, 15]  # m/s (decreasing towards top)
+            typical_dust_loadings = [200, 150, 100, 80, 60]  # g/Nm³ (decreasing towards top)
+            
+            gas_velocity = typical_velocities[stage] if stage < len(typical_velocities) else typical_velocities[-1]
+            dust_loading = typical_dust_loadings[stage] if stage < len(typical_dust_loadings) else typical_dust_loadings[-1]
+            
+            stage_pressure_drop = self.calculate_cyclone_pressure_drop(gas_velocity, dust_loading)
             total_pressure_drop += stage_pressure_drop
             
             # Heat recovery
@@ -114,6 +122,8 @@ class PreheaterTower:
                 'gas_temp_out': current_gas_temp,
                 'heat_transfer': heat_transfer_rate,
                 'pressure_drop': stage_pressure_drop,
+                'gas_velocity': gas_velocity,
+                'dust_loading': dust_loading,
                 'cyclone_efficiency': self.cyclone_efficiency[stage]
             })
         
@@ -163,6 +173,12 @@ class PreheaterTower:
         # Higher circulating alkalis = more buildup potential
         alkali_buildup_rate = (circulating_k2o + circulating_na2o) * 0.05
         
+        # Add SO3/Cl circulation impact (volatile circulation enhancement)
+        so3_content = kiln_conditions.get('so3_content', 1.0)
+        cl_content = kiln_conditions.get('cl_content', 0.1)
+        volatile_effect = (so3_content + cl_content * 0.1) * 0.3
+        alkali_buildup_rate += volatile_effect * 0.02  # Additional buildup from volatiles
+        
         # Update buildup factors
         self.alkali_buildup_factor += alkali_buildup_rate
         
@@ -180,6 +196,7 @@ class PreheaterTower:
             'na2o_volatility': na2o_volatility,
             'circulating_k2o': circulating_k2o,
             'circulating_na2o': circulating_na2o,
+            'volatile_effect': volatile_effect,
             'alkali_buildup_factor': self.alkali_buildup_factor,
             'buildup_risk': buildup_risk,
             'operational_recommendations': self._generate_alkali_recommendations(buildup_risk)
@@ -344,6 +361,44 @@ class PreheaterTower:
             recommendations.append("Continue current operating practices")
         
         return recommendations
+    
+    def calculate_cyclone_pressure_drop(self, gas_velocity: float, dust_loading: float) -> float:
+        """
+        Calculate cyclone pressure drop using Barth equation.
+        
+        Args:
+            gas_velocity: Gas velocity (m/s)
+            dust_loading: Dust loading (g/Nm³)
+            
+        Returns:
+            Pressure drop (Pa)
+        """
+        # Barth equation for cyclone pressure drop
+        # ΔP = 4.5 * v² * (1 + dust_loading/1000)
+        pressure_drop = 4.5 * (gas_velocity ** 2) * (1 + dust_loading / 1000)
+        return pressure_drop
+    
+    def calculate_stage_pressure_drops(self, 
+                                     gas_velocities: List[float], 
+                                     dust_loadings: List[float]) -> List[float]:
+        """
+        Calculate pressure drops for all stages using Barth equation.
+        
+        Args:
+            gas_velocities: Gas velocities for each stage (m/s)
+            dust_loadings: Dust loadings for each stage (g/Nm³)
+            
+        Returns:
+            List of pressure drops (Pa)
+        """
+        pressure_drops = []
+        for i in range(len(gas_velocities)):
+            velocity = gas_velocities[i] if i < len(gas_velocities) else gas_velocities[-1]
+            dust_loading = dust_loadings[i] if i < len(dust_loadings) else dust_loadings[-1]
+            pressure_drop = self.calculate_cyclone_pressure_drop(velocity, dust_loading)
+            pressure_drops.append(pressure_drop)
+        
+        return pressure_drops
 
 
 def create_preheater_tower(num_stages: int = 5) -> PreheaterTower:
