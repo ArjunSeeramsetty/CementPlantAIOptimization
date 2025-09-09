@@ -329,8 +329,26 @@ validation_report_template = create_validation_report_template()
 def run_sample_validation():
     """Run validation on sample data"""
     
-    # Use the sample data from ingestion pipeline
-    _sample_data = sample_data.copy()
+    # Create sample data for validation
+    import pandas as pd
+    import numpy as np
+    from datetime import datetime, timedelta
+    
+    np.random.seed(42)
+    n_records = 100
+    
+    _sample_data = pd.DataFrame({
+        'timestamp': [datetime.now() - timedelta(minutes=i) for i in range(n_records)],
+        'plant_id': np.random.choice(['PLANT_001', 'PLANT_002'], n_records),
+        'unit_id': np.random.choice(['KILN_01', 'MILL_01'], n_records),
+        'parameter_type': np.random.choice(['TEMPERATURE', 'PRESSURE', 'FLOW'], n_records),
+        'parameter_name': [f'param_{i}' for i in range(n_records)],
+        'value': np.random.uniform(0, 1000, n_records),
+        'unit': np.random.choice(['C', 'bar', 'm3/h'], n_records),
+        'quality_flag': np.random.choice(['GOOD', 'WARNING'], n_records),
+        'sensor_id': [f'SENSOR_{i:03d}' for i in range(n_records)],
+        'ingestion_timestamp': [datetime.now() for _ in range(n_records)]
+    })
     
     validation_results = {
         "completeness": {
