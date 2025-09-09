@@ -5,6 +5,9 @@ import pandas as pd
 
 def test_unified_platform_smoke():
     from cement_ai_platform.data import create_unified_platform
+    from cement_ai_platform.models.optimization.multi_objective_prep import (
+        OptimizationDataPrep,
+    )
 
     platform = create_unified_platform()
 
@@ -30,10 +33,6 @@ def test_unified_platform_smoke():
     assert isinstance(res, dict) and "decision_tree" in res
 
     # Optimization report (build a minimal optimization dataset for summary)
-    prep = platform.optimization_prep or platform.optimization_prep.__class__ if platform.optimization_prep else None
-    opt = platform.optimization_prep or platform.__class__.__mro__
-    from cement_ai_platform.data.data_pipeline.chemistry_data_generator import OptimizationDataPrep
-
     opt_prep = OptimizationDataPrep(base)
     ds = opt_prep.create_optimization_dataset()
     summary = platform.optimization_report(ds)

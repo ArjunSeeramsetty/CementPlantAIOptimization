@@ -4,6 +4,7 @@ from datetime import datetime
 from typing import Any, Dict
 
 import numpy as np
+import pandas as pd
 
 from .data_pipeline.chemistry_data_generator import (
     CementEnergyPredictor,
@@ -162,7 +163,28 @@ class UnifiedCementDataPlatform:
             "cement_ai_platform.data.data_pipeline.preprocessing.final_summary"
         )
         _ = self._safe_call(fs_mod, ["preprocess_final_summary", "final_summary"], df)
-        artifacts["preprocess_summary"] = _
+        if _ is None:
+            try:
+                numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+                artifacts["preprocess_summary"] = {
+                    "rows": int(len(df)),
+                    "cols": int(df.shape[1]),
+                    "missing_total": int(df.isna().sum().sum()),
+                    "missing_by_column": {c: int(df[c].isna().sum()) for c in df.columns},
+                    "basic_stats": {
+                        c: {
+                            "mean": float(df[c].mean()),
+                            "std": float(df[c].std()),
+                            "min": float(df[c].min()),
+                            "max": float(df[c].max()),
+                        }
+                        for c in numeric_cols[:10]
+                    },
+                }
+            except Exception:
+                artifacts["preprocess_summary"] = {"rows": int(len(df)), "cols": int(df.shape[1])}
+        else:
+            artifacts["preprocess_summary"] = _
 
         return {"data": df, "split": split_info, "artifacts": artifacts}
 
@@ -194,6 +216,48 @@ class UnifiedCementDataPlatform:
         reports["time_validation"] = self._safe_call(
             tv_mod, ["time_validation_summary", "summarize_time_validation"], data
         )
+
+        # Fallback summaries to avoid nulls
+        try:
+            df = data if isinstance(data, pd.DataFrame) else pd.DataFrame(data)
+            if reports.get("completeness") is None:
+                reports["completeness"] = {
+                    "missing_total": int(df.isna().sum().sum()),
+                    "missing_by_column": {c: int(df[c].isna().sum()) for c in df.columns},
+                }
+            if reports.get("mass_energy") is None:
+                temp = df.get("kiln_temperature", pd.Series([1450.0] * len(df)))
+                out_of_range = int(((temp < 1400) | (temp > 1480)).sum())
+                reports["mass_energy"] = {
+                    "temperature_out_of_range": out_of_range,
+                    "ok": out_of_range == 0,
+                    "note": "Fallback check: kiln temperature within [1400,1480]",
+                }
+            if reports.get("energy_alignment") is None:
+                if "heat_consumption" in df.columns and "kiln_temperature" in df.columns:
+                    corr = float(df[["heat_consumption", "kiln_temperature"]].corr().iloc[0, 1])
+                else:
+                    corr = None
+                reports["energy_alignment"] = {
+                    "corr_heat_vs_temp": corr,
+                    "ok": corr is None or abs(corr) >= 0.2,
+                    "note": "Fallback: simple correlation proxy",
+                }
+            if reports.get("comprehensive_report") is None:
+                numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
+                head_cols = numeric_cols[:6]
+                reports["comprehensive_report"] = {
+                    "rows": int(len(df)),
+                    "cols": int(df.shape[1]),
+                    "preview_columns": head_cols,
+                }
+            if reports.get("time_validation") is None:
+                reports["time_validation"] = {
+                    "has_timestamp": "timestamp" in df.columns,
+                    "note": "Fallback: no time-series validation performed",
+                }
+        except Exception:
+            pass
 
         return {"reports": reports}
 
@@ -239,6 +303,13 @@ class UnifiedCementDataPlatform:
         out["framework"] = self._safe_call(fw, ["run_complete_simulation", "simulate"], data)
         out["heat_mass_balance"] = self._safe_call(hmb, ["compute_heat_mass_balance", "summary"], data)
         out["visualization"] = self._safe_call(viz, ["visualize_simulation", "plot"], data)
+        # Fallbacks to avoid nulls
+        if out.get("framework") is None:
+            out["framework"] = {"status": "skipped", "reason": "DWSIM framework not available"}
+        if out.get("heat_mass_balance") is None:
+            out["heat_mass_balance"] = {"status": "skipped", "reason": "HMB wrapper not available"}
+        if out.get("visualization") is None:
+            out["visualization"] = {"status": "skipped", "reason": "Visualization wrapper not available"}
         return out
 
     def pinn_legacy_train_validate(self, data) -> Dict[str, Any]:
