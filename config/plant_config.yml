@@ -1,125 +1,104 @@
-# Cement Plant Configuration - Based on Mendeley LCI Data
-# Selected Plant: UltraTech Cement Plant (Representative of Indian cement industry)
-
+dcs_tags:
+  cement_mill:
+  - cement_mill_power_kw
+  - cement_mill_feed_rate_tph
+  - cement_mill_outlet_temp_c
+  - cement_fineness_blaine_cm2_g
+  cooler:
+  - cooler_speed_rpm
+  - cooler_outlet_temp_c
+  - cooler_fan_speed_rpm
+  - cooler_pressure_mbar
+  environmental:
+  - nox_mg_nm3
+  - so2_mg_nm3
+  - dust_mg_nm3
+  - co2_pct
+  fuel_system:
+  - coal_flow_tph
+  - petcoke_flow_tph
+  - alternative_fuel_flow_tph
+  - total_fuel_flow_tph
+  kiln:
+  - kiln_feed_rate_tph
+  - kiln_speed_rpm
+  - burning_zone_temp_c
+  - kiln_torque_motor_pct
+  - hood_pressure_mbar
+  - kiln_exhaust_temp_c
+  - kiln_exhaust_o2_pct
+  - kiln_exhaust_co_pct
+  preheater:
+  - preheater_stage1_temp_c
+  - preheater_stage2_temp_c
+  - preheater_stage3_temp_c
+  - preheater_stage4_temp_c
+  - preheater_stage5_temp_c
+  - preheater_pressure_drop_mbar
+  - calciner_temp_c
+  - calciner_o2_pct
+  quality_lab:
+  - free_lime_pct
+  - c3s_content_pct
+  - c2s_content_pct
+  - compressive_strength_3d_mpa
+  - compressive_strength_7d_mpa
+  - compressive_strength_28d_mpa
+  - setting_time_initial_min
+  - setting_time_final_min
+  - soundness_mm
+  raw_mill:
+  - raw_mill_motor_power_kw
+  - raw_mill_feed_rate_tph
+  - raw_mill_outlet_temp_c
+  - raw_mill_separator_speed_rpm
+  - raw_mill_fineness_blaine_cm2_g
+  update_frequencies:
+    critical_loops: 1
+    process_variables: 5
+    quality_lab: 3600
 plant:
-  name: "UltraTech Cement Plant - Digital Twin POC"
-  location: "India"
-  capacity_tpd: 10000  # tons per day
-  kiln_type: "Dry Process"
-  
-  # Raw Materials (kg per ton of cement)
-  raw_materials:
-    limestone: 1200
-    clay: 200
-    iron_ore: 50
-    gypsum: 50
-    
-  # Fuel Mix (kg per ton of cement)
-  fuel_mix:
-    coal: 120
-    petcoke: 80
-    alternative_fuels: 20
-    
-  # Fuel Flow Rates (tph) - Derived from fuel mix and production
-  fuel_flows:
-    coal_flow_tph: 50.0  # Based on 120 kg/t * 10000 TPD / 24h
-    petcoke_flow_tph: 33.3  # Based on 80 kg/t * 10000 TPD / 24h
-    alternative_fuel_flow_tph: 8.3  # Based on 20 kg/t * 10000 TPD / 24h
-    
-  # Energy Consumption (kWh per ton of cement)
+  capacity_tpd: 10000
   energy:
     electrical: 95
-    thermal: 3200  # kcal per kg clinker
-    
-  # Process Parameters
-  process:
-    kiln_temperature_c: 1450
-    kiln_speed_rpm: 3.5
-    preheater_stages: 5
-    cooler_type: "Grate Cooler"
-    cooler_speed_range_rpm: [2.0, 4.0]
-    cooler_outlet_temp_range_c: [80, 120]
-    
-  # Quality Targets
-  quality:
-    free_lime_pct: 1.5
-    c3s_content_pct: 60
-    c2s_content_pct: 15
-    compressive_strength_28d_mpa: 45
-    
-  # Environmental Limits
+    electrical_kwh_t: 95
+    thermal: 3200
+    thermal_kcal_kg_clinker: 3200
   environmental:
-    nox_mg_nm3: 500
-    so2_mg_nm3: 200
-    dust_mg_nm3: 30
     co2_kg_per_ton: 800
-
-# DCS Tags Configuration
-dcs_tags:
-  update_frequencies:
-    critical_loops: 1  # seconds
-    process_variables: 5  # seconds
-    quality_lab: 3600  # seconds (1 hour)
-    
-  # Critical Process Tags (200+ tags total)
-  raw_mill:
-    - raw_mill_motor_power_kw
-    - raw_mill_feed_rate_tph
-    - raw_mill_outlet_temp_c
-    - raw_mill_separator_speed_rpm
-    - raw_mill_fineness_blaine_cm2_g
-    
-  preheater:
-    - preheater_stage1_temp_c
-    - preheater_stage2_temp_c
-    - preheater_stage3_temp_c
-    - preheater_stage4_temp_c
-    - preheater_stage5_temp_c
-    - preheater_pressure_drop_mbar
-    - calciner_temp_c
-    - calciner_o2_pct
-    
-  kiln:
-    - kiln_feed_rate_tph
-    - kiln_speed_rpm
-    - burning_zone_temp_c
-    - kiln_torque_motor_pct
-    - hood_pressure_mbar
-    - kiln_exhaust_temp_c
-    - kiln_exhaust_o2_pct
-    - kiln_exhaust_co_pct
-    
-  fuel_system:
-    - coal_flow_tph
-    - petcoke_flow_tph
-    - alternative_fuel_flow_tph
-    - total_fuel_flow_tph
-    
-  cooler:
-    - cooler_speed_rpm
-    - cooler_outlet_temp_c
-    - cooler_fan_speed_rpm
-    - cooler_pressure_mbar
-    
-  cement_mill:
-    - cement_mill_power_kw
-    - cement_mill_feed_rate_tph
-    - cement_mill_outlet_temp_c
-    - cement_fineness_blaine_cm2_g
-    
-  environmental:
-    - nox_mg_nm3
-    - so2_mg_nm3
-    - dust_mg_nm3
-    - co2_pct
-    
-  quality_lab:
-    - free_lime_pct
-    - c3s_content_pct
-    - c2s_content_pct
-    - compressive_strength_3d_mpa
-    - compressive_strength_7d_mpa
-    - compressive_strength_28d_mpa
-    - setting_time_initial_min
-    - setting_time_final_min
-    - soundness_mm
+    dust_mg_nm3: 30
+    nox_mg_nm3: 400
+    so2_mg_nm3: 200
+  fuel_flows:
+    alternative_fuel_flow_tph: 8.3
+    coal_flow_tph: 50.0
+    petcoke_flow_tph: 33.3
+  fuel_mix:
+    alternative_fuels: 20
+    coal: 120
+    petcoke: 80
+  kiln_type: Dry Process
+  location: India
+  name: UltraTech Cement Plant - Digital Twin POC
+  process:
+    burning_zone_temp_c: 1450
+    cooler_outlet_temp_range_c:
+    - 80
+    - 120
+    cooler_speed_range_rpm:
+    - 2.0
+    - 4.0
+    cooler_type: Grate Cooler
+    kiln_speed_rpm: 3.5
+    kiln_temperature_c: 1450
+    preheater_stages: 5
+  quality:
+    c2s_content_pct: 15
+    c3s_content_pct: 60
+    compressive_strength_28d_mpa: 45
+    free_lime_pct: 1.5
+  raw_materials:
+    clay: 200
+    gypsum: 50
+    iron_ore: 50
+    limestone: 1200

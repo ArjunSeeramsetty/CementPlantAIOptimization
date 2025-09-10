@@ -372,6 +372,61 @@ class DigitalTwinPipeline:
         else:
             logger.warning(f"⚠️ {len(phases) - successful_phases} phases failed")
             return False
+    
+    def run_real_world_integrated_pipeline(self, 
+                                         use_config_plant: bool = True,
+                                         generate_synthetic_samples: int = 100000,
+                                         duration_hours: int = 8760) -> Dict[str, Any]:
+        """
+        Run the complete pipeline with real-world data integration.
+        
+        Args:
+            use_config_plant: Use plant_config.yml as base plant
+            generate_synthetic_samples: Number of synthetic samples to generate
+            duration_hours: Duration for synthetic data generation
+            
+        Returns:
+            Dictionary with pipeline results
+        """
+        logger.info("🚀 Starting Real-World Integrated Pipeline...")
+        
+        try:
+            # Import the comprehensive workflow
+            from scripts.comprehensive_data_generation_workflow import ComprehensiveDataGenerationWorkflow
+            
+            # Initialize workflow
+            workflow = ComprehensiveDataGenerationWorkflow()
+            
+            # Run complete workflow
+            workflow_results = workflow.run_complete_workflow(
+                use_config_plant=use_config_plant,
+                generate_synthetic_samples=generate_synthetic_samples,
+                duration_hours=duration_hours
+            )
+            
+            # Get workflow summary
+            summary = workflow.get_workflow_summary()
+            
+            # Save results
+            workflow.save_workflow_results()
+            
+            logger.info("✅ Real-World Integrated Pipeline completed successfully!")
+            logger.info(f"📊 Total data points generated: {summary.get('total_data_points', 'N/A'):,}")
+            
+            return {
+                'pipeline_type': 'real_world_integrated',
+                'workflow_results': workflow_results,
+                'summary': summary,
+                'status': 'completed'
+            }
+            
+        except Exception as e:
+            logger.error(f"❌ Real-World Integrated Pipeline failed: {e}")
+            return {
+                'pipeline_type': 'real_world_integrated',
+                'status': 'failed',
+                'error': str(e)
+            }
 
 
 def main():

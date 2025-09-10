@@ -3,7 +3,7 @@
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
-from typing import Dict, List, Tuple, Optional
+from typing import Dict, List, Tuple, Optional, Any
 import logging
 import yaml
 import os
@@ -161,6 +161,87 @@ class CementPlantDCSSimulator:
             # Fuel flow affects burning zone temperature
             'burning_zone_temp_c': 'kiln_feed_rate_tph * 2 + calciner_temp_c * 0.8 + total_fuel_flow_tph * 0.5',
         }
+    
+    def calibrate_with_real_data(self, calibrated_params: Dict[str, Any]) -> None:
+        """
+        Calibrate DCS simulator with real-world parameters.
+        
+        Args:
+            calibrated_params: Calibrated parameters from real plant data
+        """
+        logger.info("🔧 Calibrating DCS simulator with real-world parameters...")
+        
+        # Update tag definitions with calibrated parameters
+        for param_category, params in calibrated_params.items():
+            if param_category == 'thermal_energy':
+                # Update thermal energy related tags
+                if 'thermal_energy_kcal_kg' in self.tags:
+                    min_val = params['min']
+                    max_val = params['max']
+                    self.tags['thermal_energy_kcal_kg'] = (min_val, max_val, 'kcal/kg')
+            
+            elif param_category == 'electrical_energy':
+                # Update electrical energy related tags
+                if 'electrical_energy_kwh_t' in self.tags:
+                    min_val = params['min']
+                    max_val = params['max']
+                    self.tags['electrical_energy_kwh_t'] = (min_val, max_val, 'kWh/t')
+            
+            elif param_category == 'kiln_speed':
+                # Update kiln speed
+                if 'kiln_speed_rpm' in self.tags:
+                    min_val = params['min']
+                    max_val = params['max']
+                    self.tags['kiln_speed_rpm'] = (min_val, max_val, 'rpm')
+            
+            elif param_category == 'burning_zone_temp':
+                # Update burning zone temperature
+                if 'burning_zone_temp_c' in self.tags:
+                    min_val = params['min']
+                    max_val = params['max']
+                    self.tags['burning_zone_temp_c'] = (min_val, max_val, '°C')
+            
+            elif param_category == 'emissions':
+                # Update emission parameters
+                for emission_type, emission_params in params.items():
+                    tag_name = f"{emission_type}_mg_nm3" if emission_type != 'co2_kg_t' else 'co2_kg_t'
+                    if tag_name in self.tags:
+                        min_val = emission_params['min']
+                        max_val = emission_params['max']
+                        unit = 'mg/Nm³' if emission_type != 'co2_kg_t' else 'kg/t'
+                        self.tags[tag_name] = (min_val, max_val, unit)
+        
+        logger.info("✅ DCS simulator calibrated with real-world parameters")
+    
+    def generate_calibrated_data(self, 
+                               calibrated_params: Dict[str, Any],
+                               duration_hours: int = 24, 
+                               sample_rate_seconds: int = 1) -> pd.DataFrame:
+        """
+        Generate DCS data using calibrated parameters.
+        
+        Args:
+            calibrated_params: Calibrated parameters from real plant data
+            duration_hours: Duration of data to generate
+            sample_rate_seconds: Sampling rate in seconds
+            
+        Returns:
+            DataFrame with calibrated DCS data
+        """
+        logger.info("🔄 Generating calibrated DCS data...")
+        
+        # Calibrate simulator with real parameters
+        self.calibrate_with_real_data(calibrated_params)
+        
+        # Generate data using calibrated parameters
+        calibrated_data = self.generate_dcs_data(duration_hours, sample_rate_seconds)
+        
+        # Add calibration metadata
+        calibrated_data['calibration_source'] = 'real_world_data'
+        calibrated_data['calibration_timestamp'] = pd.Timestamp.now()
+        
+        logger.info(f"✅ Generated calibrated DCS data: {len(calibrated_data)} records")
+        return calibrated_data
     
     def generate_dcs_data(self, 
                          duration_hours: int = 24, 

@@ -12,9 +12,9 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 try:
-    from ydata_synthetic.synthesizers import TimeGAN
-    from ydata_synthetic.synthesizers.regular import RegularSynthesizer
+    from ydata_synthetic.synthesizers.timeseries.timegan.model import TimeGAN
     TIMEGAN_AVAILABLE = True
+    logger.info("✅ TimeGAN imported successfully")
 except ImportError:
     TIMEGAN_AVAILABLE = False
     logger.warning("TimeGAN not available. Using statistical augmentation instead.")
