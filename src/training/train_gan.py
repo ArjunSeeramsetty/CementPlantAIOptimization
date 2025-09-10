@@ -93,15 +93,21 @@ class CementPlantDataGenerator:
         
         try:
             # Initialize TimeGAN model
-            self.timegan_model = TimeGAN(
-                model_parameters={
-                    'hidden_dim': 24,
-                    'num_layers': 3,
-                    'batch_size': batch_size,
-                    'epochs': epochs,
-                    'learning_rate': 0.001
-                }
+            from ydata_synthetic.synthesizers.base import ModelParameters, TrainParameters
+            
+            model_params = ModelParameters(
+                hidden_dim=24,
+                num_layers=3,
+                seq_len=10,
+                batch_size=batch_size
             )
+            
+            train_params = TrainParameters(
+                epochs=epochs,
+                batch_size=batch_size
+            )
+            
+            self.timegan_model = TimeGAN(model_params, train_params)
             
             # Train the model
             self.timegan_model.fit(prepared_data)
@@ -271,24 +277,29 @@ class CementPlantDataGenerator:
         """
         logger.info("Adding operational scenarios...")
         
-        # Create scenarios
-        scenarios = []
+        # Create scenarios with non-overlapping assignment
+        scenarios = ['normal'] * len(df)  # Start with all normal
         
-        # Normal operation (80% of data)
-        normal_mask = np.random.random(len(df)) < 0.8
-        scenarios.extend(['normal'] * normal_mask.sum())
+        # Randomly assign scenarios to ensure exact length match
+        indices = np.random.choice(len(df), size=int(0.2 * len(df)), replace=False)
         
-        # Startup scenario (5% of data)
-        startup_mask = np.random.random(len(df)) < 0.05
-        scenarios.extend(['startup'] * startup_mask.sum())
+        # Assign startup (5%)
+        startup_count = int(0.05 * len(df))
+        startup_indices = indices[:startup_count]
+        for idx in startup_indices:
+            scenarios[idx] = 'startup'
         
-        # Shutdown scenario (5% of data)
-        shutdown_mask = np.random.random(len(df)) < 0.05
-        scenarios.extend(['shutdown'] * shutdown_mask.sum())
+        # Assign shutdown (5%)
+        shutdown_count = int(0.05 * len(df))
+        shutdown_indices = indices[startup_count:startup_count + shutdown_count]
+        for idx in shutdown_indices:
+            scenarios[idx] = 'shutdown'
         
-        # Disturbance scenario (10% of data)
-        disturbance_mask = np.random.random(len(df)) < 0.1
-        scenarios.extend(['disturbance'] * disturbance_mask.sum())
+        # Assign disturbance (10%)
+        disturbance_count = int(0.1 * len(df))
+        disturbance_indices = indices[startup_count + shutdown_count:startup_count + shutdown_count + disturbance_count]
+        for idx in disturbance_indices:
+            scenarios[idx] = 'disturbance'
         
         # Add scenario column
         df['operational_scenario'] = scenarios
