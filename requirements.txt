@@ -25,6 +25,17 @@ pina-torch>=0.1.0  # Physics-Informed Neural Networks
 pml-pinn>=0.1.0  # Alternative PINN implementation
 DWSIM>=6.0.0  # Chemical process simulator
 
+# Data Sourcing
+requests>=2.31.0
+kaggle>=1.5.0
+zipfile38>=0.0.3
+
+# Enhanced Simulation
+PyYAML>=6.0
+scikit-learn>=1.3
+matplotlib>=3.6.0
+seaborn>=0.11.0
+
 # Optimization / Frontend
 pymoo>=0.6.0
 streamlit>=1.28.0

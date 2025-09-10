@@ -138,11 +138,19 @@ def generate_ddl_statements(schemas, dataset_name="cement_plant_data"):
                 _col_def += " NOT NULL"
             _column_defs.append(_col_def)
         
-        # Create DDL
+        # Create DDL with proper partitioning
+        partition_field = schema_info['partition_field']
+        if partition_field == 'production_date':
+            # For DATE columns, use the column directly
+            partition_clause = f"PARTITION BY {partition_field}"
+        else:
+            # For TIMESTAMP columns, use DATE() function
+            partition_clause = f"PARTITION BY DATE({partition_field})"
+        
         ddl = f"""CREATE TABLE `{dataset_name}.{table_name}` (
-{chr(10).join(_column_defs)}
+{','.join(_column_defs)}
 )
-PARTITION BY DATE({schema_info['partition_field']})
+{partition_clause}
 CLUSTER BY {', '.join(schema_info['clustering_fields'])}
 OPTIONS(
   description="Time-series data for {table_name.replace('_', ' ')}",

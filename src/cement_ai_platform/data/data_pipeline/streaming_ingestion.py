@@ -23,11 +23,15 @@ class BigQueryStreamingIngestion:
 
         Returns number of successfully ingested rows.
         """
-        if not self.settings.bq_dataset:
+        import os
+        
+        # Get dataset from environment variable or settings
+        dataset_name = os.environ.get('CEMENT_BQ_DATASET') or self.settings.bq_dataset
+        if not dataset_name:
             raise RuntimeError("CEMENT_BQ_DATASET is not configured")
 
         rows_list = list(rows)
-        full_table_id = f"{self.settings.bq_dataset}.{table_name}"
+        full_table_id = f"{dataset_name}.{table_name}"
         errors = self.client.insert_rows_json(full_table_id, rows_list)
         # insert_rows_json returns a list of errors per row; empty list means success
         return 0 if errors else len(rows_list)
