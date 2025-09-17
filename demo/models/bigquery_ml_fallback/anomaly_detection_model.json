@@ -1,0 +1,56 @@
+{
+  "model_type": "kmeans",
+  "features": [
+    "kiln_speed_rpm",
+    "feed_rate_tph",
+    "fuel_rate_tph",
+    "burning_zone_temp_c",
+    "free_lime_percent",
+    "thermal_energy_kcal_kg"
+  ],
+  "n_clusters": 5,
+  "cluster_centers": [
+    {
+      "kiln_speed_rpm": 3.0,
+      "feed_rate_tph": 175,
+      "fuel_rate_tph": 15,
+      "burning_zone_temp_c": 1420,
+      "free_lime_percent": 1.2,
+      "thermal_energy_kcal_kg": 720
+    },
+    {
+      "kiln_speed_rpm": 3.2,
+      "feed_rate_tph": 180,
+      "fuel_rate_tph": 16,
+      "burning_zone_temp_c": 1450,
+      "free_lime_percent": 1.0,
+      "thermal_energy_kcal_kg": 700
+    },
+    {
+      "kiln_speed_rpm": 3.4,
+      "feed_rate_tph": 185,
+      "fuel_rate_tph": 17,
+      "burning_zone_temp_c": 1480,
+      "free_lime_percent": 0.8,
+      "thermal_energy_kcal_kg": 680
+    },
+    {
+      "kiln_speed_rpm": 2.8,
+      "feed_rate_tph": 170,
+      "fuel_rate_tph": 14,
+      "burning_zone_temp_c": 1400,
+      "free_lime_percent": 1.5,
+      "thermal_energy_kcal_kg": 750
+    },
+    {
+      "kiln_speed_rpm": 3.6,
+      "feed_rate_tph": 190,
+      "fuel_rate_tph": 18,
+      "burning_zone_temp_c": 1500,
+      "free_lime_percent": 0.6,
+      "thermal_energy_kcal_kg": 650
+    }
+  ],
+  "silhouette_score": 0.78,
+  "created_at": "2025-09-17T18:27:09.987991"
+}

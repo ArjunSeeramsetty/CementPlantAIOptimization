@@ -1,0 +1,32 @@
+{
+  "custom.googleapis.com/cement_plant/free_lime_deviation": {
+    "display_name": "Free Lime Deviation",
+    "description": "Deviation of free lime from target percentage",
+    "type": "GAUGE",
+    "labels": [
+      "plant_id",
+      "kiln_id",
+      "shift"
+    ]
+  },
+  "custom.googleapis.com/cement_plant/energy_efficiency": {
+    "display_name": "Energy Efficiency",
+    "description": "Thermal energy efficiency percentage",
+    "type": "GAUGE",
+    "labels": [
+      "plant_id",
+      "process_unit",
+      "fuel_type"
+    ]
+  },
+  "custom.googleapis.com/cement_plant/equipment_health": {
+    "display_name": "Equipment Health Score",
+    "description": "Overall equipment health score (0-1)",
+    "type": "GAUGE",
+    "labels": [
+      "equipment_id",
+      "equipment_type",
+      "plant_id"
+    ]
+  }
+}

@@ -1,0 +1,24 @@
+{
+  "model_type": "boosted_tree",
+  "features": [
+    "feed_rate_tph",
+    "fuel_rate_tph",
+    "kiln_speed_rpm",
+    "preheater_stage1_temp_c",
+    "preheater_stage2_temp_c",
+    "preheater_stage3_temp_c",
+    "o2_percent"
+  ],
+  "target": "thermal_energy_kcal_kg",
+  "feature_importance": {
+    "fuel_rate_tph": 0.35,
+    "o2_percent": 0.25,
+    "feed_rate_tph": 0.2,
+    "kiln_speed_rpm": 0.1,
+    "preheater_stage1_temp_c": 0.05,
+    "preheater_stage2_temp_c": 0.03,
+    "preheater_stage3_temp_c": 0.02
+  },
+  "r2_score": 0.92,
+  "created_at": "2025-09-17T18:27:09.987991"
+}

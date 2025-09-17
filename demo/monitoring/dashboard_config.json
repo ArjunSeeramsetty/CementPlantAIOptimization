@@ -1,0 +1,81 @@
+{
+  "dashboard_title": "Cement Plant Digital Twin - Production Monitoring",
+  "dashboard_description": "Real-time monitoring dashboard for cement plant operations",
+  "widgets": [
+    {
+      "title": "Free Lime Deviation",
+      "type": "scorecard",
+      "metric": "custom.googleapis.com/cement_plant/free_lime_deviation",
+      "thresholds": [
+        {
+          "value": 2.0,
+          "color": "RED",
+          "label": "Critical"
+        },
+        {
+          "value": 1.5,
+          "color": "YELLOW",
+          "label": "Warning"
+        },
+        {
+          "value": 1.0,
+          "color": "GREEN",
+          "label": "Normal"
+        }
+      ]
+    },
+    {
+      "title": "Energy Efficiency",
+      "type": "scorecard",
+      "metric": "custom.googleapis.com/cement_plant/energy_efficiency",
+      "thresholds": [
+        {
+          "value": 0.85,
+          "color": "GREEN",
+          "label": "Good"
+        },
+        {
+          "value": 0.8,
+          "color": "YELLOW",
+          "label": "Fair"
+        },
+        {
+          "value": 0.75,
+          "color": "RED",
+          "label": "Poor"
+        }
+      ]
+    },
+    {
+      "title": "Equipment Health Score",
+      "type": "scorecard",
+      "metric": "custom.googleapis.com/cement_plant/equipment_health",
+      "thresholds": [
+        {
+          "value": 0.8,
+          "color": "GREEN",
+          "label": "Healthy"
+        },
+        {
+          "value": 0.4,
+          "color": "YELLOW",
+          "label": "At Risk"
+        },
+        {
+          "value": 0.2,
+          "color": "RED",
+          "label": "Critical"
+        }
+      ]
+    },
+    {
+      "title": "AI Query Token Usage",
+      "type": "line_chart",
+      "metric": "custom.googleapis.com/cement_plant/ai_query_tokens",
+      "aggregation": "SUM",
+      "time_range": "1h"
+    }
+  ],
+  "refresh_interval": "30s",
+  "created_at": "2025-09-17T18:28:02.250092"
+}

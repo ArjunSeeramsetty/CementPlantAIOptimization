@@ -114,6 +114,30 @@ class CementPlantKnowledgeBase:
                 "solutions": ["Adjust grate speed", "Balance air flows", "Monitor clinker temperature"]
             }
         }
+    
+    def get_relevant_knowledge(self, query: str) -> Dict:
+        """Get relevant knowledge based on query keywords"""
+        query_lower = query.lower()
+        relevant_knowledge = {}
+        
+        # Extract relevant process knowledge
+        if any(keyword in query_lower for keyword in ['kiln', 'burning', 'temperature']):
+            relevant_knowledge['kiln_operations'] = self.process_knowledge.get('kiln_operations', {})
+        
+        if any(keyword in query_lower for keyword in ['quality', 'free lime', 'strength']):
+            relevant_knowledge['quality_parameters'] = self.process_knowledge.get('quality_parameters', {})
+        
+        if any(keyword in query_lower for keyword in ['energy', 'efficiency', 'consumption']):
+            relevant_knowledge['energy_optimization'] = self.process_knowledge.get('energy_optimization', {})
+        
+        if any(keyword in query_lower for keyword in ['emission', 'nox', 'so2', 'dust']):
+            relevant_knowledge['environmental_compliance'] = self.process_knowledge.get('environmental_compliance', {})
+        
+        # Extract relevant troubleshooting knowledge
+        if any(keyword in query_lower for keyword in ['problem', 'issue', 'trouble', 'high free lime']):
+            relevant_knowledge['troubleshooting'] = self.troubleshooting_guide.get('high_free_lime', {})
+        
+        return relevant_knowledge
 
 class CementPlantGPT:
     """
@@ -125,6 +149,13 @@ class CementPlantGPT:
     def __init__(self, project_id: str = None):
         self.settings = Settings()
         self.knowledge_base = CementPlantKnowledgeBase()
+        
+        # Use production GCP services
+        try:
+            from cement_ai_platform.gcp.production_services import get_production_services
+            self.gcp_services = get_production_services()
+        except ImportError:
+            self.gcp_services = None
         
         # Use production GPT implementation
         self.production_gpt = ProductionCementPlantGPT(project_id)
@@ -188,8 +219,28 @@ Always prioritize safety, product quality, and operational efficiency in your re
             Dict containing response and metadata
         """
         
-        # Use production GPT implementation
-        result = self.production_gpt.query_with_enterprise_features(user_prompt, context_data)
+        # Use production GCP services if available
+        if self.gcp_services:
+            # Add cement plant knowledge context
+            enhanced_context = {
+                **(context_data or {}),
+                "plant_knowledge": self.knowledge_base.get_relevant_knowledge(user_prompt),
+                "conversation_history": self.conversation_history[-5:]  # Last 5 exchanges
+            }
+            
+            # Query production Gemini
+            result = self.gcp_services.query_gemini_pro(user_prompt, enhanced_context)
+            
+            if result['success']:
+                # Send usage metrics to Cloud Monitoring
+                self.gcp_services.send_custom_metric(
+                    'ai_query_tokens',
+                    result['usage_metadata']['total_token_count'],
+                    {'query_type': self._classify_query(user_prompt)}
+                )
+        else:
+            # Fallback to production GPT implementation
+            result = self.production_gpt.query_with_enterprise_features(user_prompt, context_data)
         
         # Store in conversation history
         self.conversation_history.append({

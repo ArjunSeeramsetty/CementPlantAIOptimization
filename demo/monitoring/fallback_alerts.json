@@ -1,0 +1,48 @@
+{
+  "high_free_lime_alert": {
+    "display_name": "Critical: High Free Lime Alert",
+    "condition": "free_lime_deviation > 2.0% for 5 minutes",
+    "severity": "CRITICAL",
+    "actions": [
+      "Increase kiln temperature by 20-30\u00b0C",
+      "Reduce feed rate by 5-10%",
+      "Check fuel quality and calorific value",
+      "Verify kiln speed optimization"
+    ],
+    "escalation": {
+      "30_minutes": "Notify Plant Manager",
+      "60_minutes": "Notify Production Director",
+      "120_minutes": "Consider production shutdown"
+    }
+  },
+  "equipment_failure_risk": {
+    "display_name": "Equipment Failure Risk",
+    "condition": "equipment_health < 0.4 for 10 minutes",
+    "severity": "HIGH",
+    "actions": [
+      "Schedule vibration analysis",
+      "Check bearing temperatures and lubrication",
+      "Review motor current patterns",
+      "Plan maintenance window within 48-72 hours"
+    ],
+    "escalation": {
+      "health_score_0.2": "Immediate maintenance required",
+      "health_score_0.1": "Consider emergency shutdown"
+    }
+  },
+  "energy_efficiency_degradation": {
+    "display_name": "Energy Efficiency Degradation",
+    "condition": "energy_efficiency < 85% for 15 minutes",
+    "severity": "MEDIUM",
+    "actions": [
+      "Check combustion efficiency and air-fuel ratio",
+      "Review preheater performance",
+      "Inspect kiln insulation for heat loss",
+      "Optimize fuel-air mixing"
+    ],
+    "escalation": {
+      "efficiency_80%": "Notify Energy Manager",
+      "efficiency_75%": "Consider kiln shutdown for inspection"
+    }
+  }
+}

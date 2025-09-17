@@ -13,6 +13,14 @@ from google.cloud.exceptions import NotFound
 import yaml
 from pathlib import Path
 
+# Import production GCP services
+try:
+    from cement_ai_platform.gcp.production_services import get_production_services
+    PRODUCTION_SERVICES_AVAILABLE = True
+except ImportError:
+    PRODUCTION_SERVICES_AVAILABLE = False
+    print("Warning: Production GCP services not available. Using fallback BigQuery client.")
+
 logger = logging.getLogger(__name__)
 
 
@@ -28,7 +36,7 @@ class BigQueryDataLoader:
     
     def __init__(self, project_id: str = 'cement-ai-opt-38517', dataset_id: str = 'cement_analytics'):
         """
-        Initialize BigQuery Data Loader.
+        Initialize BigQuery Data Loader with production GCP services.
         
         Args:
             project_id: GCP project ID
@@ -37,14 +45,33 @@ class BigQueryDataLoader:
         self.project_id = project_id
         self.dataset_id = dataset_id
         self.client = None
+        self.gcp_services = None
         self._initialize_client()
         
     def _initialize_client(self) -> None:
-        """Initialize BigQuery client."""
+        """Initialize BigQuery client with production GCP services."""
         try:
-            self.client = bigquery.Client(project=self.project_id)
-            logger.info(f"✅ Connected to BigQuery project: {self.project_id}")
-            logger.info(f"📊 Dataset: {self.dataset_id}")
+            # Use production GCP services if available
+            if PRODUCTION_SERVICES_AVAILABLE:
+                try:
+                    self.gcp_services = get_production_services()
+                    self.client = self.gcp_services.bigquery_client
+                    logger.info(f"✅ Using production BigQuery client for project: {self.project_id}")
+                except Exception as e:
+                    logger.warning(f"⚠️ Production services failed, using fallback: {e}")
+                    self.client = bigquery.Client(project=self.project_id)
+                    self.gcp_services = None
+            else:
+                self.client = bigquery.Client(project=self.project_id)
+                logger.info(f"✅ Using fallback BigQuery client for project: {self.project_id}")
+            
+            if self.client:
+                self.dataset_ref = self.client.dataset(self.dataset_id)
+                logger.info(f"📊 Dataset: {self.dataset_id}")
+            else:
+                logger.warning("⚠️ BigQuery client not available, using fallback mode")
+                self.dataset_ref = None
+            
         except Exception as e:
             logger.error(f"❌ Failed to initialize BigQuery client: {e}")
             raise
@@ -261,6 +288,77 @@ class BigQueryDataLoader:
         
         logger.info(f"📊 Quality correlations extracted: {correlations}")
         return correlations
+    
+    def predict_quality_ml(self, process_parameters: Dict) -> Dict:
+        """Use BigQuery ML for real-time quality prediction"""
+        if self.gcp_services:
+            return self.gcp_services.execute_bigquery_ml_prediction(
+                'quality_prediction_model',
+                process_parameters
+            )
+        else:
+            logger.warning("⚠️ BigQuery ML not available. Using fallback prediction.")
+            return self._fallback_quality_prediction(process_parameters)
+    
+    def predict_energy_optimization(self, process_parameters: Dict) -> Dict:
+        """Use BigQuery ML for energy optimization"""
+        if self.gcp_services:
+            return self.gcp_services.execute_bigquery_ml_prediction(
+                'energy_optimization_model', 
+                process_parameters
+            )
+        else:
+            logger.warning("⚠️ BigQuery ML not available. Using fallback prediction.")
+            return self._fallback_energy_prediction(process_parameters)
+    
+    def _fallback_quality_prediction(self, process_parameters: Dict) -> Dict:
+        """Fallback quality prediction when BigQuery ML is not available"""
+        # Simple heuristic-based prediction
+        burning_temp = process_parameters.get('burning_zone_temp_c', 1450)
+        fuel_rate = process_parameters.get('fuel_rate_tph', 16)
+        kiln_speed = process_parameters.get('kiln_speed_rpm', 3.2)
+        
+        # Simple model: free lime decreases with higher temperature and lower speed
+        predicted_free_lime = max(0.5, min(3.0, 
+            2.0 - (burning_temp - 1400) * 0.001 + 
+            (fuel_rate - 16) * 0.05 + 
+            (kiln_speed - 3.0) * 0.2
+        ))
+        
+        return {
+            'success': True,
+            'predictions': [{
+                'prediction': predicted_free_lime,
+                'confidence': 0.85,
+                'model_type': 'fallback_quality_prediction'
+            }],
+            'model_used': 'fallback_quality_model',
+            'fallback_used': True
+        }
+    
+    def _fallback_energy_prediction(self, process_parameters: Dict) -> Dict:
+        """Fallback energy prediction when BigQuery ML is not available"""
+        feed_rate = process_parameters.get('feed_rate_tph', 180)
+        fuel_rate = process_parameters.get('fuel_rate_tph', 16)
+        o2_percent = process_parameters.get('o2_percent', 3)
+        
+        # Simple model: thermal energy increases with feed rate and decreases with O2
+        predicted_thermal_energy = max(600, min(800,
+            700 + (feed_rate - 180) * 0.1 +
+            (fuel_rate - 16) * 2.0 +
+            (o2_percent - 3) * -5.0
+        ))
+        
+        return {
+            'success': True,
+            'predictions': [{
+                'prediction': predicted_thermal_energy,
+                'efficiency': predicted_thermal_energy / 700,
+                'model_type': 'fallback_energy_prediction'
+            }],
+            'model_used': 'fallback_energy_model',
+            'fallback_used': True
+        }
     
     def _create_sample_mendeley_data(self) -> pd.DataFrame:
         """Create sample Mendeley LCI data if table not found."""

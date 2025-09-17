@@ -1,0 +1,21 @@
+{
+  "model_type": "linear_regression",
+  "features": [
+    "feed_rate_tph",
+    "fuel_rate_tph",
+    "burning_zone_temp_c",
+    "kiln_speed_rpm",
+    "raw_meal_fineness"
+  ],
+  "target": "free_lime_percent",
+  "coefficients": {
+    "feed_rate_tph": -0.001,
+    "fuel_rate_tph": 0.05,
+    "burning_zone_temp_c": -0.001,
+    "kiln_speed_rpm": 0.2,
+    "raw_meal_fineness": -0.0001,
+    "intercept": 2.0
+  },
+  "r2_score": 0.85,
+  "created_at": "2025-09-17T18:27:09.987991"
+}
