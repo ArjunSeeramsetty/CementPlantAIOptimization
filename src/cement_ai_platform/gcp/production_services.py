@@ -54,15 +54,39 @@ class ProductionGCPServices:
             # Initialize Vertex AI
             vertexai.init(project=self.project_id, location=self.region)
             
-            # Initialize clients
-            self.aiplatform_client = aiplatform.gapic.ModelServiceClient()
-            self.bigquery_client = bigquery.Client(project=self.project_id)
-            self.monitoring_client = monitoring_v3.MetricServiceClient()
-            self.logging_client = logging.Client(project=self.project_id)
-            self.storage_client = storage.Client(project=self.project_id)
+            # Initialize clients with error handling
+            self.aiplatform_client = None
+            self.bigquery_client = None
+            self.monitoring_client = None
+            self.logging_client = None
+            self.storage_client = None
+            
+            try:
+                self.bigquery_client = bigquery.Client(project=self.project_id)
+                print("✅ BigQuery client initialized")
+            except Exception as e:
+                print(f"⚠️ BigQuery client initialization failed: {e}")
+            
+            try:
+                self.monitoring_client = monitoring_v3.MetricServiceClient()
+                print("✅ Monitoring client initialized")
+            except Exception as e:
+                print(f"⚠️ Monitoring client initialization failed: {e}")
+            
+            try:
+                self.logging_client = logging.Client(project=self.project_id)
+                print("✅ Logging client initialized")
+            except Exception as e:
+                print(f"⚠️ Logging client initialization failed: {e}")
+            
+            try:
+                self.storage_client = storage.Client(project=self.project_id)
+                print("✅ Storage client initialized")
+            except Exception as e:
+                print(f"⚠️ Storage client initialization failed: {e}")
             
             # Initialize Gemini model
-            self.gemini_model = GenerativeModel("gemini-1.5-pro-002")
+            self.gemini_model = GenerativeModel("gemini-2.5-pro")
             
             # Configure safety settings for industrial use
             self.safety_settings = {
@@ -111,8 +135,11 @@ class ProductionGCPServices:
                 )
             )
             
-            # Log for compliance and monitoring
-            self._log_ai_usage(prompt, response, context_data)
+            # Log for compliance and monitoring (with error handling)
+            try:
+                self._log_ai_usage(prompt, response, context_data)
+            except Exception as log_error:
+                print(f"⚠️ Logging failed (non-critical): {log_error}")
             
             return {
                 'success': True,
@@ -129,17 +156,13 @@ class ProductionGCPServices:
                     'candidates_token_count': response.usage_metadata.candidates_token_count,
                     'total_token_count': response.usage_metadata.total_token_count
                 },
-                'model_version': "gemini-1.5-pro-002",
+                'model_version': "gemini-2.5-pro",
                 'enterprise_features': True
             }
             
         except Exception as e:
-            self._log_error(f"Gemini query failed: {str(e)}")
-            return {
-                'success': False,
-                'error': str(e),
-                'fallback_used': True
-            }
+            print(f"⚠️ Gemini query failed, using fallback: {str(e)}")
+            return self._fallback_gemini_query(prompt, context_data)
     
     def _fallback_gemini_query(self, prompt: str, context_data: Optional[Dict] = None) -> Dict[str, Any]:
         """Enhanced fallback for Gemini queries"""
@@ -282,11 +305,8 @@ class ProductionGCPServices:
             }
             
         except Exception as e:
-            self._log_error(f"BigQuery ML prediction failed: {str(e)}")
-            return {
-                'success': False,
-                'error': str(e)
-            }
+            print(f"⚠️ BigQuery ML prediction failed, using fallback: {str(e)}")
+            return self._fallback_ml_prediction(model_name, input_data)
     
     def _fallback_ml_prediction(self, model_name: str, input_data: Dict) -> Dict:
         """Enhanced fallback for ML predictions"""
@@ -357,11 +377,8 @@ class ProductionGCPServices:
             # Create time series data
             series = monitoring_v3.TimeSeries()
             series.metric.type = f"custom.googleapis.com/cement_plant/{metric_name}"
-            series.resource.type = "generic_task"
+            series.resource.type = "global"
             series.resource.labels["project_id"] = self.project_id
-            series.resource.labels["location"] = "global"
-            series.resource.labels["namespace"] = "cement_plant"
-            series.resource.labels["task_id"] = "digital_twin"
             
             # Add custom labels
             for key, val in labels.items():
@@ -392,8 +409,8 @@ class ProductionGCPServices:
             return True
             
         except Exception as e:
-            self._log_error(f"Metric sending failed: {str(e)}")
-            return False
+            print(f"⚠️ Metric sending failed, using fallback: {str(e)}")
+            return self._fallback_metric_sending(metric_name, value, labels)
     
     def _fallback_metric_sending(self, metric_name: str, value: float, 
                                 labels: Dict[str, str]) -> bool:

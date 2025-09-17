@@ -338,6 +338,22 @@ resource "google_cloud_run_service_iam_member" "cement_plant_public_access" {
   member   = "allUsers"
 }
 
+# IAM Bindings for existing service account
+resource "google_project_iam_member" "cement_plant_sa_roles" {
+  for_each = toset([
+    "roles/aiplatform.admin",
+    "roles/bigquery.admin", 
+    "roles/monitoring.admin",
+    "roles/monitoring.metricWriter",
+    "roles/logging.logWriter",
+    "roles/storage.admin"
+  ])
+  
+  project = var.project_id
+  role    = each.value
+  member  = "serviceAccount:cement-ops@cement-ai-opt-38517.iam.gserviceaccount.com"
+}
+
 # Outputs
 output "cluster_endpoint" {
   value = google_container_cluster.cement_plant_cluster.endpoint

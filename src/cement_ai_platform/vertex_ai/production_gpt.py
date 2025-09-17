@@ -42,7 +42,7 @@ class ProductionCementPlantGPT:
             vertexai.init(project=self.project_id, location=self.location)
             
             # Production Gemini Pro model
-            self.model = GenerativeModel("gemini-1.5-pro-002")
+            self.model = GenerativeModel("gemini-2.5-pro")
             
             # Enterprise safety settings
             self.safety_settings = {
@@ -135,7 +135,7 @@ class ProductionCementPlantGPT:
                     'completion_tokens': response.usage_metadata.candidates_token_count if response.usage_metadata else 0,
                     'total_tokens': response.usage_metadata.total_token_count if response.usage_metadata else 0
                 },
-                'model_version': "gemini-1.5-pro-002",
+                    'model_version': "gemini-2.5-pro",
                 'generation_time_ms': generation_time * 1000,
                 'timestamp': datetime.now().isoformat(),
                 'enterprise_features': True
