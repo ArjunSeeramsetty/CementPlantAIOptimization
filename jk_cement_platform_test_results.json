@@ -1,0 +1,3556 @@
+{
+  "individual_results": {
+    "fuel_results": {
+      "optimization_result": {
+        "success": true,
+        "optimized_fuel_mix": {
+          "coal": 0.0,
+          "petcoke": 900.000008800401,
+          "rdf": 1.5207119549339744e-07,
+          "biomass": 600.0000075684958,
+          "tire_chips": 0.0
+        },
+        "tsr_achieved": 0.40000000074145314,
+        "quality_impact": {
+          "chlorine_input": 0.15000000096599542,
+          "sulfur_input": 2.139999997499335,
+          "alkali_input": 1.7800000025913054,
+          "quality_penalty": 0.44600000265809264
+        },
+        "total_cost": 144.00000151776143,
+        "optimization_message": "Optimization terminated successfully"
+      },
+      "rdf_scenarios": [
+        {
+          "base_production": 163.61424964416892,
+          "current_tsr": 0.40000000074145314,
+          "rdf_percentage": 0.1,
+          "expected_savings": 12.0,
+          "quality_risk": "Low"
+        },
+        {
+          "base_production": 163.61424964416892,
+          "current_tsr": 0.40000000074145314,
+          "rdf_percentage": 0.15,
+          "expected_savings": 18.0,
+          "quality_risk": "Medium"
+        },
+        {
+          "base_production": 163.61424964416892,
+          "current_tsr": 0.40000000074145314,
+          "rdf_percentage": 0.2,
+          "expected_savings": 24.0,
+          "quality_risk": "Medium"
+        },
+        {
+          "base_production": 163.61424964416892,
+          "current_tsr": 0.40000000074145314,
+          "rdf_percentage": 0.25,
+          "expected_savings": 30.0,
+          "quality_risk": "High"
+        },
+        {
+          "base_production": 163.61424964416892,
+          "current_tsr": 0.40000000074145314,
+          "rdf_percentage": 0.3,
+          "expected_savings": 36.0,
+          "quality_risk": "High"
+        }
+      ],
+      "tsr_achieved": 0.40000000074145314,
+      "quality_impact": {
+        "chlorine_input": 0.15000000096599542,
+        "sulfur_input": 2.139999997499335,
+        "alkali_input": 1.7800000025913054,
+        "quality_penalty": 0.44600000265809264
+      },
+      "cost_analysis": 144.00000151776143
+    },
+    "control_results": {
+      "setpoints": {
+        "kiln_speed_rpm": 2.8,
+        "fuel_rate_tph": 14.0,
+        "primary_air_percent": 40.0,
+        "cooler_speed_rpm": 6.0
+      },
+      "performance_prediction": {
+        "predicted_free_lime": 1.5035643090307667,
+        "predicted_thermal_energy": 495.96534484733047,
+        "predicted_nox": 490.0065450014705,
+        "prediction_confidence": 0.85,
+        "time_to_stabilize": 15
+      },
+      "coordination_factors": {
+        "kiln_speed": 0.0,
+        "fuel_rate": -0.2,
+        "primary_air": 0.5,
+        "cooler_speed": 0.9
+      },
+      "control_health": {
+        "health_score": 1.0,
+        "saturated_controllers": 0,
+        "control_activity": 0,
+        "status": "Good"
+      }
+    },
+    "utility_results": {
+      "compressed_air_analysis": {
+        "specific_consumption": 5.820689505627931,
+        "benchmark_comparison": 0.23282758022511726,
+        "leakage_rate": 0.20223104353266189,
+        "leakage_status": "High",
+        "pressure_optimization": {
+          "current_pressure": 8.260537732650844,
+          "optimal_pressure": 8.5,
+          "pressure_reduction_possible": 0,
+          "energy_savings_percent": 0,
+          "annual_savings_usd": 0
+        },
+        "compressor_efficiency": 0.8214710683158545,
+        "annual_energy_cost": 101556.42207787796,
+        "potential_savings": {
+          "leak_repair": 20537.86121425272,
+          "pressure_optimization": 5406.6243688269005,
+          "compressor_sizing": 0,
+          "heat_recovery": 19194.163772718934,
+          "total": 45138.64935579855
+        }
+      },
+      "water_system_analysis": {
+        "specific_consumption": 0.3004056655204747,
+        "benchmark_comparison": 1.0013522184015824,
+        "usage_breakdown": {
+          "cooling": 0.6,
+          "dust_suppression": 0.2,
+          "equipment_cooling": 0.15,
+          "other": 0.05
+        },
+        "cooling_efficiency": {
+          "cooling_efficiency": 0.8421334653366991,
+          "cooling_range": 15.100757317655056,
+          "approach_temperature": 2.830791467925529,
+          "evaporation_rate": 0.4530227195296517,
+          "makeup_water_requirement": 0.5889295353885472
+        },
+        "recycling_potential": {
+          "recyclable_streams": {
+            "cooling_blowdown": 4.915064755298966,
+            "process_water": 2.457532377649483,
+            "rainwater_harvesting": 0.1141552511415525
+          },
+          "total_recyclable_m3_h": 7.486752384090001,
+          "recycling_percentage": 15.232255843666112,
+          "treatment_cost_usd_m3": 0.7252012625120505,
+          "annual_savings_potential": 83606.33778719597
+        },
+        "optimization_opportunities": [
+          {
+            "opportunity": "Implement water recycling system",
+            "potential_reduction": "20-30%",
+            "investment_required": "High",
+            "payback_months": 36
+          }
+        ]
+      },
+      "material_handling_analysis": {
+        "specific_energy": 1.0032258386278612,
+        "belt_optimization": {
+          "current_speeds": [
+            1.5,
+            2.0,
+            1.8
+          ],
+          "optimal_speeds": [
+            2.5,
+            1.8,
+            2.5
+          ],
+          "energy_savings_potential": 9.033333333333331
+        },
+        "motor_efficiency": {
+          "individual_efficiencies": [
+            0.94,
+            0.9319999999999999,
+            0.928
+          ],
+          "average_efficiency": 0.9333333333333332,
+          "underloaded_motors": [],
+          "overloaded_motors": [],
+          "optimization_potential": 0.666666666666671
+        },
+        "maintenance_optimization": [
+          {
+            "conveyor": "Conveyor_3",
+            "issue": "Belt replacement due",
+            "energy_impact": "5-15% increase in power consumption",
+            "recommended_action": "Schedule belt replacement"
+          },
+          {
+            "conveyor": "Conveyor_2",
+            "issue": "Possible alignment problems",
+            "energy_impact": "10-20% increase in power consumption",
+            "recommended_action": "Check belt alignment and roller condition"
+          }
+        ]
+      },
+      "total_savings_potential": {
+        "compressed_air_savings": 45138.64935579855,
+        "water_system_savings": 83606.33778719597,
+        "material_handling_savings": 934.400000000006,
+        "total_annual_savings": 129679.38714299453,
+        "roi_months": 24
+      },
+      "optimization_recommendations": [
+        {
+          "system": "Compressed Air",
+          "recommendation": "Implement leak detection and repair program",
+          "annual_savings": 20537.86121425272,
+          "investment_required": 5000,
+          "payback_months": 60,
+          "priority": "High"
+        },
+        {
+          "system": "Compressed Air",
+          "recommendation": "Optimize system pressure settings",
+          "annual_savings": 5406.6243688269005,
+          "investment_required": 2000,
+          "payback_months": 12,
+          "priority": "High"
+        },
+        {
+          "system": "Material Handling",
+          "recommendation": "Schedule belt replacement",
+          "energy_impact": "5-15% increase in power consumption",
+          "priority": "Medium"
+        },
+        {
+          "system": "Material Handling",
+          "recommendation": "Check belt alignment and roller condition",
+          "energy_impact": "10-20% increase in power consumption",
+          "priority": "Medium"
+        }
+      ],
+      "implementation_priority": [
+        {
+          "system": "Compressed Air",
+          "recommendation": "Optimize system pressure settings",
+          "annual_savings": 5406.6243688269005,
+          "investment_required": 2000,
+          "payback_months": 12,
+          "priority": "High"
+        },
+        {
+          "system": "Compressed Air",
+          "recommendation": "Implement leak detection and repair program",
+          "annual_savings": 20537.86121425272,
+          "investment_required": 5000,
+          "payback_months": 60,
+          "priority": "High"
+        },
+        {
+          "system": "Material Handling",
+          "recommendation": "Schedule belt replacement",
+          "energy_impact": "5-15% increase in power consumption",
+          "priority": "Medium"
+        },
+        {
+          "system": "Material Handling",
+          "recommendation": "Check belt alignment and roller condition",
+          "energy_impact": "10-20% increase in power consumption",
+          "priority": "Medium"
+        }
+      ]
+    },
+    "anomaly_results": {
+      "plant_health_score": 0.8696379743931248,
+      "plant_status": "Excellent",
+      "equipment_health": {
+        "Raw_Mill_01": {
+          "equipment_name": "Raw_Mill_01",
+          "overall_health_score": 0.8430362492783259,
+          "health_status": "Excellent",
+          "health_indicators": {
+            "vibration_health": 0.8,
+            "thermal_health": 1.0,
+            "electrical_health": 0.8666666666666667,
+            "performance_health": 0.6818479130582958
+          },
+          "failure_prediction": {
+            "risk_level": "Low",
+            "predicted_failure_days": null,
+            "maintenance_urgency": "Scheduled",
+            "health_trend": "No History",
+            "confidence": 0.7
+          },
+          "maintenance_recommendations": []
+        },
+        "Kiln_01": {
+          "equipment_name": "Kiln_01",
+          "overall_health_score": 0.9053448821182051,
+          "health_status": "Excellent",
+          "health_indicators": {
+            "vibration_health": 0.8,
+            "thermal_health": 1.0,
+            "electrical_health": 0.8666666666666667,
+            "performance_health": 0.9933910772576917
+          },
+          "failure_prediction": {
+            "risk_level": "Low",
+            "predicted_failure_days": null,
+            "maintenance_urgency": "Scheduled",
+            "health_trend": "No History",
+            "confidence": 0.7
+          },
+          "maintenance_recommendations": []
+        },
+        "Cement_Mill_01": {
+          "equipment_name": "Cement_Mill_01",
+          "overall_health_score": 0.8435033615752283,
+          "health_status": "Excellent",
+          "health_indicators": {
+            "vibration_health": 0.8,
+            "thermal_health": 1.0,
+            "electrical_health": 0.8666666666666667,
+            "performance_health": 0.684183474542808
+          },
+          "failure_prediction": {
+            "risk_level": "Low",
+            "predicted_failure_days": null,
+            "maintenance_urgency": "Scheduled",
+            "health_trend": "No History",
+            "confidence": 0.7
+          },
+          "maintenance_recommendations": []
+        },
+        "ID_Fan_01": {
+          "equipment_name": "ID_Fan_01",
+          "overall_health_score": 0.8774753607032398,
+          "health_status": "Excellent",
+          "health_indicators": {
+            "vibration_health": 0.8,
+            "thermal_health": 1.0,
+            "electrical_health": 0.7938616021596513,
+            "performance_health": 0.9450498008166354
+          },
+          "failure_prediction": {
+            "risk_level": "Low",
+            "predicted_failure_days": null,
+            "maintenance_urgency": "Scheduled",
+            "health_trend": "No History",
+            "confidence": 0.7
+          },
+          "maintenance_recommendations": []
+        }
+      },
+      "process_anomalies": {
+        "overall_anomaly_score": 0.125,
+        "anomaly_status": "Minor Anomalies",
+        "detected_anomalies": {
+          "kiln_speed_rpm": {
+            "is_anomaly": false,
+            "value": 3.0958492977977596,
+            "normal_range": [
+              2.8,
+              4.2
+            ],
+            "severity": "Low",
+            "deviation_percent": 0.0,
+            "detection_method": "Rule-based"
+          },
+          "feed_rate_tph": {
+            "is_anomaly": false,
+            "value": 183.48056158643885,
+            "normal_range": [
+              150,
+              200
+            ],
+            "severity": "Low",
+            "deviation_percent": 0.0,
+            "detection_method": "Rule-based"
+          },
+          "fuel_rate_tph": {
+            "is_anomaly": false,
+            "value": 16.83141737559207,
+            "normal_range": [
+              14,
+              20
+            ],
+            "severity": "Low",
+            "deviation_percent": 0.0,
+            "detection_method": "Rule-based"
+          },
+          "burning_zone_temp_c": {
+            "is_anomaly": true,
+            "value": 1605.4420688703951,
+            "normal_range": [
+              1420,
+              1480
+            ],
+            "severity": "Medium",
+            "deviation_percent": 8.475815464215888,
+            "detection_method": "Rule-based"
+          },
+          "free_lime_percent": {
+            "is_anomaly": false,
+            "value": 0.9735643090307666,
+            "normal_range": [
+              0.5,
+              2.0
+            ],
+            "severity": "Low",
+            "deviation_percent": 0.0,
+            "detection_method": "Rule-based"
+          },
+          "o2_percent": {
+            "is_anomaly": false,
+            "value": 2.9582057778919317,
+            "normal_range": [
+              2.0,
+              4.5
+            ],
+            "severity": "Low",
+            "deviation_percent": 0.0,
+            "detection_method": "Rule-based"
+          },
+          "nox_mg_nm3": {
+            "is_anomaly": false,
+            "value": 504.23967383582635,
+            "normal_range": [
+              300,
+              800
+            ],
+            "severity": "Low",
+            "deviation_percent": 0.0,
+            "detection_method": "Rule-based"
+          },
+          "co_mg_nm3": {
+            "is_anomaly": false,
+            "value": 95.5219642832062,
+            "normal_range": [
+              50,
+              250
+            ],
+            "severity": "Low",
+            "deviation_percent": 0.0,
+            "detection_method": "Rule-based"
+          }
+        },
+        "summary": {
+          "total_anomalies": 1,
+          "high_severity_count": 0,
+          "medium_severity_count": 1,
+          "most_critical_parameter": "burning_zone_temp_c",
+          "max_deviation_percent": 8.475815464215888
+        }
+      },
+      "active_alerts": [
+        {
+          "type": "Process Anomaly",
+          "parameter": "burning_zone_temp_c",
+          "severity": "Medium",
+          "message": "burning_zone_temp_c is 1605.44, outside normal range (1420, 1480)",
+          "recommended_action": "Investigate process conditions",
+          "timestamp": "2025-09-17 15:18:01.689517"
+        }
+      ],
+      "recommendations": [],
+      "timestamp": "2025-09-17T15:18:01.689517"
+    },
+    "gpt_results": {
+      "gpt_response": {
+        "success": true,
+        "response": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+        "confidence": 0.7,
+        "query_type": "optimization",
+        "recommendations": [
+          "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing"
+        ],
+        "timestamp": "2025-09-17T15:18:01.695277"
+      },
+      "shift_report": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+      "analysis_timestamp": "2025-09-17T15:18:01.696957"
+    }
+  },
+  "unified_results": [
+    {
+      "timestamp": "2025-09-17T15:18:01.717164",
+      "plant_data": {
+        "production_rate_tph": 174.2744672824622,
+        "feed_rate_tph": 187.28876505760786,
+        "fuel_rate_tph": 15.679462397146468,
+        "kiln_speed_rpm": 3.1753477140231796,
+        "burning_zone_temp_c": 1460.8047907715381,
+        "cooler_outlet_temp_c": 109.3017940006774,
+        "secondary_air_temp_c": 914.474109098164,
+        "free_lime_percent": 0.9215787044228213,
+        "nox_mg_nm3": 508.7685776817006,
+        "co_mg_nm3": 105.96181162760443,
+        "o2_percent": 3.2894266063724893,
+        "raw_mill_vibration_x": 3.1016408575013195,
+        "raw_mill_vibration_y": 2.856585195221891,
+        "raw_mill_vibration_z": 2.585099976890241,
+        "raw_mill_bearing_temp": 75.55389942053777,
+        "raw_mill_motor_temp": 80.72047626119024,
+        "raw_mill_power_kw": 2026.0422870374332,
+        "raw_mill_throughput_tph": 79.39945965454959,
+        "cement_mill_vibration_x": 3.7137692052776323,
+        "cement_mill_vibration_y": 3.4416677483031695,
+        "cement_mill_vibration_z": 3.0171289047120653,
+        "cement_mill_power_kw": 3244.184865371636,
+        "cement_mill_throughput_tph": 125.76123646650268,
+        "id_fan_flow_nm3_h": 49028.85348211311,
+        "id_fan_pressure_pa": -156.8704940042706,
+        "id_fan_current_a": 104.42241018984657,
+        "id_fan_current_b": 92.68522472023467,
+        "id_fan_current_c": 95.1358976129225,
+        "air_consumption_nm3_h": 989.4238458043393,
+        "baseline_air_consumption_nm3_h": 824.0865551000758,
+        "air_pressure_bar": 8.343475974995187,
+        "compressor_power_kw": 151.3646036724358,
+        "water_consumption_m3_h": 48.49482502273973,
+        "cooling_inlet_temp_c": 31.29546735028485,
+        "cooling_outlet_temp_c": 41.934046103044125,
+        "ambient_temp_c": 21.718882083370122,
+        "conveyor_power_kw": 189.06276642804474,
+        "material_throughput_tph": 193.53258457135868,
+        "belt_speeds_mps": [
+          1.5,
+          2.0,
+          1.8
+        ],
+        "motor_loads_percent": [
+          75.0,
+          85.0,
+          60.0
+        ],
+        "available_fuels": {
+          "coal": 1000.0,
+          "petcoke": 200.0,
+          "rdf": 150.0,
+          "biomass": 100.0,
+          "tire_chips": 50.0
+        },
+        "fuel_costs": {
+          "coal": 0.08,
+          "petcoke": 0.12,
+          "rdf": 0.05,
+          "biomass": 0.06,
+          "tire_chips": 0.04
+        },
+        "quality_constraints": {
+          "max_chlorine": 0.15,
+          "max_sulfur": 2.0,
+          "max_alkali": 3.0
+        },
+        "kiln_torque_percent": 74.49140356808432,
+        "cooler_speed_rpm": 9.971797987380052,
+        "voltage_phase_a": 422.6133406389292,
+        "voltage_phase_b": 421.00187109924593,
+        "voltage_phase_c": 428.55087370464713,
+        "power_factor": 0.7992588825719016,
+        "availability_percent": 99.97637410232245,
+        "power_variation_percent": 5.744435466451528
+      },
+      "fuel_optimization": {
+        "optimization_result": {
+          "success": true,
+          "optimized_fuel_mix": {
+            "coal": 0.0,
+            "petcoke": 900.000008800401,
+            "rdf": 1.5207119549339744e-07,
+            "biomass": 600.0000075684958,
+            "tire_chips": 0.0
+          },
+          "tsr_achieved": 0.40000000074145314,
+          "quality_impact": {
+            "chlorine_input": 0.15000000096599542,
+            "sulfur_input": 2.139999997499335,
+            "alkali_input": 1.7800000025913054,
+            "quality_penalty": 0.44600000265809264
+          },
+          "total_cost": 144.00000151776143,
+          "optimization_message": "Optimization terminated successfully"
+        },
+        "rdf_scenarios": [
+          {
+            "base_production": 174.2744672824622,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.1,
+            "expected_savings": 12.0,
+            "quality_risk": "Low"
+          },
+          {
+            "base_production": 174.2744672824622,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.15,
+            "expected_savings": 18.0,
+            "quality_risk": "Medium"
+          },
+          {
+            "base_production": 174.2744672824622,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.2,
+            "expected_savings": 24.0,
+            "quality_risk": "Medium"
+          },
+          {
+            "base_production": 174.2744672824622,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.25,
+            "expected_savings": 30.0,
+            "quality_risk": "High"
+          },
+          {
+            "base_production": 174.2744672824622,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.3,
+            "expected_savings": 36.0,
+            "quality_risk": "High"
+          }
+        ],
+        "tsr_achieved": 0.40000000074145314,
+        "quality_impact": {
+          "chlorine_input": 0.15000000096599542,
+          "sulfur_input": 2.139999997499335,
+          "alkali_input": 1.7800000025913054,
+          "quality_penalty": 0.44600000265809264
+        },
+        "cost_analysis": 144.00000151776143
+      },
+      "control_setpoints": {
+        "setpoints": {
+          "kiln_speed_rpm": 2.8,
+          "fuel_rate_tph": 14.0,
+          "primary_air_percent": 40.0,
+          "cooler_speed_rpm": 6.0
+        },
+        "performance_prediction": {
+          "predicted_free_lime": 1.4515787044228214,
+          "predicted_thermal_energy": 485.880719924708,
+          "predicted_nox": 494.53544884734475,
+          "prediction_confidence": 0.85,
+          "time_to_stabilize": 15
+        },
+        "coordination_factors": {
+          "kiln_speed": 0.0,
+          "fuel_rate": 0.0,
+          "primary_air": 0.5,
+          "cooler_speed": 0.4
+        },
+        "control_health": {
+          "health_score": 1.0,
+          "saturated_controllers": 0,
+          "control_activity": 0,
+          "status": "Good"
+        }
+      },
+      "utility_optimization": {
+        "compressed_air_analysis": {
+          "specific_consumption": 5.677388439241025,
+          "benchmark_comparison": 0.22709553756964102,
+          "leakage_rate": 0.20063097702666102,
+          "leakage_status": "High",
+          "pressure_optimization": {
+            "current_pressure": 8.343475974995187,
+            "optimal_pressure": 8.5,
+            "pressure_reduction_possible": 0,
+            "energy_savings_percent": 0,
+            "annual_savings_usd": 0
+          },
+          "compressor_efficiency": 0.8170865428564178,
+          "annual_energy_cost": 106076.31425364301,
+          "potential_savings": {
+            "leak_repair": 21282.194568095525,
+            "pressure_optimization": 6263.097581229114,
+            "compressor_sizing": 0,
+            "heat_recovery": 20048.423393938527,
+            "total": 47593.71554326317
+          }
+        },
+        "water_system_analysis": {
+          "specific_consumption": 0.27826695315120276,
+          "benchmark_comparison": 0.9275565105040092,
+          "usage_breakdown": {
+            "cooling": 0.6,
+            "dust_suppression": 0.2,
+            "equipment_cooling": 0.15,
+            "other": 0.05
+          },
+          "cooling_efficiency": {
+            "cooling_efficiency": 0.5262672488041894,
+            "cooling_range": 10.638578752759276,
+            "approach_temperature": 9.576585266914726,
+            "evaporation_rate": 0.31915736258277827,
+            "makeup_water_requirement": 0.4149045713576118
+          },
+          "recycling_potential": {
+            "recyclable_streams": {
+              "cooling_blowdown": 4.849482502273974,
+              "process_water": 2.424741251136987,
+              "rainwater_harvesting": 0.1141552511415525
+            },
+            "total_recyclable_m3_h": 7.388379004552513,
+            "recycling_percentage": 15.235396768805792,
+            "treatment_cost_usd_m3": 0.7250929871665607,
+            "annual_savings_potential": 82514.78676784801
+          },
+          "optimization_opportunities": [
+            {
+              "opportunity": "Optimize cooling tower performance",
+              "potential_reduction": "10-15%",
+              "investment_required": "Low",
+              "payback_months": 12
+            },
+            {
+              "opportunity": "Implement water recycling system",
+              "potential_reduction": "20-30%",
+              "investment_required": "High",
+              "payback_months": 36
+            }
+          ]
+        },
+        "material_handling_analysis": {
+          "specific_energy": 0.9769040538924553,
+          "belt_optimization": {
+            "current_speeds": [
+              1.5,
+              2.0,
+              1.8
+            ],
+            "optimal_speeds": [
+              2.5,
+              1.8,
+              2.5
+            ],
+            "energy_savings_potential": 9.033333333333331
+          },
+          "motor_efficiency": {
+            "individual_efficiencies": [
+              0.94,
+              0.9319999999999999,
+              0.928
+            ],
+            "average_efficiency": 0.9333333333333332,
+            "underloaded_motors": [],
+            "overloaded_motors": [],
+            "optimization_potential": 0.666666666666671
+          },
+          "maintenance_optimization": [
+            {
+              "conveyor": "Conveyor_3",
+              "issue": "Belt replacement due",
+              "energy_impact": "5-15% increase in power consumption",
+              "recommended_action": "Schedule belt replacement"
+            },
+            {
+              "conveyor": "Conveyor_2",
+              "issue": "Possible alignment problems",
+              "energy_impact": "10-20% increase in power consumption",
+              "recommended_action": "Check belt alignment and roller condition"
+            }
+          ]
+        },
+        "total_savings_potential": {
+          "compressed_air_savings": 47593.71554326317,
+          "water_system_savings": 82514.78676784801,
+          "material_handling_savings": 934.400000000006,
+          "total_annual_savings": 131042.90231111119,
+          "roi_months": 24
+        },
+        "optimization_recommendations": [
+          {
+            "system": "Compressed Air",
+            "recommendation": "Implement leak detection and repair program",
+            "annual_savings": 21282.194568095525,
+            "investment_required": 5000,
+            "payback_months": 60,
+            "priority": "High"
+          },
+          {
+            "system": "Compressed Air",
+            "recommendation": "Optimize system pressure settings",
+            "annual_savings": 6263.097581229114,
+            "investment_required": 2000,
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Water System",
+            "recommendation": "Optimize cooling tower performance",
+            "potential_reduction": "10-15%",
+            "investment_required": "Low",
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Schedule belt replacement",
+            "energy_impact": "5-15% increase in power consumption",
+            "priority": "Medium"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Check belt alignment and roller condition",
+            "energy_impact": "10-20% increase in power consumption",
+            "priority": "Medium"
+          }
+        ],
+        "implementation_priority": [
+          {
+            "system": "Compressed Air",
+            "recommendation": "Optimize system pressure settings",
+            "annual_savings": 6263.097581229114,
+            "investment_required": 2000,
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Compressed Air",
+            "recommendation": "Implement leak detection and repair program",
+            "annual_savings": 21282.194568095525,
+            "investment_required": 5000,
+            "payback_months": 60,
+            "priority": "High"
+          },
+          {
+            "system": "Water System",
+            "recommendation": "Optimize cooling tower performance",
+            "potential_reduction": "10-15%",
+            "investment_required": "Low",
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Schedule belt replacement",
+            "energy_impact": "5-15% increase in power consumption",
+            "priority": "Medium"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Check belt alignment and roller condition",
+            "energy_impact": "10-20% increase in power consumption",
+            "priority": "Medium"
+          }
+        ]
+      },
+      "anomaly_detection": {
+        "plant_health_score": 0.8957283648882566,
+        "plant_status": "Excellent",
+        "equipment_health": {
+          "Raw_Mill_01": {
+            "equipment_name": "Raw_Mill_01",
+            "overall_health_score": 0.8333146080251621,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 0.9930762572432779,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.6418943852383798
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "No History",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "Kiln_01": {
+            "equipment_name": "Kiln_01",
+            "overall_health_score": 0.9027456018878077,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.9803946761057053
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "No History",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "Cement_Mill_01": {
+            "equipment_name": "Cement_Mill_01",
+            "overall_health_score": 0.8341969195254823,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.6376512642940777
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "No History",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "ID_Fan_01": {
+            "equipment_name": "ID_Fan_01",
+            "overall_health_score": 0.8339049556372997,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.6268701076686088,
+              "performance_health": 0.9359371436007375
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "No History",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          }
+        },
+        "process_anomalies": {
+          "overall_anomaly_score": 0.0,
+          "anomaly_status": "Normal",
+          "detected_anomalies": {
+            "kiln_speed_rpm": {
+              "is_anomaly": false,
+              "value": 3.1753477140231796,
+              "normal_range": [
+                2.8,
+                4.2
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "feed_rate_tph": {
+              "is_anomaly": false,
+              "value": 187.28876505760786,
+              "normal_range": [
+                150,
+                200
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "fuel_rate_tph": {
+              "is_anomaly": false,
+              "value": 15.679462397146468,
+              "normal_range": [
+                14,
+                20
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "burning_zone_temp_c": {
+              "is_anomaly": false,
+              "value": 1460.8047907715381,
+              "normal_range": [
+                1420,
+                1480
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "free_lime_percent": {
+              "is_anomaly": false,
+              "value": 0.9215787044228213,
+              "normal_range": [
+                0.5,
+                2.0
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "o2_percent": {
+              "is_anomaly": false,
+              "value": 3.2894266063724893,
+              "normal_range": [
+                2.0,
+                4.5
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "nox_mg_nm3": {
+              "is_anomaly": false,
+              "value": 508.7685776817006,
+              "normal_range": [
+                300,
+                800
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "co_mg_nm3": {
+              "is_anomaly": false,
+              "value": 105.96181162760443,
+              "normal_range": [
+                50,
+                250
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            }
+          },
+          "summary": {
+            "total_anomalies": 0,
+            "high_severity_count": 0,
+            "medium_severity_count": 0,
+            "most_critical_parameter": null,
+            "max_deviation_percent": 0
+          }
+        },
+        "active_alerts": [],
+        "recommendations": [],
+        "timestamp": "2025-09-17T15:18:01.727713"
+      },
+      "gpt_analysis": {
+        "gpt_response": {
+          "success": true,
+          "response": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+          "confidence": 0.7,
+          "query_type": "optimization",
+          "recommendations": [
+            "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing"
+          ],
+          "timestamp": "2025-09-17T15:18:01.732104"
+        },
+        "shift_report": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+        "analysis_timestamp": "2025-09-17T15:18:01.732104"
+      },
+      "overall_plant_status": {
+        "overall_performance_score": 0.7566928167998419,
+        "status": "Good",
+        "tsr_achievement": 0.40000000074145314,
+        "control_health": 1.0,
+        "plant_health": 0.8957283648882566,
+        "utility_savings_potential": 131042.90231111119,
+        "assessment_timestamp": "2025-09-17T15:18:01.732104"
+      },
+      "recommendations": [
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Implement leak detection and repair program",
+          "expected_benefit": "Annual savings: $21,282",
+          "implementation_time": "60 months"
+        },
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Optimize system pressure settings",
+          "expected_benefit": "Annual savings: $6,263",
+          "implementation_time": "12 months"
+        },
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Optimize cooling tower performance",
+          "expected_benefit": "Annual savings: $0",
+          "implementation_time": "12 months"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-09-17T15:18:01.739244",
+      "plant_data": {
+        "production_rate_tph": 147.7594831996858,
+        "feed_rate_tph": 191.7698911058928,
+        "fuel_rate_tph": 15.52690119036266,
+        "kiln_speed_rpm": 3.252385493687532,
+        "burning_zone_temp_c": 1455.1747290506103,
+        "cooler_outlet_temp_c": 109.8379872927721,
+        "secondary_air_temp_c": 946.4490203108786,
+        "free_lime_percent": 0.8891605196992286,
+        "nox_mg_nm3": 480.49080902370275,
+        "co_mg_nm3": 94.36442299653648,
+        "o2_percent": 3.006557550413441,
+        "raw_mill_vibration_x": 2.980623468636537,
+        "raw_mill_vibration_y": 2.6525417527507775,
+        "raw_mill_vibration_z": 2.558012353595397,
+        "raw_mill_bearing_temp": 69.44727148795856,
+        "raw_mill_motor_temp": 75.53131785067313,
+        "raw_mill_power_kw": 2003.7993285430105,
+        "raw_mill_throughput_tph": 86.011144532272,
+        "cement_mill_vibration_x": 3.6812466643837936,
+        "cement_mill_vibration_y": 3.4720415009917107,
+        "cement_mill_vibration_z": 2.919887099020451,
+        "cement_mill_power_kw": 2983.285300040849,
+        "cement_mill_throughput_tph": 129.33833388338797,
+        "id_fan_flow_nm3_h": 47134.37272694133,
+        "id_fan_pressure_pa": -138.79246658181287,
+        "id_fan_current_a": 95.72124900653675,
+        "id_fan_current_b": 109.9054610748246,
+        "id_fan_current_c": 100.69574558379904,
+        "air_consumption_nm3_h": 1049.5291133467522,
+        "baseline_air_consumption_nm3_h": 835.526241074373,
+        "air_pressure_bar": 8.20773686203011,
+        "compressor_power_kw": 154.28292844966276,
+        "water_consumption_m3_h": 43.750244259747426,
+        "cooling_inlet_temp_c": 31.06478112368898,
+        "cooling_outlet_temp_c": 42.004144110918986,
+        "ambient_temp_c": 25.56197301587067,
+        "conveyor_power_kw": 211.27376676959284,
+        "material_throughput_tph": 193.15477302811757,
+        "belt_speeds_mps": [
+          1.5,
+          2.0,
+          1.8
+        ],
+        "motor_loads_percent": [
+          75.0,
+          85.0,
+          60.0
+        ],
+        "available_fuels": {
+          "coal": 1000.0,
+          "petcoke": 200.0,
+          "rdf": 150.0,
+          "biomass": 100.0,
+          "tire_chips": 50.0
+        },
+        "fuel_costs": {
+          "coal": 0.08,
+          "petcoke": 0.12,
+          "rdf": 0.05,
+          "biomass": 0.06,
+          "tire_chips": 0.04
+        },
+        "quality_constraints": {
+          "max_chlorine": 0.15,
+          "max_sulfur": 2.0,
+          "max_alkali": 3.0
+        },
+        "kiln_torque_percent": 71.14762751140556,
+        "cooler_speed_rpm": 10.088445708741137,
+        "voltage_phase_a": 389.0493335900156,
+        "voltage_phase_b": 414.03809054525203,
+        "voltage_phase_c": 376.81876877222,
+        "power_factor": 0.8992457722377576,
+        "availability_percent": 99.36107913715786,
+        "power_variation_percent": 4.862956305338305
+      },
+      "fuel_optimization": {
+        "optimization_result": {
+          "success": true,
+          "optimized_fuel_mix": {
+            "coal": 0.0,
+            "petcoke": 900.000008800401,
+            "rdf": 1.5207119549339744e-07,
+            "biomass": 600.0000075684958,
+            "tire_chips": 0.0
+          },
+          "tsr_achieved": 0.40000000074145314,
+          "quality_impact": {
+            "chlorine_input": 0.15000000096599542,
+            "sulfur_input": 2.139999997499335,
+            "alkali_input": 1.7800000025913054,
+            "quality_penalty": 0.44600000265809264
+          },
+          "total_cost": 144.00000151776143,
+          "optimization_message": "Optimization terminated successfully"
+        },
+        "rdf_scenarios": [
+          {
+            "base_production": 147.7594831996858,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.1,
+            "expected_savings": 12.0,
+            "quality_risk": "Low"
+          },
+          {
+            "base_production": 147.7594831996858,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.15,
+            "expected_savings": 18.0,
+            "quality_risk": "Medium"
+          },
+          {
+            "base_production": 147.7594831996858,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.2,
+            "expected_savings": 24.0,
+            "quality_risk": "Medium"
+          },
+          {
+            "base_production": 147.7594831996858,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.25,
+            "expected_savings": 30.0,
+            "quality_risk": "High"
+          },
+          {
+            "base_production": 147.7594831996858,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.3,
+            "expected_savings": 36.0,
+            "quality_risk": "High"
+          }
+        ],
+        "tsr_achieved": 0.40000000074145314,
+        "quality_impact": {
+          "chlorine_input": 0.15000000096599542,
+          "sulfur_input": 2.139999997499335,
+          "alkali_input": 1.7800000025913054,
+          "quality_penalty": 0.44600000265809264
+        },
+        "cost_analysis": 144.00000151776143
+      },
+      "control_setpoints": {
+        "setpoints": {
+          "kiln_speed_rpm": 2.8,
+          "fuel_rate_tph": 14.0,
+          "primary_air_percent": 40.0,
+          "cooler_speed_rpm": 6.0
+        },
+        "performance_prediction": {
+          "predicted_free_lime": 1.4191605196992287,
+          "predicted_thermal_energy": 474.52704632215176,
+          "predicted_nox": 466.2576801893469,
+          "prediction_confidence": 0.85,
+          "time_to_stabilize": 15
+        },
+        "coordination_factors": {
+          "kiln_speed": 0.0,
+          "fuel_rate": 0.0,
+          "primary_air": 0.5,
+          "cooler_speed": 0.4
+        },
+        "control_health": {
+          "health_score": 1.0,
+          "saturated_controllers": 0,
+          "control_activity": 0.0,
+          "status": "Good"
+        }
+      },
+      "utility_optimization": {
+        "compressed_air_analysis": {
+          "specific_consumption": 7.102956037876721,
+          "benchmark_comparison": 0.28411824151506887,
+          "leakage_rate": 0.2561294448361078,
+          "leakage_status": "High",
+          "pressure_optimization": {
+            "current_pressure": 8.20773686203011,
+            "optimal_pressure": 8.5,
+            "pressure_reduction_possible": 0,
+            "energy_savings_percent": 0,
+            "annual_savings_usd": 0
+          },
+          "compressor_efficiency": 0.8503282928749126,
+          "annual_energy_cost": 108121.47625752367,
+          "potential_savings": {
+            "leak_repair": 27693.093688699944,
+            "pressure_optimization": 5356.508802719401,
+            "compressor_sizing": 0,
+            "heat_recovery": 20434.95901267197,
+            "total": 53484.56150409132
+          }
+        },
+        "water_system_analysis": {
+          "specific_consumption": 0.2960909399000961,
+          "benchmark_comparison": 0.9869697996669871,
+          "usage_breakdown": {
+            "cooling": 0.6,
+            "dust_suppression": 0.2,
+            "equipment_cooling": 0.15,
+            "other": 0.05
+          },
+          "cooling_efficiency": {
+            "cooling_efficiency": 0.6653235101369598,
+            "cooling_range": 10.939362987230005,
+            "approach_temperature": 5.502808107818311,
+            "evaporation_rate": 0.3281808896169002,
+            "makeup_water_requirement": 0.42663515650197026
+          },
+          "recycling_potential": {
+            "recyclable_streams": {
+              "cooling_blowdown": 4.375024425974742,
+              "process_water": 2.187512212987371,
+              "rainwater_harvesting": 0.1141552511415525
+            },
+            "total_recyclable_m3_h": 6.676691890103665,
+            "recycling_percentage": 15.260924831559352,
+            "treatment_cost_usd_m3": 0.7242146258040748,
+            "annual_savings_potential": 74617.9065459236
+          },
+          "optimization_opportunities": [
+            {
+              "opportunity": "Optimize cooling tower performance",
+              "potential_reduction": "10-15%",
+              "investment_required": "Low",
+              "payback_months": 12
+            },
+            {
+              "opportunity": "Implement water recycling system",
+              "potential_reduction": "20-30%",
+              "investment_required": "High",
+              "payback_months": 36
+            }
+          ]
+        },
+        "material_handling_analysis": {
+          "specific_energy": 1.0938055708249967,
+          "belt_optimization": {
+            "current_speeds": [
+              1.5,
+              2.0,
+              1.8
+            ],
+            "optimal_speeds": [
+              2.5,
+              1.8,
+              2.5
+            ],
+            "energy_savings_potential": 9.033333333333331
+          },
+          "motor_efficiency": {
+            "individual_efficiencies": [
+              0.94,
+              0.9319999999999999,
+              0.928
+            ],
+            "average_efficiency": 0.9333333333333332,
+            "underloaded_motors": [],
+            "overloaded_motors": [],
+            "optimization_potential": 0.666666666666671
+          },
+          "maintenance_optimization": [
+            {
+              "conveyor": "Conveyor_3",
+              "issue": "Belt replacement due",
+              "energy_impact": "5-15% increase in power consumption",
+              "recommended_action": "Schedule belt replacement"
+            },
+            {
+              "conveyor": "Conveyor_2",
+              "issue": "Possible alignment problems",
+              "energy_impact": "10-20% increase in power consumption",
+              "recommended_action": "Check belt alignment and roller condition"
+            }
+          ]
+        },
+        "total_savings_potential": {
+          "compressed_air_savings": 53484.56150409132,
+          "water_system_savings": 74617.9065459236,
+          "material_handling_savings": 934.400000000006,
+          "total_annual_savings": 129036.86805001493,
+          "roi_months": 24
+        },
+        "optimization_recommendations": [
+          {
+            "system": "Compressed Air",
+            "recommendation": "Implement leak detection and repair program",
+            "annual_savings": 27693.093688699944,
+            "investment_required": 5000,
+            "payback_months": 60,
+            "priority": "High"
+          },
+          {
+            "system": "Compressed Air",
+            "recommendation": "Optimize system pressure settings",
+            "annual_savings": 5356.508802719401,
+            "investment_required": 2000,
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Water System",
+            "recommendation": "Optimize cooling tower performance",
+            "potential_reduction": "10-15%",
+            "investment_required": "Low",
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Schedule belt replacement",
+            "energy_impact": "5-15% increase in power consumption",
+            "priority": "Medium"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Check belt alignment and roller condition",
+            "energy_impact": "10-20% increase in power consumption",
+            "priority": "Medium"
+          }
+        ],
+        "implementation_priority": [
+          {
+            "system": "Compressed Air",
+            "recommendation": "Implement leak detection and repair program",
+            "annual_savings": 27693.093688699944,
+            "investment_required": 5000,
+            "payback_months": 60,
+            "priority": "High"
+          },
+          {
+            "system": "Compressed Air",
+            "recommendation": "Optimize system pressure settings",
+            "annual_savings": 5356.508802719401,
+            "investment_required": 2000,
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Water System",
+            "recommendation": "Optimize cooling tower performance",
+            "potential_reduction": "10-15%",
+            "investment_required": "Low",
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Schedule belt replacement",
+            "energy_impact": "5-15% increase in power consumption",
+            "priority": "Medium"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Check belt alignment and roller condition",
+            "energy_impact": "10-20% increase in power consumption",
+            "priority": "Medium"
+          }
+        ]
+      },
+      "anomaly_detection": {
+        "plant_health_score": 0.8954346433157956,
+        "plant_status": "Excellent",
+        "equipment_health": {
+          "Raw_Mill_01": {
+            "equipment_name": "Raw_Mill_01",
+            "overall_health_score": 0.8425147287027108,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.6792403101802208
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "Kiln_01": {
+            "equipment_name": "Kiln_01",
+            "overall_health_score": 0.9011246926516281,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.9722901299248071
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "Cement_Mill_01": {
+            "equipment_name": "Cement_Mill_01",
+            "overall_health_score": 0.843375325661914,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.6835432949762363
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "ID_Fan_01": {
+            "equipment_name": "ID_Fan_01",
+            "overall_health_score": 0.8154689290740086,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.6120991118273835,
+              "performance_health": 0.8622207555858137
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          }
+        },
+        "process_anomalies": {
+          "overall_anomaly_score": 0.0,
+          "anomaly_status": "Normal",
+          "detected_anomalies": {
+            "kiln_speed_rpm": {
+              "is_anomaly": false,
+              "value": 3.252385493687532,
+              "normal_range": [
+                2.8,
+                4.2
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "feed_rate_tph": {
+              "is_anomaly": false,
+              "value": 191.7698911058928,
+              "normal_range": [
+                150,
+                200
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "fuel_rate_tph": {
+              "is_anomaly": false,
+              "value": 15.52690119036266,
+              "normal_range": [
+                14,
+                20
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "burning_zone_temp_c": {
+              "is_anomaly": false,
+              "value": 1455.1747290506103,
+              "normal_range": [
+                1420,
+                1480
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "free_lime_percent": {
+              "is_anomaly": false,
+              "value": 0.8891605196992286,
+              "normal_range": [
+                0.5,
+                2.0
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "o2_percent": {
+              "is_anomaly": false,
+              "value": 3.006557550413441,
+              "normal_range": [
+                2.0,
+                4.5
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "nox_mg_nm3": {
+              "is_anomaly": false,
+              "value": 480.49080902370275,
+              "normal_range": [
+                300,
+                800
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "co_mg_nm3": {
+              "is_anomaly": false,
+              "value": 94.36442299653648,
+              "normal_range": [
+                50,
+                250
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            }
+          },
+          "summary": {
+            "total_anomalies": 0,
+            "high_severity_count": 0,
+            "medium_severity_count": 0,
+            "most_critical_parameter": null,
+            "max_deviation_percent": 0
+          }
+        },
+        "active_alerts": [],
+        "recommendations": [],
+        "timestamp": "2025-09-17T15:18:01.749601"
+      },
+      "gpt_analysis": {
+        "gpt_response": {
+          "success": true,
+          "response": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+          "confidence": 0.7,
+          "query_type": "optimization",
+          "recommendations": [
+            "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing"
+          ],
+          "timestamp": "2025-09-17T15:18:01.752633"
+        },
+        "shift_report": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+        "analysis_timestamp": "2025-09-17T15:18:01.753546"
+      },
+      "overall_plant_status": {
+        "overall_performance_score": 0.7561178778414527,
+        "status": "Good",
+        "tsr_achievement": 0.40000000074145314,
+        "control_health": 1.0,
+        "plant_health": 0.8954346433157956,
+        "utility_savings_potential": 129036.86805001493,
+        "assessment_timestamp": "2025-09-17T15:18:01.753546"
+      },
+      "recommendations": [
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Implement leak detection and repair program",
+          "expected_benefit": "Annual savings: $27,693",
+          "implementation_time": "60 months"
+        },
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Optimize system pressure settings",
+          "expected_benefit": "Annual savings: $5,357",
+          "implementation_time": "12 months"
+        },
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Optimize cooling tower performance",
+          "expected_benefit": "Annual savings: $0",
+          "implementation_time": "12 months"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-09-17T15:18:01.755556",
+      "plant_data": {
+        "production_rate_tph": 162.80200377152596,
+        "feed_rate_tph": 190.89594464551706,
+        "fuel_rate_tph": 16.522015439716117,
+        "kiln_speed_rpm": 3.354799024806569,
+        "burning_zone_temp_c": 1374.2329070436615,
+        "cooler_outlet_temp_c": 90.08610262374708,
+        "secondary_air_temp_c": 948.170146614563,
+        "free_lime_percent": 1.0191645735551318,
+        "nox_mg_nm3": 485.71495628082766,
+        "co_mg_nm3": 91.30925399994344,
+        "o2_percent": 2.8606907683862683,
+        "raw_mill_vibration_x": 3.0389844370571,
+        "raw_mill_vibration_y": 2.914661459518632,
+        "raw_mill_vibration_z": 2.426530404811545,
+        "raw_mill_bearing_temp": 60.09024702859907,
+        "raw_mill_motor_temp": 84.08427704752796,
+        "raw_mill_power_kw": 1831.5456858824512,
+        "raw_mill_throughput_tph": 79.12889039632736,
+        "cement_mill_vibration_x": 3.407874129016502,
+        "cement_mill_vibration_y": 3.091192807311367,
+        "cement_mill_vibration_z": 2.885936381225525,
+        "cement_mill_power_kw": 2907.168058356141,
+        "cement_mill_throughput_tph": 117.75134169502891,
+        "id_fan_flow_nm3_h": 44697.06357674162,
+        "id_fan_pressure_pa": -152.64004862617273,
+        "id_fan_current_a": 92.88548996970724,
+        "id_fan_current_b": 90.97286214244805,
+        "id_fan_current_c": 109.50018272791864,
+        "air_consumption_nm3_h": 1027.9237504324253,
+        "baseline_air_consumption_nm3_h": 811.0908504591553,
+        "air_pressure_bar": 7.736547103908173,
+        "compressor_power_kw": 153.20578059306936,
+        "water_consumption_m3_h": 52.143774662123434,
+        "cooling_inlet_temp_c": 30.50475097507796,
+        "cooling_outlet_temp_c": 37.8373273572065,
+        "ambient_temp_c": 23.556709773508068,
+        "conveyor_power_kw": 195.86434072642436,
+        "material_throughput_tph": 194.8683494527898,
+        "belt_speeds_mps": [
+          1.5,
+          2.0,
+          1.8
+        ],
+        "motor_loads_percent": [
+          75.0,
+          85.0,
+          60.0
+        ],
+        "available_fuels": {
+          "coal": 1000.0,
+          "petcoke": 200.0,
+          "rdf": 150.0,
+          "biomass": 100.0,
+          "tire_chips": 50.0
+        },
+        "fuel_costs": {
+          "coal": 0.08,
+          "petcoke": 0.12,
+          "rdf": 0.05,
+          "biomass": 0.06,
+          "tire_chips": 0.04
+        },
+        "quality_constraints": {
+          "max_chlorine": 0.15,
+          "max_sulfur": 2.0,
+          "max_alkali": 3.0
+        },
+        "kiln_torque_percent": 68.19457012272936,
+        "cooler_speed_rpm": 10.252951355384193,
+        "voltage_phase_a": 416.54666079700246,
+        "voltage_phase_b": 389.7743011161076,
+        "voltage_phase_c": 390.1839923705689,
+        "power_factor": 0.8811570687419628,
+        "availability_percent": 80.55124855104144,
+        "power_variation_percent": 4.899439000878994
+      },
+      "fuel_optimization": {
+        "optimization_result": {
+          "success": true,
+          "optimized_fuel_mix": {
+            "coal": 0.0,
+            "petcoke": 900.000008800401,
+            "rdf": 1.5207119549339744e-07,
+            "biomass": 600.0000075684958,
+            "tire_chips": 0.0
+          },
+          "tsr_achieved": 0.40000000074145314,
+          "quality_impact": {
+            "chlorine_input": 0.15000000096599542,
+            "sulfur_input": 2.139999997499335,
+            "alkali_input": 1.7800000025913054,
+            "quality_penalty": 0.44600000265809264
+          },
+          "total_cost": 144.00000151776143,
+          "optimization_message": "Optimization terminated successfully"
+        },
+        "rdf_scenarios": [
+          {
+            "base_production": 162.80200377152596,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.1,
+            "expected_savings": 12.0,
+            "quality_risk": "Low"
+          },
+          {
+            "base_production": 162.80200377152596,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.15,
+            "expected_savings": 18.0,
+            "quality_risk": "Medium"
+          },
+          {
+            "base_production": 162.80200377152596,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.2,
+            "expected_savings": 24.0,
+            "quality_risk": "Medium"
+          },
+          {
+            "base_production": 162.80200377152596,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.25,
+            "expected_savings": 30.0,
+            "quality_risk": "High"
+          },
+          {
+            "base_production": 162.80200377152596,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.3,
+            "expected_savings": 36.0,
+            "quality_risk": "High"
+          }
+        ],
+        "tsr_achieved": 0.40000000074145314,
+        "quality_impact": {
+          "chlorine_input": 0.15000000096599542,
+          "sulfur_input": 2.139999997499335,
+          "alkali_input": 1.7800000025913054,
+          "quality_penalty": 0.44600000265809264
+        },
+        "cost_analysis": 144.00000151776143
+      },
+      "control_setpoints": {
+        "setpoints": {
+          "kiln_speed_rpm": 2.8,
+          "fuel_rate_tph": 14.0,
+          "primary_air_percent": 40.0,
+          "cooler_speed_rpm": 6.0
+        },
+        "performance_prediction": {
+          "predicted_free_lime": 1.5491645735551318,
+          "predicted_thermal_energy": 476.69949285188767,
+          "predicted_nox": 471.4818274464718,
+          "prediction_confidence": 0.85,
+          "time_to_stabilize": 15
+        },
+        "coordination_factors": {
+          "kiln_speed": 0.0,
+          "fuel_rate": 0.1,
+          "primary_air": 0.5,
+          "cooler_speed": 0.10000000000000003
+        },
+        "control_health": {
+          "health_score": 1.0,
+          "saturated_controllers": 0,
+          "control_activity": 0.0,
+          "status": "Good"
+        }
+      },
+      "utility_optimization": {
+        "compressed_air_analysis": {
+          "specific_consumption": 6.3139502378299905,
+          "benchmark_comparison": 0.2525580095131996,
+          "leakage_rate": 0.26733491057200537,
+          "leakage_status": "High",
+          "pressure_optimization": {
+            "current_pressure": 7.736547103908173,
+            "optimal_pressure": 8.5,
+            "pressure_reduction_possible": 0,
+            "energy_savings_percent": 0,
+            "annual_savings_usd": 0
+          },
+          "compressor_efficiency": 0.8386789865673367,
+          "annual_energy_cost": 107366.611039623,
+          "potential_savings": {
+            "leak_repair": 28702.8433606969,
+            "pressure_optimization": 1777.8082628500636,
+            "compressor_sizing": 0,
+            "heat_recovery": 20292.289486488746,
+            "total": 50772.94111003571
+          }
+        },
+        "water_system_analysis": {
+          "specific_consumption": 0.3202895139749095,
+          "benchmark_comparison": 1.0676317132496984,
+          "usage_breakdown": {
+            "cooling": 0.6,
+            "dust_suppression": 0.2,
+            "equipment_cooling": 0.15,
+            "other": 0.05
+          },
+          "cooling_efficiency": {
+            "cooling_efficiency": 0.5134635346932613,
+            "cooling_range": 7.332576382128536,
+            "approach_temperature": 6.948041201569893,
+            "evaporation_rate": 0.21997729146385608,
+            "makeup_water_requirement": 0.2859704789030129
+          },
+          "recycling_potential": {
+            "recyclable_streams": {
+              "cooling_blowdown": 5.214377466212344,
+              "process_water": 2.607188733106172,
+              "rainwater_harvesting": 0.1141552511415525
+            },
+            "total_recyclable_m3_h": 7.935721450460068,
+            "recycling_percentage": 15.218924026657538,
+            "treatment_cost_usd_m3": 0.725661340183259,
+            "annual_savings_potential": 88588.09854763826
+          },
+          "optimization_opportunities": [
+            {
+              "opportunity": "Optimize cooling tower performance",
+              "potential_reduction": "10-15%",
+              "investment_required": "Low",
+              "payback_months": 12
+            },
+            {
+              "opportunity": "Implement water recycling system",
+              "potential_reduction": "20-30%",
+              "investment_required": "High",
+              "payback_months": 36
+            }
+          ]
+        },
+        "material_handling_analysis": {
+          "specific_energy": 1.0051110982180091,
+          "belt_optimization": {
+            "current_speeds": [
+              1.5,
+              2.0,
+              1.8
+            ],
+            "optimal_speeds": [
+              2.5,
+              1.8,
+              2.5
+            ],
+            "energy_savings_potential": 9.033333333333331
+          },
+          "motor_efficiency": {
+            "individual_efficiencies": [
+              0.94,
+              0.9319999999999999,
+              0.928
+            ],
+            "average_efficiency": 0.9333333333333332,
+            "underloaded_motors": [],
+            "overloaded_motors": [],
+            "optimization_potential": 0.666666666666671
+          },
+          "maintenance_optimization": [
+            {
+              "conveyor": "Conveyor_3",
+              "issue": "Belt replacement due",
+              "energy_impact": "5-15% increase in power consumption",
+              "recommended_action": "Schedule belt replacement"
+            },
+            {
+              "conveyor": "Conveyor_2",
+              "issue": "Possible alignment problems",
+              "energy_impact": "10-20% increase in power consumption",
+              "recommended_action": "Check belt alignment and roller condition"
+            }
+          ]
+        },
+        "total_savings_potential": {
+          "compressed_air_savings": 50772.94111003571,
+          "water_system_savings": 88588.09854763826,
+          "material_handling_savings": 934.400000000006,
+          "total_annual_savings": 140295.43965767397,
+          "roi_months": 24
+        },
+        "optimization_recommendations": [
+          {
+            "system": "Compressed Air",
+            "recommendation": "Implement leak detection and repair program",
+            "annual_savings": 28702.8433606969,
+            "investment_required": 5000,
+            "payback_months": 60,
+            "priority": "High"
+          },
+          {
+            "system": "Water System",
+            "recommendation": "Optimize cooling tower performance",
+            "potential_reduction": "10-15%",
+            "investment_required": "Low",
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Schedule belt replacement",
+            "energy_impact": "5-15% increase in power consumption",
+            "priority": "Medium"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Check belt alignment and roller condition",
+            "energy_impact": "10-20% increase in power consumption",
+            "priority": "Medium"
+          }
+        ],
+        "implementation_priority": [
+          {
+            "system": "Compressed Air",
+            "recommendation": "Implement leak detection and repair program",
+            "annual_savings": 28702.8433606969,
+            "investment_required": 5000,
+            "payback_months": 60,
+            "priority": "High"
+          },
+          {
+            "system": "Water System",
+            "recommendation": "Optimize cooling tower performance",
+            "potential_reduction": "10-15%",
+            "investment_required": "Low",
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Schedule belt replacement",
+            "energy_impact": "5-15% increase in power consumption",
+            "priority": "Medium"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Check belt alignment and roller condition",
+            "energy_impact": "10-20% increase in power consumption",
+            "priority": "Medium"
+          }
+        ]
+      },
+      "anomaly_detection": {
+        "plant_health_score": 0.8551299390419724,
+        "plant_status": "Excellent",
+        "equipment_health": {
+          "Raw_Mill_01": {
+            "equipment_name": "Raw_Mill_01",
+            "overall_health_score": 0.8430733460154295,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.6820333967438139
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "Kiln_01": {
+            "equipment_name": "Kiln_01",
+            "overall_health_score": 0.9057084379889101,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.995208856611217
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "Cement_Mill_01": {
+            "equipment_name": "Cement_Mill_01",
+            "overall_health_score": 0.8376742584751784,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.6550379590425586
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "ID_Fan_01": {
+            "equipment_name": "ID_Fan_01",
+            "overall_health_score": 0.8000007520460397,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.5333333333333333,
+              "performance_health": 0.8833370935635318
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": [
+              {
+                "category": "Electrical",
+                "recommendation": "Check electrical connections and motor condition",
+                "urgency": "Scheduled",
+                "estimated_cost": 8000
+              }
+            ]
+          }
+        },
+        "process_anomalies": {
+          "overall_anomaly_score": 0.125,
+          "anomaly_status": "Minor Anomalies",
+          "detected_anomalies": {
+            "kiln_speed_rpm": {
+              "is_anomaly": false,
+              "value": 3.354799024806569,
+              "normal_range": [
+                2.8,
+                4.2
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "feed_rate_tph": {
+              "is_anomaly": false,
+              "value": 190.89594464551706,
+              "normal_range": [
+                150,
+                200
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "fuel_rate_tph": {
+              "is_anomaly": false,
+              "value": 16.522015439716117,
+              "normal_range": [
+                14,
+                20
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "burning_zone_temp_c": {
+              "is_anomaly": true,
+              "value": 1374.2329070436615,
+              "normal_range": [
+                1420,
+                1480
+              ],
+              "severity": "Medium",
+              "deviation_percent": 3.2230347152351055,
+              "detection_method": "Rule-based"
+            },
+            "free_lime_percent": {
+              "is_anomaly": false,
+              "value": 1.0191645735551318,
+              "normal_range": [
+                0.5,
+                2.0
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "o2_percent": {
+              "is_anomaly": false,
+              "value": 2.8606907683862683,
+              "normal_range": [
+                2.0,
+                4.5
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "nox_mg_nm3": {
+              "is_anomaly": false,
+              "value": 485.71495628082766,
+              "normal_range": [
+                300,
+                800
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "co_mg_nm3": {
+              "is_anomaly": false,
+              "value": 91.30925399994344,
+              "normal_range": [
+                50,
+                250
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            }
+          },
+          "summary": {
+            "total_anomalies": 1,
+            "high_severity_count": 0,
+            "medium_severity_count": 1,
+            "most_critical_parameter": "burning_zone_temp_c",
+            "max_deviation_percent": 3.2230347152351055
+          }
+        },
+        "active_alerts": [
+          {
+            "type": "Process Anomaly",
+            "parameter": "burning_zone_temp_c",
+            "severity": "Medium",
+            "message": "burning_zone_temp_c is 1374.23, outside normal range (1420, 1480)",
+            "recommended_action": "Investigate process conditions",
+            "timestamp": "2025-09-17 15:18:01.779973"
+          }
+        ],
+        "recommendations": [
+          {
+            "category": "Equipment Maintenance",
+            "equipment": "ID_Fan_01",
+            "recommendation": "Check electrical connections and motor condition",
+            "urgency": "Scheduled",
+            "estimated_cost": 8000
+          }
+        ],
+        "timestamp": "2025-09-17T15:18:01.779973"
+      },
+      "gpt_analysis": {
+        "gpt_response": {
+          "success": true,
+          "response": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+          "confidence": 0.7,
+          "query_type": "optimization",
+          "recommendations": [
+            "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing"
+          ],
+          "timestamp": "2025-09-17T15:18:01.804378"
+        },
+        "shift_report": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+        "analysis_timestamp": "2025-09-17T15:18:01.806386"
+      },
+      "overall_plant_status": {
+        "overall_performance_score": 0.7488563446749116,
+        "status": "Good",
+        "tsr_achievement": 0.40000000074145314,
+        "control_health": 1.0,
+        "plant_health": 0.8551299390419724,
+        "utility_savings_potential": 140295.43965767397,
+        "assessment_timestamp": "2025-09-17T15:18:01.806386"
+      },
+      "recommendations": [
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Implement leak detection and repair program",
+          "expected_benefit": "Annual savings: $28,703",
+          "implementation_time": "60 months"
+        },
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Optimize cooling tower performance",
+          "expected_benefit": "Annual savings: $0",
+          "implementation_time": "12 months"
+        },
+        {
+          "category": "Utility Optimization",
+          "priority": "Medium",
+          "recommendation": "Schedule belt replacement",
+          "expected_benefit": "Annual savings: $0",
+          "implementation_time": "24 months"
+        },
+        {
+          "category": "Equipment Maintenance",
+          "priority": "Medium",
+          "recommendation": "Check electrical connections and motor condition",
+          "expected_benefit": "Prevent equipment failure and downtime",
+          "implementation_time": "1-4 weeks"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-09-17T15:18:01.821434",
+      "plant_data": {
+        "production_rate_tph": 166.91867567542974,
+        "feed_rate_tph": 188.0731490744655,
+        "fuel_rate_tph": 17.616295462256797,
+        "kiln_speed_rpm": 3.0711173004670638,
+        "burning_zone_temp_c": 1444.3928916356872,
+        "cooler_outlet_temp_c": 106.12093347536957,
+        "secondary_air_temp_c": 852.7743179588707,
+        "free_lime_percent": 1.0156398775743973,
+        "nox_mg_nm3": 501.8348517939821,
+        "co_mg_nm3": 102.37723754304722,
+        "o2_percent": 3.0159189762262457,
+        "raw_mill_vibration_x": 2.862039797238983,
+        "raw_mill_vibration_y": 2.85167928220025,
+        "raw_mill_vibration_z": 2.4708383788419344,
+        "raw_mill_bearing_temp": 67.0304249427412,
+        "raw_mill_motor_temp": 83.79423230629966,
+        "raw_mill_power_kw": 2350.19631283792,
+        "raw_mill_throughput_tph": 81.58893230097539,
+        "cement_mill_vibration_x": 3.685733598691345,
+        "cement_mill_vibration_y": 3.570531107864615,
+        "cement_mill_vibration_z": 2.8102292995942175,
+        "cement_mill_power_kw": 2848.9942444825424,
+        "cement_mill_throughput_tph": 122.04450758835632,
+        "id_fan_flow_nm3_h": 42470.25642917887,
+        "id_fan_pressure_pa": -150.4096724757087,
+        "id_fan_current_a": 100.08899368054824,
+        "id_fan_current_b": 94.43203791804365,
+        "id_fan_current_c": 101.19287963035003,
+        "air_consumption_nm3_h": 1057.3637331423636,
+        "baseline_air_consumption_nm3_h": 801.3513669690567,
+        "air_pressure_bar": 8.426261085890475,
+        "compressor_power_kw": 149.70674856571662,
+        "water_consumption_m3_h": 51.01762292442162,
+        "cooling_inlet_temp_c": 31.13943896313369,
+        "cooling_outlet_temp_c": 40.86494777877953,
+        "ambient_temp_c": 25.538270790234712,
+        "conveyor_power_kw": 205.33993110985693,
+        "material_throughput_tph": 191.5270978327021,
+        "belt_speeds_mps": [
+          1.5,
+          2.0,
+          1.8
+        ],
+        "motor_loads_percent": [
+          75.0,
+          85.0,
+          60.0
+        ],
+        "available_fuels": {
+          "coal": 1000.0,
+          "petcoke": 200.0,
+          "rdf": 150.0,
+          "biomass": 100.0,
+          "tire_chips": 50.0
+        },
+        "fuel_costs": {
+          "coal": 0.08,
+          "petcoke": 0.12,
+          "rdf": 0.05,
+          "biomass": 0.06,
+          "tire_chips": 0.04
+        },
+        "quality_constraints": {
+          "max_chlorine": 0.15,
+          "max_sulfur": 2.0,
+          "max_alkali": 3.0
+        },
+        "kiln_torque_percent": 70.35765944609822,
+        "cooler_speed_rpm": 10.317477943538156,
+        "voltage_phase_a": 412.8388280847623,
+        "voltage_phase_b": 376.9729514498789,
+        "voltage_phase_c": 410.21854915912473,
+        "power_factor": 0.8256701577775641,
+        "availability_percent": 99.15700421256943,
+        "power_variation_percent": 5.03453189923901
+      },
+      "fuel_optimization": {
+        "optimization_result": {
+          "success": true,
+          "optimized_fuel_mix": {
+            "coal": 0.0,
+            "petcoke": 900.000008800401,
+            "rdf": 1.5207119549339744e-07,
+            "biomass": 600.0000075684958,
+            "tire_chips": 0.0
+          },
+          "tsr_achieved": 0.40000000074145314,
+          "quality_impact": {
+            "chlorine_input": 0.15000000096599542,
+            "sulfur_input": 2.139999997499335,
+            "alkali_input": 1.7800000025913054,
+            "quality_penalty": 0.44600000265809264
+          },
+          "total_cost": 144.00000151776143,
+          "optimization_message": "Optimization terminated successfully"
+        },
+        "rdf_scenarios": [
+          {
+            "base_production": 166.91867567542974,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.1,
+            "expected_savings": 12.0,
+            "quality_risk": "Low"
+          },
+          {
+            "base_production": 166.91867567542974,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.15,
+            "expected_savings": 18.0,
+            "quality_risk": "Medium"
+          },
+          {
+            "base_production": 166.91867567542974,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.2,
+            "expected_savings": 24.0,
+            "quality_risk": "Medium"
+          },
+          {
+            "base_production": 166.91867567542974,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.25,
+            "expected_savings": 30.0,
+            "quality_risk": "High"
+          },
+          {
+            "base_production": 166.91867567542974,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.3,
+            "expected_savings": 36.0,
+            "quality_risk": "High"
+          }
+        ],
+        "tsr_achieved": 0.40000000074145314,
+        "quality_impact": {
+          "chlorine_input": 0.15000000096599542,
+          "sulfur_input": 2.139999997499335,
+          "alkali_input": 1.7800000025913054,
+          "quality_penalty": 0.44600000265809264
+        },
+        "cost_analysis": 144.00000151776143
+      },
+      "control_setpoints": {
+        "setpoints": {
+          "kiln_speed_rpm": 2.8,
+          "fuel_rate_tph": 14.0,
+          "primary_air_percent": 40.0,
+          "cooler_speed_rpm": 6.0
+        },
+        "performance_prediction": {
+          "predicted_free_lime": 1.5456398775743974,
+          "predicted_thermal_energy": 483.8542899282744,
+          "predicted_nox": 487.6017229596263,
+          "prediction_confidence": 0.85,
+          "time_to_stabilize": 15
+        },
+        "coordination_factors": {
+          "kiln_speed": 0.0,
+          "fuel_rate": 0.0,
+          "primary_air": 1.5,
+          "cooler_speed": 0.7
+        },
+        "control_health": {
+          "health_score": 1.0,
+          "saturated_controllers": 0,
+          "control_activity": 0.0,
+          "status": "Good"
+        }
+      },
+      "utility_optimization": {
+        "compressed_air_analysis": {
+          "specific_consumption": 6.334604135000374,
+          "benchmark_comparison": 0.25338416540001496,
+          "leakage_rate": 0.3194757964182677,
+          "leakage_status": "High",
+          "pressure_optimization": {
+            "current_pressure": 8.426261085890475,
+            "optimal_pressure": 8.5,
+            "pressure_reduction_possible": 0,
+            "energy_savings_percent": 0,
+            "annual_savings_usd": 0
+          },
+          "compressor_efficiency": 0.8828624488145683,
+          "annual_energy_cost": 104914.48939485422,
+          "potential_savings": {
+            "leak_repair": 31474.346818456263,
+            "pressure_optimization": 6802.47462107657,
+            "compressor_sizing": 0,
+            "heat_recovery": 19828.838495627442,
+            "total": 58105.65993516028
+          }
+        },
+        "water_system_analysis": {
+          "specific_consumption": 0.3056435879207695,
+          "benchmark_comparison": 1.0188119597358984,
+          "usage_breakdown": {
+            "cooling": 0.6,
+            "dust_suppression": 0.2,
+            "equipment_cooling": 0.15,
+            "other": 0.05
+          },
+          "cooling_efficiency": {
+            "cooling_efficiency": 0.6345477772458246,
+            "cooling_range": 9.725508815645842,
+            "approach_temperature": 5.601168172898976,
+            "evaporation_rate": 0.29176526446937523,
+            "makeup_water_requirement": 0.3792948438101878
+          },
+          "recycling_potential": {
+            "recyclable_streams": {
+              "cooling_blowdown": 5.101762292442163,
+              "process_water": 2.5508811462210814,
+              "rainwater_harvesting": 0.1141552511415525
+            },
+            "total_recyclable_m3_h": 7.766798689804796,
+            "recycling_percentage": 15.223756507257628,
+            "treatment_cost_usd_m3": 0.7254944793807072,
+            "annual_savings_potential": 86713.73159540736
+          },
+          "optimization_opportunities": [
+            {
+              "opportunity": "Optimize cooling tower performance",
+              "potential_reduction": "10-15%",
+              "investment_required": "Low",
+              "payback_months": 12
+            },
+            {
+              "opportunity": "Implement water recycling system",
+              "potential_reduction": "20-30%",
+              "investment_required": "High",
+              "payback_months": 36
+            }
+          ]
+        },
+        "material_handling_analysis": {
+          "specific_energy": 1.0721194725626775,
+          "belt_optimization": {
+            "current_speeds": [
+              1.5,
+              2.0,
+              1.8
+            ],
+            "optimal_speeds": [
+              2.5,
+              1.8,
+              2.5
+            ],
+            "energy_savings_potential": 9.033333333333331
+          },
+          "motor_efficiency": {
+            "individual_efficiencies": [
+              0.94,
+              0.9319999999999999,
+              0.928
+            ],
+            "average_efficiency": 0.9333333333333332,
+            "underloaded_motors": [],
+            "overloaded_motors": [],
+            "optimization_potential": 0.666666666666671
+          },
+          "maintenance_optimization": [
+            {
+              "conveyor": "Conveyor_3",
+              "issue": "Belt replacement due",
+              "energy_impact": "5-15% increase in power consumption",
+              "recommended_action": "Schedule belt replacement"
+            },
+            {
+              "conveyor": "Conveyor_2",
+              "issue": "Possible alignment problems",
+              "energy_impact": "10-20% increase in power consumption",
+              "recommended_action": "Check belt alignment and roller condition"
+            }
+          ]
+        },
+        "total_savings_potential": {
+          "compressed_air_savings": 58105.65993516028,
+          "water_system_savings": 86713.73159540736,
+          "material_handling_savings": 934.400000000006,
+          "total_annual_savings": 145753.79153056763,
+          "roi_months": 24
+        },
+        "optimization_recommendations": [
+          {
+            "system": "Compressed Air",
+            "recommendation": "Implement leak detection and repair program",
+            "annual_savings": 31474.346818456263,
+            "investment_required": 5000,
+            "payback_months": 60,
+            "priority": "High"
+          },
+          {
+            "system": "Compressed Air",
+            "recommendation": "Optimize system pressure settings",
+            "annual_savings": 6802.47462107657,
+            "investment_required": 2000,
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Water System",
+            "recommendation": "Optimize cooling tower performance",
+            "potential_reduction": "10-15%",
+            "investment_required": "Low",
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Schedule belt replacement",
+            "energy_impact": "5-15% increase in power consumption",
+            "priority": "Medium"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Check belt alignment and roller condition",
+            "energy_impact": "10-20% increase in power consumption",
+            "priority": "Medium"
+          }
+        ],
+        "implementation_priority": [
+          {
+            "system": "Compressed Air",
+            "recommendation": "Optimize system pressure settings",
+            "annual_savings": 6802.47462107657,
+            "investment_required": 2000,
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Compressed Air",
+            "recommendation": "Implement leak detection and repair program",
+            "annual_savings": 31474.346818456263,
+            "investment_required": 5000,
+            "payback_months": 60,
+            "priority": "High"
+          },
+          {
+            "system": "Water System",
+            "recommendation": "Optimize cooling tower performance",
+            "potential_reduction": "10-15%",
+            "investment_required": "Low",
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Schedule belt replacement",
+            "energy_impact": "5-15% increase in power consumption",
+            "priority": "Medium"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Check belt alignment and roller condition",
+            "energy_impact": "10-20% increase in power consumption",
+            "priority": "Medium"
+          }
+        ]
+      },
+      "anomaly_detection": {
+        "plant_health_score": 0.8980139586329041,
+        "plant_status": "Excellent",
+        "equipment_health": {
+          "Raw_Mill_01": {
+            "equipment_name": "Raw_Mill_01",
+            "overall_health_score": 0.826098255726097,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.5971579452971516
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": [
+              {
+                "category": "Performance",
+                "recommendation": "Review operating parameters and optimize settings",
+                "urgency": "Scheduled",
+                "estimated_cost": 2000
+              }
+            ]
+          },
+          "Kiln_01": {
+            "equipment_name": "Kiln_01",
+            "overall_health_score": 0.9058846727879468,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.9960900306064007
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "Cement_Mill_01": {
+            "equipment_name": "Cement_Mill_01",
+            "overall_health_score": 0.8423421697497016,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.6783775154151743
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "ID_Fan_01": {
+            "equipment_name": "ID_Fan_01",
+            "overall_health_score": 0.8428975224957075,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.7266913165813481,
+              "performance_health": 0.8561234667518522
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          }
+        },
+        "process_anomalies": {
+          "overall_anomaly_score": 0.0,
+          "anomaly_status": "Normal",
+          "detected_anomalies": {
+            "kiln_speed_rpm": {
+              "is_anomaly": false,
+              "value": 3.0711173004670638,
+              "normal_range": [
+                2.8,
+                4.2
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "feed_rate_tph": {
+              "is_anomaly": false,
+              "value": 188.0731490744655,
+              "normal_range": [
+                150,
+                200
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "fuel_rate_tph": {
+              "is_anomaly": false,
+              "value": 17.616295462256797,
+              "normal_range": [
+                14,
+                20
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "burning_zone_temp_c": {
+              "is_anomaly": false,
+              "value": 1444.3928916356872,
+              "normal_range": [
+                1420,
+                1480
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "free_lime_percent": {
+              "is_anomaly": false,
+              "value": 1.0156398775743973,
+              "normal_range": [
+                0.5,
+                2.0
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "o2_percent": {
+              "is_anomaly": false,
+              "value": 3.0159189762262457,
+              "normal_range": [
+                2.0,
+                4.5
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "nox_mg_nm3": {
+              "is_anomaly": false,
+              "value": 501.8348517939821,
+              "normal_range": [
+                300,
+                800
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "co_mg_nm3": {
+              "is_anomaly": false,
+              "value": 102.37723754304722,
+              "normal_range": [
+                50,
+                250
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            }
+          },
+          "summary": {
+            "total_anomalies": 0,
+            "high_severity_count": 0,
+            "medium_severity_count": 0,
+            "most_critical_parameter": null,
+            "max_deviation_percent": 0
+          }
+        },
+        "active_alerts": [],
+        "recommendations": [
+          {
+            "category": "Equipment Maintenance",
+            "equipment": "Raw_Mill_01",
+            "recommendation": "Review operating parameters and optimize settings",
+            "urgency": "Scheduled",
+            "estimated_cost": 2000
+          }
+        ],
+        "timestamp": "2025-09-17T15:18:01.831286"
+      },
+      "gpt_analysis": {
+        "gpt_response": {
+          "success": true,
+          "response": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+          "confidence": 0.7,
+          "query_type": "optimization",
+          "recommendations": [
+            "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing"
+          ],
+          "timestamp": "2025-09-17T15:18:01.838365"
+        },
+        "shift_report": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+        "analysis_timestamp": "2025-09-17T15:18:01.839365"
+      },
+      "overall_plant_status": {
+        "overall_performance_score": 0.760941937540868,
+        "status": "Good",
+        "tsr_achievement": 0.40000000074145314,
+        "control_health": 1.0,
+        "plant_health": 0.8980139586329041,
+        "utility_savings_potential": 145753.79153056763,
+        "assessment_timestamp": "2025-09-17T15:18:01.839365"
+      },
+      "recommendations": [
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Implement leak detection and repair program",
+          "expected_benefit": "Annual savings: $31,474",
+          "implementation_time": "60 months"
+        },
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Optimize system pressure settings",
+          "expected_benefit": "Annual savings: $6,802",
+          "implementation_time": "12 months"
+        },
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Optimize cooling tower performance",
+          "expected_benefit": "Annual savings: $0",
+          "implementation_time": "12 months"
+        },
+        {
+          "category": "Equipment Maintenance",
+          "priority": "Medium",
+          "recommendation": "Review operating parameters and optimize settings",
+          "expected_benefit": "Prevent equipment failure and downtime",
+          "implementation_time": "1-4 weeks"
+        }
+      ]
+    },
+    {
+      "timestamp": "2025-09-17T15:18:01.842602",
+      "plant_data": {
+        "production_rate_tph": 175.98455689814892,
+        "feed_rate_tph": 206.33743616989847,
+        "fuel_rate_tph": 16.977589561709593,
+        "kiln_speed_rpm": 3.2706469843713046,
+        "burning_zone_temp_c": 1467.8611901679549,
+        "cooler_outlet_temp_c": 108.78381707222124,
+        "secondary_air_temp_c": 959.4287376407468,
+        "free_lime_percent": 1.0378195717590457,
+        "nox_mg_nm3": 497.4022966923165,
+        "co_mg_nm3": 102.3846666631925,
+        "o2_percent": 2.7138642820564516,
+        "raw_mill_vibration_x": 3.0913995181535165,
+        "raw_mill_vibration_y": 3.1656380540477347,
+        "raw_mill_vibration_z": 2.413030217301799,
+        "raw_mill_bearing_temp": 66.21994765154663,
+        "raw_mill_motor_temp": 79.38002981177222,
+        "raw_mill_power_kw": 1886.8357131745827,
+        "raw_mill_throughput_tph": 79.08800649721053,
+        "cement_mill_vibration_x": 3.612781786556618,
+        "cement_mill_vibration_y": 3.2243402047564307,
+        "cement_mill_vibration_z": 2.9703122668498727,
+        "cement_mill_power_kw": 2966.0451179332517,
+        "cement_mill_throughput_tph": 122.01670192080235,
+        "id_fan_flow_nm3_h": 46592.09931331237,
+        "id_fan_pressure_pa": -146.92054115753885,
+        "id_fan_current_a": 99.11803537117741,
+        "id_fan_current_b": 97.65177157564386,
+        "id_fan_current_c": 94.30531273660037,
+        "air_consumption_nm3_h": 986.8325979601502,
+        "baseline_air_consumption_nm3_h": 811.5676064723059,
+        "air_pressure_bar": 8.098378525498054,
+        "compressor_power_kw": 141.3270413283787,
+        "water_consumption_m3_h": 52.69135803842831,
+        "cooling_inlet_temp_c": 31.052192457945285,
+        "cooling_outlet_temp_c": 35.339952765761105,
+        "ambient_temp_c": 25.097962444588003,
+        "conveyor_power_kw": 194.82671367886954,
+        "material_throughput_tph": 195.94435619558652,
+        "belt_speeds_mps": [
+          1.5,
+          2.0,
+          1.8
+        ],
+        "motor_loads_percent": [
+          75.0,
+          85.0,
+          60.0
+        ],
+        "available_fuels": {
+          "coal": 1000.0,
+          "petcoke": 200.0,
+          "rdf": 150.0,
+          "biomass": 100.0,
+          "tire_chips": 50.0
+        },
+        "fuel_costs": {
+          "coal": 0.08,
+          "petcoke": 0.12,
+          "rdf": 0.05,
+          "biomass": 0.06,
+          "tire_chips": 0.04
+        },
+        "quality_constraints": {
+          "max_chlorine": 0.15,
+          "max_sulfur": 2.0,
+          "max_alkali": 3.0
+        },
+        "kiln_torque_percent": 65.98123797174839,
+        "cooler_speed_rpm": 10.325746742199682,
+        "voltage_phase_a": 381.07758007591974,
+        "voltage_phase_b": 408.1289527140992,
+        "voltage_phase_c": 385.975771103267,
+        "power_factor": 0.9059198283129032,
+        "availability_percent": 95.17396758161703,
+        "power_variation_percent": 4.915484664824378
+      },
+      "fuel_optimization": {
+        "optimization_result": {
+          "success": true,
+          "optimized_fuel_mix": {
+            "coal": 0.0,
+            "petcoke": 900.000008800401,
+            "rdf": 1.5207119549339744e-07,
+            "biomass": 600.0000075684958,
+            "tire_chips": 0.0
+          },
+          "tsr_achieved": 0.40000000074145314,
+          "quality_impact": {
+            "chlorine_input": 0.15000000096599542,
+            "sulfur_input": 2.139999997499335,
+            "alkali_input": 1.7800000025913054,
+            "quality_penalty": 0.44600000265809264
+          },
+          "total_cost": 144.00000151776143,
+          "optimization_message": "Optimization terminated successfully"
+        },
+        "rdf_scenarios": [
+          {
+            "base_production": 175.98455689814892,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.1,
+            "expected_savings": 12.0,
+            "quality_risk": "Low"
+          },
+          {
+            "base_production": 175.98455689814892,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.15,
+            "expected_savings": 18.0,
+            "quality_risk": "Medium"
+          },
+          {
+            "base_production": 175.98455689814892,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.2,
+            "expected_savings": 24.0,
+            "quality_risk": "Medium"
+          },
+          {
+            "base_production": 175.98455689814892,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.25,
+            "expected_savings": 30.0,
+            "quality_risk": "High"
+          },
+          {
+            "base_production": 175.98455689814892,
+            "current_tsr": 0.40000000074145314,
+            "rdf_percentage": 0.3,
+            "expected_savings": 36.0,
+            "quality_risk": "High"
+          }
+        ],
+        "tsr_achieved": 0.40000000074145314,
+        "quality_impact": {
+          "chlorine_input": 0.15000000096599542,
+          "sulfur_input": 2.139999997499335,
+          "alkali_input": 1.7800000025913054,
+          "quality_penalty": 0.44600000265809264
+        },
+        "cost_analysis": 144.00000151776143
+      },
+      "control_setpoints": {
+        "setpoints": {
+          "kiln_speed_rpm": 2.8,
+          "fuel_rate_tph": 14.0,
+          "primary_air_percent": 40.0,
+          "cooler_speed_rpm": 6.0
+        },
+        "performance_prediction": {
+          "predicted_free_lime": 1.5678195717590457,
+          "predicted_thermal_energy": 441.02515611888526,
+          "predicted_nox": 483.16916785796064,
+          "prediction_confidence": 0.85,
+          "time_to_stabilize": 15
+        },
+        "coordination_factors": {
+          "kiln_speed": 0.0,
+          "fuel_rate": 0.0,
+          "primary_air": 0.5,
+          "cooler_speed": 0.4
+        },
+        "control_health": {
+          "health_score": 1.0,
+          "saturated_controllers": 0,
+          "control_activity": 0.0,
+          "status": "Good"
+        }
+      },
+      "utility_optimization": {
+        "compressed_air_analysis": {
+          "specific_consumption": 5.607495426608823,
+          "benchmark_comparison": 0.22429981706435292,
+          "leakage_rate": 0.2159585844606097,
+          "leakage_status": "High",
+          "pressure_optimization": {
+            "current_pressure": 8.098378525498054,
+            "optimal_pressure": 8.5,
+            "pressure_reduction_possible": 0,
+            "energy_savings_percent": 0,
+            "annual_savings_usd": 0
+          },
+          "compressor_efficiency": 0.8728271220112854,
+          "annual_energy_cost": 99041.9905629278,
+          "potential_savings": {
+            "leak_repair": 21388.96808413095,
+            "pressure_optimization": 4148.5220192805855,
+            "compressor_sizing": 0,
+            "heat_recovery": 18718.93621639335,
+            "total": 44256.42631980489
+          }
+        },
+        "water_system_analysis": {
+          "specific_consumption": 0.29940898773818797,
+          "benchmark_comparison": 0.9980299591272933,
+          "usage_breakdown": {
+            "cooling": 0.6,
+            "dust_suppression": 0.2,
+            "equipment_cooling": 0.15,
+            "other": 0.05
+          },
+          "cooling_efficiency": {
+            "cooling_efficiency": 0.41864522161789214,
+            "cooling_range": 4.2877603078158195,
+            "approach_temperature": 5.954230013357282,
+            "evaporation_rate": 0.1286328092344746,
+            "makeup_water_requirement": 0.16722265200481698
+          },
+          "recycling_potential": {
+            "recyclable_streams": {
+              "cooling_blowdown": 5.269135803842832,
+              "process_water": 2.634567901921416,
+              "rainwater_harvesting": 0.1141552511415525
+            },
+            "total_recyclable_m3_h": 8.0178589569058,
+            "recycling_percentage": 15.216648906749183,
+            "treatment_cost_usd_m3": 0.7257399345299796,
+            "annual_savings_potential": 89499.4963191601
+          },
+          "optimization_opportunities": [
+            {
+              "opportunity": "Optimize cooling tower performance",
+              "potential_reduction": "10-15%",
+              "investment_required": "Low",
+              "payback_months": 12
+            },
+            {
+              "opportunity": "Implement water recycling system",
+              "potential_reduction": "20-30%",
+              "investment_required": "High",
+              "payback_months": 36
+            }
+          ]
+        },
+        "material_handling_analysis": {
+          "specific_energy": 0.9942961229482855,
+          "belt_optimization": {
+            "current_speeds": [
+              1.5,
+              2.0,
+              1.8
+            ],
+            "optimal_speeds": [
+              2.5,
+              1.8,
+              2.5
+            ],
+            "energy_savings_potential": 9.033333333333331
+          },
+          "motor_efficiency": {
+            "individual_efficiencies": [
+              0.94,
+              0.9319999999999999,
+              0.928
+            ],
+            "average_efficiency": 0.9333333333333332,
+            "underloaded_motors": [],
+            "overloaded_motors": [],
+            "optimization_potential": 0.666666666666671
+          },
+          "maintenance_optimization": [
+            {
+              "conveyor": "Conveyor_3",
+              "issue": "Belt replacement due",
+              "energy_impact": "5-15% increase in power consumption",
+              "recommended_action": "Schedule belt replacement"
+            },
+            {
+              "conveyor": "Conveyor_2",
+              "issue": "Possible alignment problems",
+              "energy_impact": "10-20% increase in power consumption",
+              "recommended_action": "Check belt alignment and roller condition"
+            }
+          ]
+        },
+        "total_savings_potential": {
+          "compressed_air_savings": 44256.42631980489,
+          "water_system_savings": 89499.4963191601,
+          "material_handling_savings": 934.400000000006,
+          "total_annual_savings": 134690.32263896498,
+          "roi_months": 24
+        },
+        "optimization_recommendations": [
+          {
+            "system": "Compressed Air",
+            "recommendation": "Implement leak detection and repair program",
+            "annual_savings": 21388.96808413095,
+            "investment_required": 5000,
+            "payback_months": 60,
+            "priority": "High"
+          },
+          {
+            "system": "Compressed Air",
+            "recommendation": "Optimize system pressure settings",
+            "annual_savings": 4148.5220192805855,
+            "investment_required": 2000,
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Water System",
+            "recommendation": "Optimize cooling tower performance",
+            "potential_reduction": "10-15%",
+            "investment_required": "Low",
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Schedule belt replacement",
+            "energy_impact": "5-15% increase in power consumption",
+            "priority": "Medium"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Check belt alignment and roller condition",
+            "energy_impact": "10-20% increase in power consumption",
+            "priority": "Medium"
+          }
+        ],
+        "implementation_priority": [
+          {
+            "system": "Compressed Air",
+            "recommendation": "Implement leak detection and repair program",
+            "annual_savings": 21388.96808413095,
+            "investment_required": 5000,
+            "payback_months": 60,
+            "priority": "High"
+          },
+          {
+            "system": "Compressed Air",
+            "recommendation": "Optimize system pressure settings",
+            "annual_savings": 4148.5220192805855,
+            "investment_required": 2000,
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Water System",
+            "recommendation": "Optimize cooling tower performance",
+            "potential_reduction": "10-15%",
+            "investment_required": "Low",
+            "payback_months": 12,
+            "priority": "High"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Schedule belt replacement",
+            "energy_impact": "5-15% increase in power consumption",
+            "priority": "Medium"
+          },
+          {
+            "system": "Material Handling",
+            "recommendation": "Check belt alignment and roller condition",
+            "energy_impact": "10-20% increase in power consumption",
+            "priority": "Medium"
+          }
+        ]
+      },
+      "anomaly_detection": {
+        "plant_health_score": 0.8652107911629399,
+        "plant_status": "Excellent",
+        "equipment_health": {
+          "Raw_Mill_01": {
+            "equipment_name": "Raw_Mill_01",
+            "overall_health_score": 0.8404980314696423,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.669156824014878
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "Kiln_01": {
+            "equipment_name": "Kiln_01",
+            "overall_health_score": 0.9047756880787143,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.9905451070602386
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "Cement_Mill_01": {
+            "equipment_name": "Cement_Mill_01",
+            "overall_health_score": 0.8389423550458266,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.8666666666666667,
+              "performance_health": 0.6613784418957993
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          },
+          "ID_Fan_01": {
+            "equipment_name": "ID_Fan_01",
+            "overall_health_score": 0.859845589194045,
+            "health_status": "Excellent",
+            "health_indicators": {
+              "vibration_health": 0.8,
+              "thermal_health": 1.0,
+              "electrical_health": 0.7732293725127883,
+              "performance_health": 0.8826912303292396
+            },
+            "failure_prediction": {
+              "risk_level": "Low",
+              "predicted_failure_days": null,
+              "maintenance_urgency": "Scheduled",
+              "health_trend": "Stable",
+              "confidence": 0.7
+            },
+            "maintenance_recommendations": []
+          }
+        },
+        "process_anomalies": {
+          "overall_anomaly_score": 0.125,
+          "anomaly_status": "Minor Anomalies",
+          "detected_anomalies": {
+            "kiln_speed_rpm": {
+              "is_anomaly": false,
+              "value": 3.2706469843713046,
+              "normal_range": [
+                2.8,
+                4.2
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "feed_rate_tph": {
+              "is_anomaly": true,
+              "value": 206.33743616989847,
+              "normal_range": [
+                150,
+                200
+              ],
+              "severity": "Medium",
+              "deviation_percent": 3.168718084949233,
+              "detection_method": "Rule-based"
+            },
+            "fuel_rate_tph": {
+              "is_anomaly": false,
+              "value": 16.977589561709593,
+              "normal_range": [
+                14,
+                20
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "burning_zone_temp_c": {
+              "is_anomaly": false,
+              "value": 1467.8611901679549,
+              "normal_range": [
+                1420,
+                1480
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "free_lime_percent": {
+              "is_anomaly": false,
+              "value": 1.0378195717590457,
+              "normal_range": [
+                0.5,
+                2.0
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "o2_percent": {
+              "is_anomaly": false,
+              "value": 2.7138642820564516,
+              "normal_range": [
+                2.0,
+                4.5
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "nox_mg_nm3": {
+              "is_anomaly": false,
+              "value": 497.4022966923165,
+              "normal_range": [
+                300,
+                800
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            },
+            "co_mg_nm3": {
+              "is_anomaly": false,
+              "value": 102.3846666631925,
+              "normal_range": [
+                50,
+                250
+              ],
+              "severity": "Low",
+              "deviation_percent": 0.0,
+              "detection_method": "Rule-based"
+            }
+          },
+          "summary": {
+            "total_anomalies": 1,
+            "high_severity_count": 0,
+            "medium_severity_count": 1,
+            "most_critical_parameter": "feed_rate_tph",
+            "max_deviation_percent": 3.168718084949233
+          }
+        },
+        "active_alerts": [
+          {
+            "type": "Process Anomaly",
+            "parameter": "feed_rate_tph",
+            "severity": "Medium",
+            "message": "feed_rate_tph is 206.34, outside normal range (150, 200)",
+            "recommended_action": "Investigate process conditions",
+            "timestamp": "2025-09-17 15:18:01.854576"
+          }
+        ],
+        "recommendations": [],
+        "timestamp": "2025-09-17T15:18:01.854576"
+      },
+      "gpt_analysis": {
+        "gpt_response": {
+          "success": true,
+          "response": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+          "confidence": 0.7,
+          "query_type": "optimization",
+          "recommendations": [
+            "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing"
+          ],
+          "timestamp": "2025-09-17T15:18:01.856477"
+        },
+        "shift_report": "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm\u00b3.",
+        "analysis_timestamp": "2025-09-17T15:18:01.856477"
+      },
+      "overall_plant_status": {
+        "overall_performance_score": 0.7499752784504762,
+        "status": "Good",
+        "tsr_achievement": 0.40000000074145314,
+        "control_health": 1.0,
+        "plant_health": 0.8652107911629399,
+        "utility_savings_potential": 134690.32263896498,
+        "assessment_timestamp": "2025-09-17T15:18:01.856477"
+      },
+      "recommendations": [
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Implement leak detection and repair program",
+          "expected_benefit": "Annual savings: $21,389",
+          "implementation_time": "60 months"
+        },
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Optimize system pressure settings",
+          "expected_benefit": "Annual savings: $4,149",
+          "implementation_time": "12 months"
+        },
+        {
+          "category": "Utility Optimization",
+          "priority": "High",
+          "recommendation": "Optimize cooling tower performance",
+          "expected_benefit": "Annual savings: $0",
+          "implementation_time": "12 months"
+        }
+      ]
+    }
+  ],
+  "performance_summary": {
+    "period_days": 7,
+    "data_points": 10,
+    "average_metrics": {
+      "avg_tsr_achieved": 0.40000000074145314,
+      "avg_plant_health_score": 0.8673979671706695,
+      "avg_control_health_score": 1.0,
+      "avg_utility_savings_potential": 135416.59649874552,
+      "avg_overall_performance_score": 0.7507036409173538
+    },
+    "trend_analysis": {
+      "performance_trend": "Declining",
+      "trend_magnitude": 0.016253059337878795,
+      "recommendation": "Review and adjust optimization parameters"
+    }
+  },
+  "platform_status": {
+    "platform_status": "Operational",
+    "agents_initialized": {
+      "alternative_fuel_optimizer": true,
+      "cement_plant_gpt": true,
+      "kiln_cooler_controller": true,
+      "utility_optimizer": true,
+      "anomaly_detector": true
+    },
+    "optimization_history_count": 10,
+    "performance_metrics_count": 10,
+    "last_processing_time": "2025-09-17T15:18:02.024439",
+    "platform_version": "1.0.0",
+    "jk_cement_requirements_coverage": {
+      "alternative_fuel_optimization": "\u2705 Implemented",
+      "cement_plant_gpt_interface": "\u2705 Implemented",
+      "unified_kiln_cooler_controller": "\u2705 Implemented",
+      "utility_optimization": "\u2705 Implemented",
+      "plant_anomaly_detection": "\u2705 Implemented"
+    }
+  },
+  "export_files": {
+    "json": "jk_cement_platform_results_20250917_151802.json",
+    "csv": "jk_cement_platform_metrics_20250917_151802.csv"
+  },
+  "training_data": "     production_rate_tph  feed_rate_tph  ...  availability_percent  power_variation_percent\n0             170.273353     209.090506  ...             94.945583                 4.984168\n1             173.287758     181.863249  ...             90.807926                 5.288095\n2             170.594216     203.961175  ...            104.706762                 4.896033\n3             169.100002     193.458114  ...             99.589548                 4.975491\n4             162.791237     197.132332  ...             94.371581                 4.865151\n..                   ...            ...  ...                   ...                      ...\n995           158.543920     187.472688  ...             89.739080                 4.510919\n996           177.266627     190.367734  ...             98.480452                 4.809472\n997           168.634365     198.221509  ...             88.547854                 4.987064\n998           160.972023     183.420716  ...             98.541684                 5.008358\n999           187.681489     199.245929  ...             93.266002                 4.804620\n\n[1000 rows x 51 columns]",
+  "summary": {
+    "test_timestamp": "2025-09-17T15:18:03.068986",
+    "individual_agents_tested": 5,
+    "unified_platform_tests": 5,
+    "performance_tracking_active": true,
+    "export_functionality_working": true,
+    "anomaly_models_trained": true,
+    "training_samples": 1000,
+    "platform_status": "Operational",
+    "jk_cement_requirements_coverage": {
+      "alternative_fuel_optimization": "\u2705 Implemented",
+      "cement_plant_gpt_interface": "\u2705 Implemented",
+      "unified_kiln_cooler_controller": "\u2705 Implemented",
+      "utility_optimization": "\u2705 Implemented",
+      "plant_anomaly_detection": "\u2705 Implemented"
+    }
+  }
+}

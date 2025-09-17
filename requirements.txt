@@ -1,58 +1,39 @@
-# Core
-pandas>=2.0
-numpy>=1.24
-scipy>=1.11
-pydantic>=2.5
-python-dotenv>=1.0
-
-# Google Cloud
-google-cloud-bigquery>=3.14
-google-cloud-storage>=2.14
-google-cloud-aiplatform>=1.66
-google-auth>=2.30
-PyYAML>=6.0
-
-# Google AI
-google-generativeai>=0.7.0
-
-# ML (optional scaffolds)
-tensorflow>=2.15; platform_system != "Windows" or platform_machine != "ARM64"
-torch>=2.2; platform_system != "Windows" or platform_machine != "ARM64"
-
-# Advanced AI Features
-ydata-synthetic>=1.1.0  # TimeGAN implementation
-pina-torch>=0.1.0  # Physics-Informed Neural Networks
-pml-pinn>=0.1.0  # Alternative PINN implementation
-DWSIM>=6.0.0  # Chemical process simulator
-
-# Data Sourcing
-requests>=2.31.0
-kaggle>=1.5.0
-zipfile38>=0.0.3
-
-# Enhanced Simulation
-PyYAML>=6.0
-scikit-learn>=1.3
-matplotlib>=3.6.0
+# JK Cement Digital Twin Platform - Requirements
+# Core dependencies (required)
+numpy>=1.21.0
+pandas>=1.3.0
+scipy>=1.7.0
+scikit-learn>=1.0.0
+pyyaml>=6.0
+matplotlib>=3.5.0
 seaborn>=0.11.0
 
-# Optimization / Frontend
-pymoo>=0.6.0
-streamlit>=1.28.0
+# Optional dependencies for enhanced functionality
+# Uncomment these for full functionality:
 
-# Dev
-pytest>=7.4
-black>=24.3
-isort>=5.13
-mypy>=1.10
+# Google Generative AI (for GPT interface)
+# google-generativeai>=0.3.0
 
-# Industrial protocols (optional, used by industrial modules)
-paho-mqtt>=1.6.1
-opcua>=0.98.14
-firebase-admin>=6.5.0
-opencv-python>=4.9.0.80
-google-cloud-vision>=3.7.2
-scikit-learn>=1.3
-ydata-synthetic>=1.1.0
-matplotlib>=3.6.0
-seaborn>=0.11.0
+# TensorFlow/PyTorch (for advanced ML models)
+# tensorflow>=2.8.0
+# torch>=1.12.0
+
+# Additional ML libraries
+# xgboost>=1.6.0
+# lightgbm>=3.3.0
+
+# Database connectors
+# sqlalchemy>=1.4.0
+# psycopg2-binary>=2.9.0
+
+# Cloud services
+# google-cloud-bigquery>=3.0.0
+# google-cloud-storage>=2.0.0
+
+# Web framework (for API)
+# fastapi>=0.78.0
+# uvicorn>=0.18.0
+
+# Monitoring and logging
+# prometheus-client>=0.14.0
+# structlog>=22.0.0
