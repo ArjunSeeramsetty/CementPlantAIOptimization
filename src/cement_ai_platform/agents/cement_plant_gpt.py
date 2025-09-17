@@ -5,38 +5,42 @@ import pandas as pd
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 
-# Conditional import for Google Generative AI
+# Import production GPT implementation
 try:
-    import google.generativeai as genai
-    GENAI_AVAILABLE = True
+    from cement_ai_platform.vertex_ai.production_gpt import ProductionCementPlantGPT
+    PRODUCTION_GPT_AVAILABLE = True
 except ImportError:
-    GENAI_AVAILABLE = False
-    # Create a mock genai module for fallback
-    class MockGenai:
-        @staticmethod
-        def configure(**kwargs):
-            pass
-        
-        class GenerativeModel:
-            def __init__(self, model_name):
-                self.model_name = model_name
-            
-            def generate_content(self, prompt):
-                class MockResponse:
-                    def __init__(self, text):
-                        self.text = text
-                
-                # Return a fallback response based on prompt content
-                if 'free lime' in prompt.lower():
-                    return MockResponse("High free lime typically indicates insufficient burning. Check burning zone temperature (target: 1450°C), reduce kiln speed, or increase fuel rate. Normal free lime should be <1.5%.")
-                elif 'nox' in prompt.lower() or 'emission' in prompt.lower():
-                    return MockResponse("High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm³.")
-                elif 'energy' in prompt.lower():
-                    return MockResponse("Energy optimization focuses on thermal efficiency (target: <720 kcal/kg) and electrical consumption (<75 kWh/t). Check kiln insulation, optimize combustion, and review mill operations.")
-                else:
-                    return MockResponse("Based on current plant data, the system is operating within normal parameters. Continue monitoring key performance indicators and follow standard operating procedures.")
+    PRODUCTION_GPT_AVAILABLE = False
+    print("Warning: Production GPT not available. Using fallback implementation.")
     
-    genai = MockGenai()
+    # Fallback implementation
+    class ProductionCementPlantGPT:
+        def __init__(self, project_id=None, location="us-central1"):
+            self.project_id = project_id or "cement-ai-opt-38517"
+            self.location = location
+            print("🔄 Using fallback GPT implementation")
+        
+        def query_with_enterprise_features(self, prompt, context_data=None):
+            return self._fallback_response(prompt, context_data)
+        
+        def _fallback_response(self, prompt, context_data):
+            prompt_lower = prompt.lower()
+            if 'free lime' in prompt_lower:
+                response_text = "High free lime typically indicates insufficient burning. Check burning zone temperature (target: 1450°C), reduce kiln speed, or increase fuel rate. Normal free lime should be <1.5%."
+            elif 'nox' in prompt_lower or 'emission' in prompt_lower:
+                response_text = "High NOx emissions can be reduced by optimizing excess air (target: 2-4% O2), using staged combustion, or adjusting fuel/air mixing. Current limit: <500 mg/Nm³."
+            elif 'energy' in prompt_lower:
+                response_text = "Energy optimization focuses on thermal efficiency (target: <720 kcal/kg) and electrical consumption (<75 kWh/t). Check kiln insulation, optimize combustion, and review mill operations."
+            else:
+                response_text = "Based on current plant data, the system is operating within normal parameters. Continue monitoring key performance indicators and follow standard operating procedures."
+            
+            return {
+                'success': True,
+                'response': response_text,
+                'model_version': "fallback-v1.0",
+                'enterprise_features': False,
+                'fallback_mode': True
+            }
 
 try:
     from cement_ai_platform.config.settings import Settings
@@ -115,12 +119,15 @@ class CementPlantGPT:
     """
     Advanced cement plant AI assistant with domain expertise.
     Provides natural language interface for plant operations, troubleshooting, and optimization.
+    Now uses production Vertex AI services with enterprise features.
     """
     
-    def __init__(self):
+    def __init__(self, project_id: str = None):
         self.settings = Settings()
         self.knowledge_base = CementPlantKnowledgeBase()
-        self._initialize_ai_model()
+        
+        # Use production GPT implementation
+        self.production_gpt = ProductionCementPlantGPT(project_id)
         self.conversation_history = []
     
     def _initialize_ai_model(self):
@@ -171,7 +178,7 @@ Always prioritize safety, product quality, and operational efficiency in your re
     
     def query(self, user_prompt: str, context_data: Optional[Dict] = None) -> Dict[str, Any]:
         """
-        Process user query with full cement plant context
+        Process user query with full cement plant context using production services
         
         Args:
             user_prompt: User's question or request
@@ -181,57 +188,27 @@ Always prioritize safety, product quality, and operational efficiency in your re
             Dict containing response and metadata
         """
         
-        # Always use the model (either real or mock)
+        # Use production GPT implementation
+        result = self.production_gpt.query_with_enterprise_features(user_prompt, context_data)
         
-        # Build full prompt with context
-        system_prompt = self._build_system_prompt()
+        # Store in conversation history
+        self.conversation_history.append({
+            'timestamp': datetime.now().isoformat(),
+            'user_query': user_prompt,
+            'ai_response': result.get('response', ''),
+            'context_provided': context_data is not None,
+            'enterprise_features': result.get('enterprise_features', False)
+        })
         
-        full_prompt = f"{system_prompt}\n\nCURRENT PLANT DATA:\n"
-        if context_data:
-            # Convert pandas Timestamps to strings for JSON serialization
-            def convert_timestamps(obj):
-                if isinstance(obj, pd.Timestamp):
-                    return obj.isoformat()
-                elif isinstance(obj, dict):
-                    return {k: convert_timestamps(v) for k, v in obj.items()}
-                elif isinstance(obj, list):
-                    return [convert_timestamps(item) for item in obj]
-                else:
-                    return obj
-            
-            context_data_serializable = convert_timestamps(context_data)
-            full_prompt += json.dumps(context_data_serializable, indent=2)
+        # Add additional metadata
+        result.update({
+            'confidence': self._assess_confidence(user_prompt, result.get('response', '')),
+            'query_type': self._classify_query(user_prompt),
+            'recommendations': self._extract_recommendations(result.get('response', '')),
+            'timestamp': datetime.now().isoformat()
+        })
         
-        full_prompt += f"\n\nUSER QUERY: {user_prompt}\n\nRESPONSE:"
-        
-        try:
-            # Generate response
-            response = self.model.generate_content(full_prompt)
-            
-            # Store in conversation history
-            self.conversation_history.append({
-                'timestamp': datetime.now().isoformat(),
-                'user_query': user_prompt,
-                'ai_response': response.text,
-                'context_provided': context_data is not None
-            })
-            
-            return {
-                'success': True,
-                'response': response.text,
-                'confidence': self._assess_confidence(user_prompt, response.text),
-                'query_type': self._classify_query(user_prompt),
-                'recommendations': self._extract_recommendations(response.text),
-                'timestamp': datetime.now().isoformat()
-            }
-            
-        except Exception as e:
-            return {
-                'success': False,
-                'error': str(e),
-                'fallback_response': self._fallback_response(user_prompt),
-                'timestamp': datetime.now().isoformat()
-            }
+        return result
     
     def _fallback_response(self, user_prompt: str) -> Dict[str, Any]:
         """Provide fallback response when AI model is unavailable"""

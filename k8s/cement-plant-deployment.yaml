@@ -1,0 +1,298 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: cement-plant-digital-twin
+  namespace: cement-plant-ai
+  labels:
+    app: cement-plant-ai
+    tier: production
+    version: v1.0
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: cement-plant-ai
+  template:
+    metadata:
+      labels:
+        app: cement-plant-ai
+        tier: production
+      annotations:
+        prometheus.io/scrape: "true"
+        prometheus.io/port: "8080"
+        prometheus.io/path: "/metrics"
+    spec:
+      serviceAccountName: cement-plant-sa
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 1000
+        fsGroup: 2000
+      containers:
+      - name: cement-plant-api
+        image: gcr.io/cement-ai-opt-38517/cement-plant-ai:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        - containerPort: 9090
+          name: metrics
+          protocol: TCP
+        env:
+        - name: CEMENT_GCP_PROJECT
+          value: "cement-ai-opt-38517"
+        - name: CEMENT_ENV
+          value: "production"
+        - name: CEMENT_BQ_DATASET
+          value: "cement_analytics"
+        - name: CEMENT_BQ_LOCATION
+          value: "US"
+        - name: CEMENT_VERTEX_AI_LOCATION
+          value: "us-central1"
+        - name: CEMENT_LOG_LEVEL
+          value: "INFO"
+        - name: CEMENT_MONITORING_ENABLED
+          value: "true"
+        - name: CEMENT_CACHE_ENABLED
+          value: "true"
+        - name: CEMENT_REDIS_HOST
+          value: "redis-service"
+        - name: CEMENT_REDIS_PORT
+          value: "6379"
+        resources:
+          requests:
+            cpu: 500m
+            memory: 1Gi
+            ephemeral-storage: 1Gi
+          limits:
+            cpu: 2000m
+            memory: 4Gi
+            ephemeral-storage: 2Gi
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 30
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 5
+          periodSeconds: 5
+          timeoutSeconds: 3
+          failureThreshold: 3
+        startupProbe:
+          httpGet:
+            path: /startup
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          timeoutSeconds: 5
+          failureThreshold: 30
+        volumeMounts:
+        - name: config-volume
+          mountPath: /app/config
+          readOnly: true
+        - name: logs-volume
+          mountPath: /app/logs
+        - name: tmp-volume
+          mountPath: /tmp
+      - name: redis-cache
+        image: redis:7-alpine
+        ports:
+        - containerPort: 6379
+          name: redis
+        resources:
+          requests:
+            cpu: 100m
+            memory: 128Mi
+          limits:
+            cpu: 500m
+            memory: 512Mi
+        volumeMounts:
+        - name: redis-data
+          mountPath: /data
+        livenessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          exec:
+            command:
+            - redis-cli
+            - ping
+          initialDelaySeconds: 5
+          periodSeconds: 5
+      volumes:
+      - name: config-volume
+        configMap:
+          name: cement-plant-config
+      - name: logs-volume
+        emptyDir: {}
+      - name: tmp-volume
+        emptyDir: {}
+      - name: redis-data
+        emptyDir: {}
+      nodeSelector:
+        cloud.google.com/gke-nodepool: cement-plant-pool
+      tolerations:
+      - key: "cement-plant-workload"
+        operator: "Equal"
+        value: "true"
+        effect: "NoSchedule"
+      affinity:
+        podAntiAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+          - weight: 100
+            podAffinityTerm:
+              labelSelector:
+                matchExpressions:
+                - key: app
+                  operator: In
+                  values:
+                  - cement-plant-ai
+              topologyKey: kubernetes.io/hostname
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cement-plant-service
+  namespace: cement-plant-ai
+  labels:
+    app: cement-plant-ai
+spec:
+  selector:
+    app: cement-plant-ai
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+    name: http
+  - protocol: TCP
+    port: 6379
+    targetPort: 6379
+    name: redis
+  type: ClusterIP
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: redis-service
+  namespace: cement-plant-ai
+  labels:
+    app: redis
+spec:
+  selector:
+    app: cement-plant-ai
+  ports:
+  - protocol: TCP
+    port: 6379
+    targetPort: 6379
+    name: redis
+  type: ClusterIP
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cement-plant-ingress
+  namespace: cement-plant-ai
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: cement-plant-ip
+    networking.gke.io/managed-certificates: cement-plant-ssl-cert
+    kubernetes.io/ingress.class: "gce"
+    nginx.ingress.kubernetes.io/ssl-redirect: "true"
+    nginx.ingress.kubernetes.io/force-ssl-redirect: "true"
+spec:
+  rules:
+  - host: cement-plant.jkcement.com
+    http:
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cement-plant-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - cement-plant.jkcement.com
+    secretName: cement-plant-tls
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cement-plant-config
+  namespace: cement-plant-ai
+data:
+  plant_config.yml: |
+    # JK Cement Production Configuration
+    plant:
+      name: "JK Cement Digital Twin"
+      location: "India"
+      capacity_tpd: 24340000
+      type: "dry_process"
+    
+    # Production Parameters
+    process:
+      kiln_speed_range_rpm: [2.8, 4.2]
+      fuel_rate_range_tph: [14.0, 20.0]
+      burning_zone_temp_range_c: [1420, 1480]
+      free_lime_target_percent: 1.0
+    
+    # Quality Targets
+    quality:
+      free_lime_percent: [0.5, 1.5]
+      compressive_strength_28d_mpa: [42.5, 52.5]
+      blaine_fineness_cm2_g: [3200, 3800]
+    
+    # Energy Targets
+    energy:
+      thermal_energy_kcal_kg: [680, 720]
+      electrical_energy_kwh_t: [65, 75]
+    
+    # Environmental Limits
+    environmental:
+      nox_mg_nm3: 500
+      so2_mg_nm3: 200
+      dust_mg_nm3: 30
+      co2_kg_t: 850
+---
+apiVersion: v1
+kind: ServiceAccount
+metadata:
+  name: cement-plant-sa
+  namespace: cement-plant-ai
+  annotations:
+    iam.gke.io/gcp-service-account: cement-plant-sa@cement-ai-opt-38517.iam.gserviceaccount.com
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cement-plant-secrets
+  namespace: cement-plant-ai
+type: Opaque
+data:
+  # Base64 encoded secrets
+  google-application-credentials: ""  # Would contain service account key
+  redis-password: ""  # Redis password if needed
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: cement-plant-pdb
+  namespace: cement-plant-ai
+spec:
+  minAvailable: 2
+  selector:
+    matchLabels:
+      app: cement-plant-ai

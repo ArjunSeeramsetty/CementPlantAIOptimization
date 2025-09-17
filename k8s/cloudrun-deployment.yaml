@@ -1,0 +1,115 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: cement-plant-ai
+  namespace: cement-plant-ai
+  annotations:
+    run.googleapis.com/ingress: all
+    run.googleapis.com/execution-environment: gen2
+    run.googleapis.com/cpu-throttling: "false"
+    run.googleapis.com/memory: "4Gi"
+    run.googleapis.com/cpu: "2"
+    autoscaling.knative.dev/maxScale: "100"
+    autoscaling.knative.dev/minScale: "2"
+spec:
+  template:
+    metadata:
+      annotations:
+        run.googleapis.com/cloudsql-instances: "cement-ai-opt-38517:us-central1:cement-plant-db"
+        run.googleapis.com/vpc-access-connector: "cement-plant-connector"
+        run.googleapis.com/vpc-access-egress: "private-ranges-only"
+    spec:
+      containerConcurrency: 100
+      timeoutSeconds: 3600
+      containers:
+      - image: gcr.io/cement-ai-opt-38517/cement-plant-ai:latest
+        ports:
+        - containerPort: 8080
+        env:
+        - name: CEMENT_GCP_PROJECT
+          value: cement-ai-opt-38517
+        - name: CEMENT_BQ_DATASET
+          value: cement_analytics
+        - name: CEMENT_ENV
+          value: production
+        - name: CEMENT_VERTEX_AI_LOCATION
+          value: us-central1
+        - name: CEMENT_LOG_LEVEL
+          value: INFO
+        - name: CEMENT_MONITORING_ENABLED
+          value: "true"
+        - name: CEMENT_CACHE_ENABLED
+          value: "true"
+        - name: CEMENT_REDIS_HOST
+          value: "10.0.0.3"  # Redis Memorystore IP
+        - name: CEMENT_REDIS_PORT
+          value: "6379"
+        - name: CEMENT_REDIS_AUTH
+          valueFrom:
+            secretKeyRef:
+              name: cement-plant-secrets
+              key: redis-password
+        resources:
+          limits:
+            cpu: "2"
+            memory: "4Gi"
+        livenessProbe:
+          httpGet:
+            path: /health
+            port: 8080
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /ready
+            port: 8080
+          initialDelaySeconds: 5
+          periodSeconds: 5
+        startupProbe:
+          httpGet:
+            path: /startup
+            port: 8080
+          initialDelaySeconds: 10
+          periodSeconds: 10
+          failureThreshold: 30
+      serviceAccountName: cement-plant-sa@cement-ai-opt-38517.iam.gserviceaccount.com
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: cement-plant-cloudrun-service
+  namespace: cement-plant-ai
+spec:
+  selector:
+    app: cement-plant-ai
+  ports:
+  - protocol: TCP
+    port: 80
+    targetPort: 8080
+  type: LoadBalancer
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: cement-plant-cloudrun-ingress
+  namespace: cement-plant-ai
+  annotations:
+    kubernetes.io/ingress.global-static-ip-name: cement-plant-cloudrun-ip
+    networking.gke.io/managed-certificates: cement-plant-cloudrun-ssl-cert
+    kubernetes.io/ingress.class: "gce"
+spec:
+  rules:
+  - host: api.cement-plant.jkcement.com
+    http:
+      paths:
+      - path: /*
+        pathType: ImplementationSpecific
+        backend:
+          service:
+            name: cement-plant-cloudrun-service
+            port:
+              number: 80
+  tls:
+  - hosts:
+    - api.cement-plant.jkcement.com
+    secretName: cement-plant-cloudrun-tls
