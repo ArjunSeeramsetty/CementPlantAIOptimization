@@ -277,13 +277,14 @@ class ProductionGCPServices:
             return self._fallback_ml_prediction(model_name, input_data)
         
         try:
-            # Construct prediction query
+            # Construct prediction query - model_name should be just the model name, not full path
+            model_path = f"{self.project_id}.cement_analytics.{model_name}"
             query = f"""
             SELECT
-                predicted_{model_name} as prediction,
+                predicted_{model_name.split('.')[-1]} as prediction,
                 * 
             FROM
-                ML.PREDICT(MODEL `{self.project_id}.cement_analytics.{model_name}`, 
+                ML.PREDICT(MODEL `{model_path}`, 
                 (SELECT 
                     {', '.join([f'{k} as {k}' for k in input_data.keys()])}
                 ))

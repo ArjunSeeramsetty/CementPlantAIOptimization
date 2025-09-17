@@ -11,6 +11,7 @@ from typing import Dict, Any
 import pandas as pd
 import numpy as np
 from datetime import datetime, timedelta
+from google.cloud.bigquery import LoadJobConfig
 
 # Add src to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
@@ -90,7 +91,7 @@ class BigQueryMLModelManager:
             # Upload process variables
             table_id = f"{self.project_id}.{self.dataset_id}.process_variables"
             
-            job_config = self.gcp_services.bigquery_client.LoadJobConfig(
+            job_config = LoadJobConfig(
                 write_disposition="WRITE_TRUNCATE",
                 autodetect=True
             )
@@ -135,10 +136,12 @@ class BigQueryMLModelManager:
                 model_type='LINEAR_REG',
                 input_label_cols=['free_lime_percent'],
                 data_split_method='SEQ',
+                data_split_col='timestamp',
                 data_split_eval_fraction=0.2,
                 l2_reg=0.01
             ) AS
             SELECT
+                timestamp,
                 feed_rate_tph,
                 fuel_rate_tph,
                 burning_zone_temp_c,
@@ -170,7 +173,7 @@ class BigQueryMLModelManager:
                 preheater_stage3_temp_c,
                 o2_percent,
                 thermal_energy_kcal_kg
-            FROM `{self.project_id}.{self.dataset_id}.energy_consumption`
+            FROM `{self.project_id}.{self.dataset_id}.process_variables`
             WHERE thermal_energy_kcal_kg IS NOT NULL
             AND thermal_energy_kcal_kg BETWEEN 600 AND 800
             """,
@@ -278,7 +281,8 @@ class BigQueryMLModelManager:
             'o2_percent': 3,
             'preheater_stage1_temp_c': 800,
             'preheater_stage2_temp_c': 900,
-            'preheater_stage3_temp_c': 950
+            'preheater_stage3_temp_c': 950,
+            'thermal_energy_kcal_kg': 720
         }
         
         # Test quality prediction
