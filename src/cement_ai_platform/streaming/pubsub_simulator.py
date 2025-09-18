@@ -9,10 +9,35 @@ import numpy as np
 import random
 from datetime import datetime
 
+# Import centralized logging and retry mechanisms
+from ..config.logging_config import get_logger
+from ..utils.retry_decorator import retry_gcp_operation
+from ..config.otel_tracer import trace_gcp_operation
+
+logger = get_logger(__name__)
+
 class CementPlantPubSubSimulator:
     """
-    Real-time sensor data streaming using Google Cloud Pub/Sub
-    for POC demonstration purposes.
+    Simulates real-time sensor data streaming using Google Cloud Pub/Sub.
+    
+    This class provides a comprehensive simulation of cement plant sensor data
+    streaming through Google Cloud Pub/Sub, including process variables, quality data,
+    energy consumption, emissions, and equipment health metrics.
+    
+    Attributes:
+        project_id (str): GCP project ID for Pub/Sub operations
+        publisher (pubsub_v1.PublisherClient): Pub/Sub publisher client
+        subscriber (pubsub_v1.SubscriberClient): Pub/Sub subscriber client
+        topics (dict): Mapping of topic names to topic paths
+        streaming (bool): Flag indicating if streaming is active
+        
+    Methods:
+        start_streaming_simulation(interval_seconds: int) -> threading.Thread:
+            Starts background thread publishing synthetic sensor data
+        subscribe_to_stream(topic_name: str, callback: Callable) -> Future:
+            Subscribes to a Pub/Sub topic and dispatches messages to callback
+        stop_streaming() -> None:
+            Stops the streaming simulation
     """
     
     def __init__(self, project_id: str = "cement-ai-opt-38517"):
@@ -33,17 +58,18 @@ class CementPlantPubSubSimulator:
         # Create topics if they don't exist
         self._create_topics()
     
+    @retry_gcp_operation()
     def _create_topics(self):
         """Create Pub/Sub topics for cement plant data streams"""
         for topic_name, topic_path in self.topics.items():
             try:
                 self.publisher.create_topic(request={"name": topic_path})
-                print(f"✅ Created topic: {topic_name}")
+                logger.info(f"SUCCESS: Created topic: {topic_name}")
             except Exception as e:
                 if "already exists" in str(e).lower():
-                    print(f"ℹ️ Topic already exists: {topic_name}")
+                    logger.info(f"INFO: Topic already exists: {topic_name}")
                 else:
-                    print(f"❌ Error creating topic {topic_name}: {e}")
+                    logger.error(f"ERROR: Error creating topic {topic_name}: {e}")
     
     def start_streaming_simulation(self, interval_seconds: int = 2):
         """Start simulating real-time sensor data streaming"""
