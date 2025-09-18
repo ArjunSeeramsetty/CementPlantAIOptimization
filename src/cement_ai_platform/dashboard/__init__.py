@@ -1,4 +1,4 @@
-"""Dashboard integrations (e.g., Firebase)."""
+# Dashboard Package
+from .unified_dashboard import main
 
-
-
+__all__ = ['main']
