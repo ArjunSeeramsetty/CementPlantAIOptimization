@@ -41,6 +41,22 @@ except ImportError:
     VALIDATION_AVAILABLE = False
     print("⚠️ Validation modules not available")
 
+# Import DWSIM integration capabilities
+try:
+    from ..dwsim.dwsim_connector import DWSIMIntegrationEngine, DWSIMScenario
+    DWSIM_AVAILABLE = True
+except ImportError:
+    DWSIM_AVAILABLE = False
+    print("⚠️ DWSIM modules not available")
+
+# Import Multi-Plant capabilities
+try:
+    from ..multi_plant.multi_plant_supervisor import MultiPlantSupervisor
+    MULTI_PLANT_AVAILABLE = True
+except ImportError:
+    MULTI_PLANT_AVAILABLE = False
+    print("⚠️ Multi-Plant modules not available")
+
 logger = logging.getLogger(__name__)
 
 class JKCementDigitalTwinPlatform:
@@ -85,6 +101,18 @@ class JKCementDigitalTwinPlatform:
             self.drift_detector = DataDriftDetector()
         else:
             self.drift_detector = None
+
+        # Initialize DWSIM integration if available
+        if DWSIM_AVAILABLE:
+            self.dwsim_engine = DWSIMIntegrationEngine()
+        else:
+            self.dwsim_engine = None
+
+        # Initialize Multi-Plant Supervisor if available
+        if MULTI_PLANT_AVAILABLE:
+            self.multi_plant_supervisor = MultiPlantSupervisor()
+        else:
+            self.multi_plant_supervisor = None
         
         # Platform state
         self.current_plant_data = {}
@@ -624,6 +652,14 @@ class JKCementDigitalTwinPlatform:
                 'available': VALIDATION_AVAILABLE,
                 'detector_initialized': self.drift_detector is not None
             },
+            'dwsim_capabilities': {
+                'available': DWSIM_AVAILABLE,
+                'engine_initialized': self.dwsim_engine is not None
+            },
+            'multi_plant_capabilities': {
+                'available': MULTI_PLANT_AVAILABLE,
+                'supervisor_initialized': self.multi_plant_supervisor is not None
+            },
             'optimization_history_count': len(self.optimization_history),
             'performance_metrics_count': len(self.performance_metrics),
             'last_processing_time': self.optimization_history[-1]['timestamp'] if self.optimization_history else None,
@@ -636,7 +672,9 @@ class JKCementDigitalTwinPlatform:
                 'plant_anomaly_detection': '✅ Implemented',
                 'real_time_streaming': '✅ Implemented' if STREAMING_AVAILABLE else '⚠️ Requires google-cloud-pubsub',
                 'predictive_maintenance': '✅ Implemented' if MAINTENANCE_AVAILABLE else '⚠️ Requires sklearn',
-                'data_validation_drift_detection': '✅ Implemented' if VALIDATION_AVAILABLE else '⚠️ Requires scipy'
+                'data_validation_drift_detection': '✅ Implemented' if VALIDATION_AVAILABLE else '⚠️ Requires scipy',
+                'dwsim_physics_simulation': '✅ Implemented' if DWSIM_AVAILABLE else '⚠️ Requires google-cloud-pubsub',
+                'multi_plant_support': '✅ Implemented' if MULTI_PLANT_AVAILABLE else '⚠️ Requires google-cloud-firestore'
             }
         }
     
@@ -842,6 +880,171 @@ class JKCementDigitalTwinPlatform:
                 'success': False,
                 'error': f'Error triggering model retraining: {str(e)}'
             }
+    
+    def execute_dwsim_scenario(self, scenario_name: str, plant_id: str = "JK_Rajasthan_1") -> Dict:
+        """Execute a DWSIM physics simulation scenario"""
+        
+        if not DWSIM_AVAILABLE or not self.dwsim_engine:
+            return {
+                'success': False,
+                'error': 'DWSIM integration not available'
+            }
+        
+        try:
+            # Get scenario from standard scenarios
+            if scenario_name in self.dwsim_engine.standard_scenarios:
+                scenario = self.dwsim_engine.standard_scenarios[scenario_name]
+            else:
+                return {
+                    'success': False,
+                    'error': f'Scenario {scenario_name} not found'
+                }
+            
+            # Execute scenario
+            result = self.dwsim_engine.execute_scenario(scenario, plant_id)
+            
+            # Log execution
+            logger.info(f"DWSIM scenario {scenario_name} executed: {result['success']}")
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Error executing DWSIM scenario: {e}")
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    def create_custom_dwsim_scenario(self, scenario_config: Dict, plant_id: str = "JK_Rajasthan_1") -> Dict:
+        """Create and execute a custom DWSIM scenario"""
+        
+        if not DWSIM_AVAILABLE or not self.dwsim_engine:
+            return {
+                'success': False,
+                'error': 'DWSIM integration not available'
+            }
+        
+        try:
+            import time
+            
+            # Create custom scenario
+            custom_scenario = DWSIMScenario(
+                scenario_id=f"custom_{int(time.time())}",
+                scenario_name=scenario_config.get('name', 'Custom Scenario'),
+                description=scenario_config.get('description', 'Custom process simulation'),
+                input_parameters=scenario_config.get('parameters', {}),
+                expected_outputs=scenario_config.get('outputs', ['burning_zone_temp', 'free_lime_percent']),
+                simulation_duration=scenario_config.get('duration', 1800),
+                priority=scenario_config.get('priority', 'medium')
+            )
+            
+            # Execute scenario
+            result = self.dwsim_engine.execute_scenario(custom_scenario, plant_id)
+            
+            # Log execution
+            logger.info(f"Custom DWSIM scenario executed: {result['success']}")
+            
+            return result
+            
+        except Exception as e:
+            logger.error(f"Error creating custom DWSIM scenario: {e}")
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    def get_dwsim_scenario_history(self, plant_id: str = "JK_Rajasthan_1", limit: int = 20) -> List[Dict]:
+        """Get DWSIM scenario execution history"""
+        
+        if not DWSIM_AVAILABLE or not self.dwsim_engine:
+            return []
+        
+        try:
+            history = self.dwsim_engine.get_scenario_history(plant_id, limit)
+            return history
+            
+        except Exception as e:
+            logger.error(f"Error retrieving DWSIM scenario history: {e}")
+            return []
+    
+    def get_multi_plant_status(self) -> Dict:
+        """Get multi-plant supervisor status"""
+        
+        if not MULTI_PLANT_AVAILABLE or not self.multi_plant_supervisor:
+            return {
+                'success': False,
+                'error': 'Multi-Plant support not available'
+            }
+        
+        try:
+            status = self.multi_plant_supervisor.get_supervisor_status()
+            return {
+                'success': True,
+                'status': status
+            }
+            
+        except Exception as e:
+            logger.error(f"Error getting multi-plant status: {e}")
+            return {
+                'success': False,
+                'error': str(e)
+            }
+    
+    def start_multi_plant_orchestration(self) -> bool:
+        """Start multi-plant orchestration"""
+        
+        if not MULTI_PLANT_AVAILABLE or not self.multi_plant_supervisor:
+            logger.warning("Multi-Plant support not available")
+            return False
+        
+        try:
+            self.multi_plant_supervisor.start_orchestration()
+            logger.info("Multi-plant orchestration started")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error starting multi-plant orchestration: {e}")
+            return False
+    
+    def stop_multi_plant_orchestration(self) -> bool:
+        """Stop multi-plant orchestration"""
+        
+        if not MULTI_PLANT_AVAILABLE or not self.multi_plant_supervisor:
+            logger.warning("Multi-Plant support not available")
+            return False
+        
+        try:
+            self.multi_plant_supervisor.stop_orchestration()
+            logger.info("Multi-plant orchestration stopped")
+            return True
+            
+        except Exception as e:
+            logger.error(f"Error stopping multi-plant orchestration: {e}")
+            return False
+    
+    def deploy_model_to_tenant(self, tenant_id: str, model_config: Dict) -> Dict:
+        """Deploy AI model to all plants in a tenant"""
+        
+        if not MULTI_PLANT_AVAILABLE or not self.multi_plant_supervisor:
+            return {
+                'success': False,
+                'error': 'Multi-Plant support not available'
+            }
+        
+        try:
+            result = self.multi_plant_supervisor.deploy_model_to_tenant(tenant_id, model_config)
+            logger.info(f"Model deployed to tenant {tenant_id}: {result['successful_deployments']}/{result['total_plants']}")
+            return {
+                'success': True,
+                'deployment_result': result
+            }
+            
+        except Exception as e:
+            logger.error(f"Error deploying model to tenant {tenant_id}: {e}")
+            return {
+                'success': False,
+                'error': str(e)
+            }
 
 def create_unified_platform(config_file: str = "config/plant_config.yml") -> JKCementDigitalTwinPlatform:
     """
@@ -865,5 +1068,10 @@ def create_unified_platform(config_file: str = "config/plant_config.yml") -> JKC
     logger.info("   ✅ Unified Kiln-Cooler Controller")
     logger.info("   ✅ Utility Optimization")
     logger.info("   ✅ Plant Anomaly Detection")
+    logger.info("   ✅ Real-time Streaming & Pub/Sub Integration")
+    logger.info("   ✅ Predictive Maintenance with Time-to-Failure Models")
+    logger.info("   ✅ Data Validation & Drift Detection")
+    logger.info("   ✅ DWSIM Physics-Based Simulation")
+    logger.info("   ✅ Multi-Plant Support & Tenant Isolation")
     
     return platform

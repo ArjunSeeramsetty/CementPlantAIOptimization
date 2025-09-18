@@ -331,6 +331,76 @@ def test_streaming_capabilities():
     
     return streaming_status
 
+def test_dwsim_integration():
+    """Test DWSIM integration capabilities"""
+    
+    logger.info("🧪 Testing DWSIM Integration...")
+    
+    test_results = {
+        'dwsim_available': False,
+        'engine_initialized': False,
+        'scenario_execution': False,
+        'custom_scenario': False,
+        'history_retrieval': False
+    }
+    
+    try:
+        # Test DWSIM availability
+        from cement_ai_platform.dwsim.dwsim_connector import DWSIMIntegrationEngine, DWSIMScenario
+        test_results['dwsim_available'] = True
+        logger.info("✅ DWSIM modules imported successfully")
+        
+        # Test engine initialization
+        engine = DWSIMIntegrationEngine()
+        test_results['engine_initialized'] = True
+        logger.info("✅ DWSIM engine initialized")
+        
+        # Test standard scenario execution
+        startup_scenario = engine.standard_scenarios['startup_sequence']
+        result = engine.execute_scenario(startup_scenario, "test_plant")
+        
+        if result['success']:
+            test_results['scenario_execution'] = True
+            logger.info(f"✅ Startup scenario executed successfully in {result['execution_duration']:.1f}s")
+        else:
+            logger.warning(f"⚠️ Startup scenario failed: {result.get('error')}")
+        
+        # Test custom scenario creation
+        custom_scenario = DWSIMScenario(
+            scenario_id="test_custom_001",
+            scenario_name="Test Custom Scenario",
+            description="Test scenario for validation",
+            input_parameters={
+                'raw_meal_feed': 165.0,
+                'fuel_rate': 16.0,
+                'kiln_speed': 3.5,
+                'o2_target': 3.2
+            },
+            expected_outputs=['burning_zone_temp', 'free_lime_percent'],
+            simulation_duration=1800,
+            priority='medium'
+        )
+        
+        custom_result = engine.execute_scenario(custom_scenario, "test_plant")
+        
+        if custom_result['success']:
+            test_results['custom_scenario'] = True
+            logger.info(f"✅ Custom scenario executed successfully in {custom_result['execution_duration']:.1f}s")
+        else:
+            logger.warning(f"⚠️ Custom scenario failed: {custom_result.get('error')}")
+        
+        # Test history retrieval
+        history = engine.get_scenario_history("test_plant", limit=5)
+        test_results['history_retrieval'] = True
+        logger.info(f"✅ Retrieved {len(history)} scenario history records")
+        
+    except ImportError as e:
+        logger.warning(f"⚠️ DWSIM modules not available: {e}")
+    except Exception as e:
+        logger.error(f"❌ DWSIM integration test failed: {e}")
+    
+    return test_results
+
 def run_comprehensive_test():
     """Run comprehensive test suite"""
     
@@ -368,6 +438,11 @@ def run_comprehensive_test():
         streaming_status = test_streaming_capabilities()
         logger.info("✅ Streaming capabilities testing completed")
         
+        # Test DWSIM integration
+        logger.info("\n📋 PHASE 7: DWSIM Integration Testing")
+        dwsim_status = test_dwsim_integration()
+        logger.info("✅ DWSIM integration testing completed")
+        
         # Summary
         logger.info("\n" + "=" * 80)
         logger.info("🎉 COMPREHENSIVE TEST SUITE COMPLETED SUCCESSFULLY!")
@@ -382,6 +457,7 @@ def run_comprehensive_test():
             'export_functionality_working': True,
             'anomaly_models_trained': True,
             'streaming_capabilities_tested': streaming_status['streaming_available'],
+            'dwsim_integration_tested': dwsim_status['dwsim_available'],
             'training_samples': len(training_df),
             'platform_status': platform_status['platform_status'],
             'jk_cement_requirements_coverage': platform_status['jk_cement_requirements_coverage']
@@ -397,6 +473,7 @@ def run_comprehensive_test():
             'export_files': {'json': json_file, 'csv': csv_file},
             'training_data': training_df,
             'streaming_status': streaming_status,
+            'dwsim_status': dwsim_status,
             'summary': summary
         }
         

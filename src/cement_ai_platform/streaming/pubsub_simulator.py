@@ -266,7 +266,8 @@ class CementPlantPubSubSimulator:
 class RealTimeDataProcessor:
     """Process real-time streaming data and trigger AI agent responses"""
     
-    def __init__(self):
+    def __init__(self, plant_id: str = "default"):
+        self.plant_id = plant_id
         self.agents = self._initialize_agents()
         self.alert_thresholds = {
             'free_lime_high': 2.0,
@@ -291,6 +292,9 @@ class RealTimeDataProcessor:
     
     def process_process_variables(self, data: Dict):
         """Process real-time process variables and trigger control actions"""
+        
+        # Add plant context to data
+        data['plant_id'] = self.plant_id
         
         # Check for critical conditions
         free_lime = data.get('free_lime_percent', 1.0)
@@ -319,6 +323,9 @@ class RealTimeDataProcessor:
     
     def process_equipment_health(self, data: Dict):
         """Process equipment health data and trigger maintenance alerts"""
+        
+        # Add plant context to data
+        data['plant_id'] = self.plant_id
         
         for key, value in data.items():
             if 'vibration' in key and value > self.alert_thresholds['vibration_high']:
