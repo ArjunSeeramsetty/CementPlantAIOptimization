@@ -17,9 +17,16 @@ google-cloud-logging>=3.5.0
 google-cloud-bigquery>=3.11.0
 google-cloud-storage>=2.10.0
 google-cloud-secret-manager>=2.16.0
+google-cloud-pubsub>=2.18.0
 google-auth>=2.23.0
 google-auth-oauthlib>=1.1.0
 google-auth-httplib2>=0.1.1
+
+# Machine Learning and Data Science
+scikit-learn>=1.3.0
+scipy>=1.11.0
+numpy>=1.24.0
+pandas>=2.0.0
 
 # Vertex AI and Generative AI (required for production)
 google-cloud-aiplatform[langchain]>=1.38.0

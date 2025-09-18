@@ -17,6 +17,30 @@ from .unified_kiln_cooler_controller import UnifiedKilnCoolerController
 from .utility_optimizer import UtilityOptimizer
 from .plant_anomaly_detector import PlantAnomalyDetector
 
+# Import streaming capabilities
+try:
+    from ..streaming.pubsub_simulator import CementPlantPubSubSimulator, RealTimeDataProcessor
+    STREAMING_AVAILABLE = True
+except ImportError:
+    STREAMING_AVAILABLE = False
+    print("⚠️ Streaming modules not available - install google-cloud-pubsub")
+
+# Import predictive maintenance capabilities
+try:
+    from ..maintenance.predictive_maintenance import PredictiveMaintenanceEngine
+    MAINTENANCE_AVAILABLE = True
+except ImportError:
+    MAINTENANCE_AVAILABLE = False
+    print("⚠️ Maintenance modules not available")
+
+# Import data validation capabilities
+try:
+    from ..validation.drift_detection import DataDriftDetector
+    VALIDATION_AVAILABLE = True
+except ImportError:
+    VALIDATION_AVAILABLE = False
+    print("⚠️ Validation modules not available")
+
 logger = logging.getLogger(__name__)
 
 class JKCementDigitalTwinPlatform:
@@ -39,6 +63,28 @@ class JKCementDigitalTwinPlatform:
         self.kiln_cooler_controller = UnifiedKilnCoolerController()
         self.utility_optimizer = UtilityOptimizer()
         self.anomaly_detector = PlantAnomalyDetector()
+        
+        # Initialize streaming capabilities if available
+        if STREAMING_AVAILABLE:
+            self.pubsub_simulator = CementPlantPubSubSimulator()
+            self.realtime_processor = RealTimeDataProcessor()
+            self.streaming_active = False
+        else:
+            self.pubsub_simulator = None
+            self.realtime_processor = None
+            self.streaming_active = False
+
+        # Initialize predictive maintenance if available
+        if MAINTENANCE_AVAILABLE:
+            self.maintenance_engine = PredictiveMaintenanceEngine()
+        else:
+            self.maintenance_engine = None
+
+        # Initialize data validation if available
+        if VALIDATION_AVAILABLE:
+            self.drift_detector = DataDriftDetector()
+        else:
+            self.drift_detector = None
         
         # Platform state
         self.current_plant_data = {}
@@ -565,6 +611,19 @@ class JKCementDigitalTwinPlatform:
                 'utility_optimizer': True,
                 'anomaly_detector': True
             },
+            'streaming_capabilities': {
+                'pubsub_available': STREAMING_AVAILABLE,
+                'streaming_active': self.streaming_active,
+                'simulator_initialized': self.pubsub_simulator is not None
+            },
+            'maintenance_capabilities': {
+                'available': MAINTENANCE_AVAILABLE,
+                'engine_initialized': self.maintenance_engine is not None
+            },
+            'validation_capabilities': {
+                'available': VALIDATION_AVAILABLE,
+                'detector_initialized': self.drift_detector is not None
+            },
             'optimization_history_count': len(self.optimization_history),
             'performance_metrics_count': len(self.performance_metrics),
             'last_processing_time': self.optimization_history[-1]['timestamp'] if self.optimization_history else None,
@@ -574,9 +633,215 @@ class JKCementDigitalTwinPlatform:
                 'cement_plant_gpt_interface': '✅ Implemented',
                 'unified_kiln_cooler_controller': '✅ Implemented',
                 'utility_optimization': '✅ Implemented',
-                'plant_anomaly_detection': '✅ Implemented'
+                'plant_anomaly_detection': '✅ Implemented',
+                'real_time_streaming': '✅ Implemented' if STREAMING_AVAILABLE else '⚠️ Requires google-cloud-pubsub',
+                'predictive_maintenance': '✅ Implemented' if MAINTENANCE_AVAILABLE else '⚠️ Requires sklearn',
+                'data_validation_drift_detection': '✅ Implemented' if VALIDATION_AVAILABLE else '⚠️ Requires scipy'
             }
         }
+    
+    def start_real_time_streaming(self, interval_seconds: int = 2) -> bool:
+        """Start real-time data streaming simulation"""
+        
+        if not STREAMING_AVAILABLE:
+            logger.warning("⚠️ Streaming not available - install google-cloud-pubsub")
+            return False
+        
+        if self.streaming_active:
+            logger.info("ℹ️ Streaming already active")
+            return True
+        
+        try:
+            self.pubsub_simulator.start_streaming_simulation(interval_seconds)
+            self.streaming_active = True
+            logger.info(f"🚀 Real-time streaming started (interval: {interval_seconds}s)")
+            return True
+        except Exception as e:
+            logger.error(f"❌ Failed to start streaming: {e}")
+            return False
+    
+    def stop_real_time_streaming(self) -> bool:
+        """Stop real-time data streaming"""
+        
+        if not STREAMING_AVAILABLE:
+            return False
+        
+        if not self.streaming_active:
+            logger.info("ℹ️ Streaming not active")
+            return True
+        
+        try:
+            self.pubsub_simulator.stop_streaming()
+            self.streaming_active = False
+            logger.info("⏹️ Real-time streaming stopped")
+            return True
+        except Exception as e:
+            logger.error(f"❌ Failed to stop streaming: {e}")
+            return False
+    
+    def subscribe_to_process_data(self, callback_func=None):
+        """Subscribe to process variables stream"""
+        
+        if not STREAMING_AVAILABLE:
+            logger.warning("⚠️ Streaming not available")
+            return None
+        
+        def default_callback(data):
+            logger.info(f"📊 Process data received: Free Lime {data.get('free_lime_percent', 0):.2f}%")
+            # Process with AI agents
+            if self.realtime_processor:
+                self.realtime_processor.process_process_variables(data)
+        
+        callback = callback_func or default_callback
+        
+        try:
+            return self.pubsub_simulator.subscribe_to_stream('process-variables', callback)
+        except Exception as e:
+            logger.error(f"❌ Failed to subscribe to process data: {e}")
+            return None
+    
+    def subscribe_to_equipment_health(self, callback_func=None):
+        """Subscribe to equipment health stream"""
+        
+        if not STREAMING_AVAILABLE:
+            logger.warning("⚠️ Streaming not available")
+            return None
+        
+        def default_callback(data):
+            logger.info(f"🔧 Equipment health data received")
+            # Process with AI agents
+            if self.realtime_processor:
+                self.realtime_processor.process_equipment_health(data)
+        
+        callback = callback_func or default_callback
+        
+        try:
+            return self.pubsub_simulator.subscribe_to_stream('equipment-health', callback)
+        except Exception as e:
+            logger.error(f"❌ Failed to subscribe to equipment health: {e}")
+            return None
+    
+    def get_streaming_status(self) -> Dict:
+        """Get current streaming status"""
+        
+        if not STREAMING_AVAILABLE:
+            return {
+                'streaming_available': False,
+                'error': 'google-cloud-pubsub not installed'
+            }
+        
+        return {
+            'streaming_available': True,
+            'streaming_active': self.streaming_active,
+            'topics_configured': list(self.pubsub_simulator.topics.keys()) if self.pubsub_simulator else [],
+            'project_id': self.pubsub_simulator.project_id if self.pubsub_simulator else None
+        }
+
+    def generate_maintenance_report(self, plant_id: str = "JK_Rajasthan_1", days_ahead: int = 30) -> Dict:
+        """Generate predictive maintenance report"""
+        if not MAINTENANCE_AVAILABLE:
+            return {
+                'success': False,
+                'error': 'Maintenance modules not available'
+            }
+        
+        try:
+            report = self.maintenance_engine.generate_maintenance_report(plant_id, days_ahead)
+            return {
+                'success': True,
+                'report': report
+            }
+        except Exception as e:
+            return {
+                'success': False,
+                'error': f'Error generating maintenance report: {str(e)}'
+            }
+
+    def predict_equipment_failure(self, equipment_data: Dict) -> Dict:
+        """Predict failure for specific equipment"""
+        if not MAINTENANCE_AVAILABLE:
+            return {
+                'success': False,
+                'error': 'Maintenance modules not available'
+            }
+        
+        try:
+            recommendation = self.maintenance_engine.predict_equipment_failure(equipment_data)
+            if recommendation:
+                return {
+                    'success': True,
+                    'recommendation': recommendation
+                }
+            else:
+                return {
+                    'success': False,
+                    'error': 'Failed to generate maintenance recommendation'
+                }
+        except Exception as e:
+            return {
+                'success': False,
+                'error': f'Error predicting equipment failure: {str(e)}'
+            }
+
+    def detect_data_drift(self, current_data, reference_snapshot: str = "baseline") -> Dict:
+        """Detect data drift in process variables"""
+        if not VALIDATION_AVAILABLE:
+            return {
+                'success': False,
+                'error': 'Validation modules not available'
+            }
+        
+        try:
+            drift_results = self.drift_detector.detect_data_drift(current_data, reference_snapshot)
+            return {
+                'success': True,
+                'drift_results': drift_results
+            }
+        except Exception as e:
+            return {
+                'success': False,
+                'error': f'Error detecting data drift: {str(e)}'
+            }
+
+    def create_reference_snapshot(self, data, snapshot_name: str = "baseline") -> Dict:
+        """Create reference snapshot for drift detection"""
+        if not VALIDATION_AVAILABLE:
+            return {
+                'success': False,
+                'error': 'Validation modules not available'
+            }
+        
+        try:
+            success = self.drift_detector.create_reference_snapshot(data, snapshot_name)
+            return {
+                'success': success,
+                'snapshot_name': snapshot_name
+            }
+        except Exception as e:
+            return {
+                'success': False,
+                'error': f'Error creating reference snapshot: {str(e)}'
+            }
+
+    def trigger_model_retraining(self, drift_summary: Dict) -> Dict:
+        """Trigger model retraining based on drift detection"""
+        if not VALIDATION_AVAILABLE:
+            return {
+                'success': False,
+                'error': 'Validation modules not available'
+            }
+        
+        try:
+            retraining_result = self.drift_detector.trigger_model_retraining(drift_summary)
+            return {
+                'success': True,
+                'retraining_result': retraining_result
+            }
+        except Exception as e:
+            return {
+                'success': False,
+                'error': f'Error triggering model retraining: {str(e)}'
+            }
 
 def create_unified_platform(config_file: str = "config/plant_config.yml") -> JKCementDigitalTwinPlatform:
     """

@@ -288,6 +288,49 @@ def test_anomaly_model_training():
     
     return training_df
 
+def test_streaming_capabilities():
+    """Test real-time streaming capabilities"""
+    
+    logger.info("🧪 Testing streaming capabilities...")
+    
+    # Create platform
+    platform = create_unified_platform()
+    
+    # Test streaming status
+    streaming_status = platform.get_streaming_status()
+    logger.info(f"📡 Streaming Available: {streaming_status['streaming_available']}")
+    
+    if streaming_status['streaming_available']:
+        logger.info(f"📡 Topics Configured: {streaming_status['topics_configured']}")
+        logger.info(f"📡 Project ID: {streaming_status['project_id']}")
+        
+        # Test starting streaming
+        logger.info("🚀 Testing streaming start...")
+        success = platform.start_real_time_streaming(interval_seconds=3)
+        
+        if success:
+            logger.info("✅ Streaming started successfully")
+            
+            # Let it run briefly
+            import time
+            logger.info("⏳ Running streaming for 6 seconds...")
+            time.sleep(6)
+            
+            # Test stopping streaming
+            logger.info("⏹️ Testing streaming stop...")
+            stop_success = platform.stop_real_time_streaming()
+            
+            if stop_success:
+                logger.info("✅ Streaming stopped successfully")
+            else:
+                logger.warning("⚠️ Failed to stop streaming")
+        else:
+            logger.warning("⚠️ Failed to start streaming")
+    else:
+        logger.warning(f"⚠️ Streaming not available: {streaming_status.get('error', 'Unknown')}")
+    
+    return streaming_status
+
 def run_comprehensive_test():
     """Run comprehensive test suite"""
     
@@ -320,6 +363,11 @@ def run_comprehensive_test():
         training_df = test_anomaly_model_training()
         logger.info("✅ Anomaly model training testing completed")
         
+        # Test streaming capabilities
+        logger.info("\n📋 PHASE 6: Streaming Capabilities Testing")
+        streaming_status = test_streaming_capabilities()
+        logger.info("✅ Streaming capabilities testing completed")
+        
         # Summary
         logger.info("\n" + "=" * 80)
         logger.info("🎉 COMPREHENSIVE TEST SUITE COMPLETED SUCCESSFULLY!")
@@ -333,6 +381,7 @@ def run_comprehensive_test():
             'performance_tracking_active': True,
             'export_functionality_working': True,
             'anomaly_models_trained': True,
+            'streaming_capabilities_tested': streaming_status['streaming_available'],
             'training_samples': len(training_df),
             'platform_status': platform_status['platform_status'],
             'jk_cement_requirements_coverage': platform_status['jk_cement_requirements_coverage']
@@ -347,6 +396,7 @@ def run_comprehensive_test():
             'platform_status': platform_status,
             'export_files': {'json': json_file, 'csv': csv_file},
             'training_data': training_df,
+            'streaming_status': streaming_status,
             'summary': summary
         }
         
