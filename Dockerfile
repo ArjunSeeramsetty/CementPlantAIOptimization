@@ -1,50 +1,45 @@
-# Production Dockerfile for Cement Plant AI Digital Twin
+# Dockerfile for JK Cement Digital Twin Platform
 FROM python:3.9-slim
 
+# Set working directory
+WORKDIR /app
+
 # Set environment variables
+ENV PYTHONPATH=/app/src
 ENV PYTHONUNBUFFERED=1
-ENV PYTHONDONTWRITEBYTECODE=1
-ENV CEMENT_ENV=production
+ENV CEMENT_LOG_LEVEL=INFO
+ENV CEMENT_GCP_PROJECT=cement-ai-opt-38517
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
     gcc \
     g++ \
-    git \
-    curl \
     && rm -rf /var/lib/apt/lists/*
 
-# Set working directory
-WORKDIR /app
-
-# Copy requirements and install Python dependencies
+# Copy requirements first for better caching
 COPY requirements.txt .
-RUN pip install --no-cache-dir --upgrade pip && \
-    pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Copy source code
 COPY src/ ./src/
-COPY config/ ./config/
 COPY scripts/ ./scripts/
-COPY demo/ ./demo/
 
-# Create secrets directory for service account key
-RUN mkdir -p /app/secrets
+# Create logs directory
+RUN mkdir -p logs
 
-# Set Python path
-ENV PYTHONPATH=/app/src
-
-# Create non-root user for security
-RUN groupadd -r cementuser && useradd -r -g cementuser cementuser
-RUN chown -R cementuser:cementuser /app
-USER cementuser
+# Create non-root user
+RUN useradd --create-home --shell /bin/bash app
+RUN chown -R app:app /app
+USER app
 
 # Expose port
 EXPOSE 8080
 
-# Health check endpoint
-HEALTHCHECK --interval=30s --timeout=30s --start-period=5s --retries=3 \
-    CMD curl -f http://localhost:8080/health || exit 1
+# Health check
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python -c "import requests; requests.get('http://localhost:8080/health', timeout=5)" || exit 1
 
-# Run application
-CMD ["python", "-m", "uvicorn", "src.cement_ai_platform.api.main:app", "--host", "0.0.0.0", "--port", "8080", "--workers", "4"]
+# Default command
+CMD ["python", "-m", "streamlit", "run", "scripts/launch_streaming_demo.py", "--server.port=8080", "--server.address=0.0.0.0"]
