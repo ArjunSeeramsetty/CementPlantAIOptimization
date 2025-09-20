@@ -55,12 +55,20 @@ except ImportError as e:
     DWSIM_AVAILABLE = False
     print(f"DWSIM dashboard not available: {e}")
 
+try:
+    from cement_ai_platform.dashboard.dynamic_plant_twin import launch_dynamic_plant_twin
+    DYNAMIC_TWIN_AVAILABLE = True
+except ImportError as e:
+    DYNAMIC_TWIN_AVAILABLE = False
+    print(f"Dynamic Plant Twin not available: {e}")
+
 def show_module_status():
     """Display the status of each module"""
     st.sidebar.markdown("---")
     st.sidebar.markdown("### Module Status")
     
     modules = [
+        ("Live Plant Twin", DYNAMIC_TWIN_AVAILABLE),
         ("Real-Time Streaming", STREAMING_AVAILABLE),
         ("Multi-Plant Support", MULTI_PLANT_AVAILABLE),
         ("Mobile Dashboard", MOBILE_AVAILABLE),
@@ -92,6 +100,14 @@ def show_platform_overview():
     
     with col1:
         st.markdown("""
+        **🏭 Live Plant Twin**
+        - Real-time plant simulation
+        - Dynamic process visualization
+        - AI-powered recommendations
+        - Scenario injection for demos
+        """)
+        
+        st.markdown("""
         **🔄 Real-Time Streaming**
         - Pub/Sub sensor data simulation
         - Live process monitoring
@@ -104,15 +120,15 @@ def show_platform_overview():
         - Cross-plant analytics
         - Tenant isolation and security
         """)
-        
+    
+    with col2:
         st.markdown("""
         **📱 Mobile Dashboard**
         - Mobile-optimized interface
         - PWA capabilities
         - Push notifications
         """)
-    
-    with col2:
+        
         st.markdown("""
         **🔧 Predictive Maintenance**
         - Time-to-failure models
@@ -126,15 +142,15 @@ def show_platform_overview():
         - Data quality assessment
         - Model retraining triggers
         """)
-        
+    
+    with col3:
         st.markdown("""
         **⚗️ DWSIM Integration**
         - Physics-based simulation
         - Process scenario execution
         - Chemical engineering models
         """)
-    
-    with col3:
+        
         st.markdown("""
         **🔍 Production Features**
         - Centralized logging
@@ -188,6 +204,7 @@ def main():
     # Navigation options
     nav_options = [
         "📊 Platform Overview",
+        "🏭 Live Plant Twin",
         "🔄 Real-Time Streaming",
         "🏭 Multi-Plant Support",
         "📱 Mobile Dashboard",
@@ -218,6 +235,13 @@ def main():
     # Main content area
     if choice == "📊 Platform Overview":
         show_platform_overview()
+        
+    elif choice == "🏭 Live Plant Twin":
+        if DYNAMIC_TWIN_AVAILABLE:
+            launch_dynamic_plant_twin()
+        else:
+            st.error("❌ Live Plant Twin module is not available")
+            st.info("Please ensure the dynamic plant twin module is properly installed and configured.")
         
     elif choice == "🔄 Real-Time Streaming":
         if STREAMING_AVAILABLE:
