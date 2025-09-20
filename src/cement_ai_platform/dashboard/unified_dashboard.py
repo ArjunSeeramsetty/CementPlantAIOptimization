@@ -62,6 +62,41 @@ except ImportError as e:
     DYNAMIC_TWIN_AVAILABLE = False
     print(f"Dynamic Plant Twin not available: {e}")
 
+try:
+    from cement_ai_platform.tsr_optimization.tsr_fuel_optimizer import launch_tsr_fuel_optimizer_demo
+    TSR_OPTIMIZER_AVAILABLE = True
+except ImportError as e:
+    TSR_OPTIMIZER_AVAILABLE = False
+    print(f"TSR Optimizer not available: {e}")
+
+try:
+    from cement_ai_platform.copilot.plant_ai_assistant import launch_plant_ai_assistant
+    PLANT_COPILOT_AVAILABLE = True
+except ImportError as e:
+    PLANT_COPILOT_AVAILABLE = False
+    print(f"Plant Copilot not available: {e}")
+
+try:
+    from cement_ai_platform.utilities.utility_optimizer import launch_utility_optimization_demo
+    UTILITY_OPTIMIZER_AVAILABLE = True
+except ImportError as e:
+    UTILITY_OPTIMIZER_AVAILABLE = False
+    print(f"Utility Optimizer not available: {e}")
+
+try:
+    from cement_ai_platform.lims.lims_integration import launch_lims_integration_demo
+    LIMS_AVAILABLE = True
+except ImportError as e:
+    LIMS_AVAILABLE = False
+    print(f"LIMS Integration not available: {e}")
+
+try:
+    from cement_ai_platform.analytics.historical_analytics import launch_historical_analytics_demo
+    ANALYTICS_AVAILABLE = True
+except ImportError as e:
+    ANALYTICS_AVAILABLE = False
+    print(f"Historical Analytics not available: {e}")
+
 def show_module_status():
     """Display the status of each module"""
     st.sidebar.markdown("---")
@@ -69,6 +104,11 @@ def show_module_status():
     
     modules = [
         ("Live Plant Twin", DYNAMIC_TWIN_AVAILABLE),
+        ("TSR & Fuel Optimizer", TSR_OPTIMIZER_AVAILABLE),
+        ("Plant AI Copilot", PLANT_COPILOT_AVAILABLE),
+        ("Utility Optimization", UTILITY_OPTIMIZER_AVAILABLE),
+        ("LIMS Integration", LIMS_AVAILABLE),
+        ("Historical Analytics", ANALYTICS_AVAILABLE),
         ("Real-Time Streaming", STREAMING_AVAILABLE),
         ("Multi-Plant Support", MULTI_PLANT_AVAILABLE),
         ("Mobile Dashboard", MOBILE_AVAILABLE),
@@ -108,6 +148,47 @@ def show_platform_overview():
         """)
         
         st.markdown("""
+        **🔥 TSR & Fuel Optimizer**
+        - Alternative fuel mix optimization
+        - TSR impact simulation
+        - Cost-benefit analysis
+        - Environmental optimization
+        """)
+        
+        st.markdown("""
+        **🤖 Plant AI Copilot**
+        - Gemini-powered assistant
+        - Intelligent troubleshooting
+        - Optimization recommendations
+        - Natural language interface
+        """)
+        
+        st.markdown("""
+        **💧 Utility Optimization**
+        - Compressed air optimization
+        - Water system management
+        - Material handling efficiency
+        - ROI analysis & recommendations
+        """)
+        
+        st.markdown("""
+        **🧪 LIMS Integration**
+        - Robotic lab automation
+        - Real-time quality monitoring
+        - Quality prediction algorithms
+        - Sample tracking & analysis
+        """)
+        
+        st.markdown("""
+        **📊 Historical Analytics**
+        - Large-scale data analysis (10+ years)
+        - Parameter correlation detection
+        - Performance benchmarking
+        - Optimization opportunities
+        """)
+    
+    with col2:
+        st.markdown("""
         **🔄 Real-Time Streaming**
         - Pub/Sub sensor data simulation
         - Live process monitoring
@@ -120,15 +201,15 @@ def show_platform_overview():
         - Cross-plant analytics
         - Tenant isolation and security
         """)
-    
-    with col2:
+        
         st.markdown("""
         **📱 Mobile Dashboard**
         - Mobile-optimized interface
         - PWA capabilities
         - Push notifications
         """)
-        
+    
+    with col3:
         st.markdown("""
         **🔧 Predictive Maintenance**
         - Time-to-failure models
@@ -142,21 +223,12 @@ def show_platform_overview():
         - Data quality assessment
         - Model retraining triggers
         """)
-    
-    with col3:
+        
         st.markdown("""
         **⚗️ DWSIM Integration**
         - Physics-based simulation
         - Process scenario execution
         - Chemical engineering models
-        """)
-        
-        st.markdown("""
-        **🔍 Production Features**
-        - Centralized logging
-        - Retry mechanisms
-        - OpenTelemetry tracing
-        - CI/CD pipelines
         """)
     
     st.markdown("---")
@@ -205,6 +277,11 @@ def main():
     nav_options = [
         "📊 Platform Overview",
         "🏭 Live Plant Twin",
+        "🔥 TSR & Fuel Optimizer",
+        "🤖 Plant AI Copilot",
+        "💧 Utility Optimization",
+        "🧪 LIMS Integration",
+        "📊 Historical Analytics",
         "🔄 Real-Time Streaming",
         "🏭 Multi-Plant Support",
         "📱 Mobile Dashboard",
@@ -242,6 +319,41 @@ def main():
         else:
             st.error("❌ Live Plant Twin module is not available")
             st.info("Please ensure the dynamic plant twin module is properly installed and configured.")
+    
+    elif choice == "🔥 TSR & Fuel Optimizer":
+        if TSR_OPTIMIZER_AVAILABLE:
+            launch_tsr_fuel_optimizer_demo()
+        else:
+            st.error("❌ TSR & Fuel Optimizer module is not available")
+            st.info("Please ensure the TSR optimizer module is properly installed and configured.")
+    
+    elif choice == "🤖 Plant AI Copilot":
+        if PLANT_COPILOT_AVAILABLE:
+            launch_plant_ai_assistant()
+        else:
+            st.error("❌ Plant AI Copilot module is not available")
+            st.info("Please ensure the plant AI assistant module is properly installed and configured.")
+    
+    elif choice == "💧 Utility Optimization":
+        if UTILITY_OPTIMIZER_AVAILABLE:
+            launch_utility_optimization_demo()
+        else:
+            st.error("❌ Utility Optimization module is not available")
+            st.info("Please ensure the utility optimizer module is properly installed and configured.")
+    
+    elif choice == "🧪 LIMS Integration":
+        if LIMS_AVAILABLE:
+            launch_lims_integration_demo()
+        else:
+            st.error("❌ LIMS Integration module is not available")
+            st.info("Please ensure the LIMS integration module is properly installed and configured.")
+    
+    elif choice == "📊 Historical Analytics":
+        if ANALYTICS_AVAILABLE:
+            launch_historical_analytics_demo()
+        else:
+            st.error("❌ Historical Analytics module is not available")
+            st.info("Please ensure the historical analytics module is properly installed and configured.")
         
     elif choice == "🔄 Real-Time Streaming":
         if STREAMING_AVAILABLE:

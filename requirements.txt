@@ -73,8 +73,8 @@ kubernetes>=28.1.0
 # Optional dependencies for enhanced functionality
 # Uncomment these for full functionality:
 
-# Advanced ML libraries
-# tensorflow>=2.13.0
+# Advanced ML libraries (compatible versions)
+# tensorflow>=2.15.0  # Note: May conflict with protobuf versions
 # torch>=2.1.0
 # xgboost>=1.7.0
 # lightgbm>=4.0.0
