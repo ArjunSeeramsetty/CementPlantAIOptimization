@@ -68,6 +68,7 @@ class LIMSIntegration:
                 'sample_integrity': 99.8
             },
             'auto_sampling': {
+                'status': 'Online',
                 'points_configured': 24,
                 'active_points': 22,
                 'sampling_interval_minutes': 30,
@@ -642,12 +643,14 @@ def launch_lims_integration_demo():
         equipment_data = []
         for equipment, details in lab_status['equipment_status'].items():
             
-            status_icon = "🟢" if details['status'] == 'Online' else "🔴"
+            # Get status with default value
+            equipment_status = details.get('status', 'Online')
+            status_icon = "🟢" if equipment_status == 'Online' else "🔴"
             
             if equipment == 'x_ray_analyzer':
                 equipment_data.append({
                     'Equipment': 'X-ray Analyzer',
-                    'Status': f"{status_icon} {details['status']}",
+                    'Status': f"{status_icon} {equipment_status}",
                     'Model': details['model'],
                     'Performance': f"{details['accuracy_percentage']:.1f}% accuracy",
                     'Last Service': details['last_calibration']
@@ -655,7 +658,7 @@ def launch_lims_integration_demo():
             elif equipment == 'sample_preparation':
                 equipment_data.append({
                     'Equipment': 'Sample Preparation',
-                    'Status': f"{status_icon} {details['status']}",
+                    'Status': f"{status_icon} {equipment_status}",
                     'Model': details['model'],
                     'Performance': f"{details['throughput_samples_hour']} samples/hr",
                     'Last Service': 'N/A'
@@ -663,7 +666,7 @@ def launch_lims_integration_demo():
             elif equipment == 'pneumatic_transport':
                 equipment_data.append({
                     'Equipment': 'Pneumatic Transport',
-                    'Status': f"{status_icon} {details['status']}",
+                    'Status': f"{status_icon} {equipment_status}",
                     'Model': 'Pneumatic System',
                     'Performance': f"{details['sample_integrity']:.1f}% integrity",
                     'Last Service': 'N/A'
@@ -671,7 +674,7 @@ def launch_lims_integration_demo():
             elif equipment == 'auto_sampling':
                 equipment_data.append({
                     'Equipment': 'Auto Sampling',
-                    'Status': f"{status_icon} {details['status']}",
+                    'Status': f"{status_icon} {equipment_status}",
                     'Model': 'Multi-point Sampling',
                     'Performance': f"{details['active_points']}/{details['points_configured']} points active",
                     'Last Service': details['last_maintenance']
