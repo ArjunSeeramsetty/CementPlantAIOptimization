@@ -433,7 +433,12 @@ def launch_dwsim_integration_demo():
                 success_rate = len(history_df[history_df['status'] == 'completed']) / len(history_df) * 100
                 st.metric("Success Rate", f"{success_rate:.1f}%")
             with col4:
-                st.metric("Last Execution", history_df['execution_timestamp'].iloc[0][:16])
+                last_execution = history_df['execution_timestamp'].iloc[0]
+                if hasattr(last_execution, 'strftime'):
+                    formatted_time = last_execution.strftime('%Y-%m-%d %H:%M')
+                else:
+                    formatted_time = str(last_execution)[:16]
+                st.metric("Last Execution", formatted_time)
             
             # Execution trends
             st.subheader("📊 Execution Trends")
