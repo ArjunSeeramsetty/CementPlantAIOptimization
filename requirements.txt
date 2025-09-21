@@ -23,6 +23,7 @@ google-cloud-firestore>=2.11.0
 google-auth>=2.23.0
 google-auth-oauthlib>=1.1.0
 google-auth-httplib2>=0.1.1
+# Note: All Google Cloud packages support Python 3.9+
 
 # Machine Learning and Data Science
 scikit-learn>=1.3.0
@@ -38,9 +39,16 @@ google-generativeai>=0.3.0
 prometheus-client>=0.17.0
 opentelemetry-api>=1.20.0
 opentelemetry-sdk>=1.20.0
-opentelemetry-exporter-prometheus>=0.58.0  # Compatible with Python 3.9
 opentelemetry-exporter-cloud-trace>=1.0.0
 opentelemetry-instrumentation>=0.40b0
+
+# Optional: Prometheus metrics (if needed)
+# opentelemetry-exporter-prometheus==0.58b0  # Beta version for Python 3.9
+
+# Alternative monitoring (if OpenTelemetry has issues)
+# For basic monitoring without OpenTelemetry dependencies:
+# statsd>=4.0.0
+# datadog>=0.48.0
 
 # Production web framework
 fastapi>=0.104.0
@@ -74,8 +82,8 @@ kubernetes>=28.1.0
 # Uncomment these for full functionality:
 
 # Advanced ML libraries (compatible versions)
-# tensorflow>=2.15.0  # Note: May conflict with protobuf versions
-# torch>=2.1.0
+# tensorflow>=2.13.0  # Compatible with Python 3.9
+# torch>=1.13.0       # Compatible with Python 3.9
 # xgboost>=1.7.0
 # lightgbm>=4.0.0
 
@@ -86,3 +94,8 @@ kubernetes>=28.1.0
 # Advanced analytics
 # dask>=2023.9.0
 # vaex>=4.17.0
+
+# Installation notes:
+# If you encounter OpenTelemetry issues, you can:
+# 1. Use: pip install --only-binary=all -r requirements.txt
+# 2. Or skip problematic packages: pip install -r requirements.txt --ignore-installed opentelemetry-exporter-prometheus
