@@ -7,6 +7,7 @@ Provides a single navigation interface for all seven enhancement modules
 import streamlit as st
 import sys
 import os
+import pandas as pd
 from pathlib import Path
 
 # Add src to path for imports
