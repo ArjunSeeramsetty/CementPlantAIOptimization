@@ -7,7 +7,8 @@ pandas==2.0.3
 numpy==1.24.4
 plotly==5.17.0
 
-# Packaging compatibility fix
+# Essential dependencies
+typing-extensions>=4.3.0
 packaging==23.2
 tenacity==8.5.0
 

@@ -46,6 +46,7 @@ jobs:
       - name: Install dependencies in stages
         run: |
           echo "📦 Installing core dependencies..."
+          pip install --no-deps typing-extensions>=4.3.0
           pip install --no-deps streamlit==1.28.2
           pip install --no-deps pandas==2.0.3 numpy==1.24.4
           pip install --no-deps plotly==5.17.0

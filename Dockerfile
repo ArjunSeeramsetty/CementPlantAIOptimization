@@ -18,7 +18,8 @@ RUN pip install --no-cache-dir --upgrade pip==23.3.2 setuptools==69.0.3 wheel==0
 COPY requirements.txt .
 
 # Install Python dependencies in stages to avoid conflicts
-RUN pip install --no-cache-dir packaging==23.2 tenacity==8.5.0 && \
+RUN pip install --no-cache-dir typing-extensions>=4.3.0 && \
+    pip install --no-cache-dir packaging==23.2 tenacity==8.5.0 && \
     pip install --no-cache-dir numpy==1.24.4 pandas==2.0.3 && \
     pip install --no-cache-dir streamlit==1.28.2 plotly==5.17.0 && \
     pip install --no-cache-dir pyyaml==6.0.1 python-dotenv==1.0.0 requests==2.30.0 && \
