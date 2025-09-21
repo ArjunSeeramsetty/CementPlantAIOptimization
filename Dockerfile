@@ -19,6 +19,7 @@ COPY requirements.txt .
 
 # Install Python dependencies in stages to avoid conflicts
 RUN pip install --no-cache-dir typing-extensions>=4.3.0 && \
+    pip install --no-cache-dir toml>=0.10.2 && \
     pip install --no-cache-dir packaging==23.2 tenacity==8.5.0 && \
     pip install --no-cache-dir numpy==1.24.4 pandas==2.0.3 && \
     pip install --no-cache-dir streamlit==1.28.2 plotly==5.17.0 && \
