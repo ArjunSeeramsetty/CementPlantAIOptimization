@@ -1206,6 +1206,9 @@ def launch_enhanced_ai_copilot_demo():
         # AI Chat Interface
         st.subheader("💬 AI Assistant Chat")
         
+        # Initialize confidence variable to avoid NameError
+        confidence = st.session_state.get('ai_confidence', 0.0)
+        
         # Display knowledge base summary
         kb_summary = copilot.get_knowledge_base_summary()
         
@@ -1232,6 +1235,7 @@ def launch_enhanced_ai_copilot_demo():
                 
                 # Confidence indicator
                 confidence = response['confidence']
+                st.session_state['ai_confidence'] = confidence  # Store in session state
                 confidence_color = "green" if confidence > 0.8 else "orange" if confidence > 0.6 else "red"
                 st.markdown(f"**Confidence Level:** :{confidence_color}[{confidence:.0%}]")
 

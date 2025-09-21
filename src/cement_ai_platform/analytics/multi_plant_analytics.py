@@ -263,6 +263,7 @@ class MultiPlantPerformanceAnalyzer:
 
         # Calculate average performance metrics for each plant
         plant_summary = self.performance_data.groupby(['plant_id', 'plant_name', 'technology_level']).agg({
+            'capacity_tpd': 'first',  # Add capacity_tpd to aggregation
             'thermal_energy_kcal_kg': 'mean',
             'electrical_energy_kwh_t': 'mean',
             'energy_cost_per_ton': 'mean',
