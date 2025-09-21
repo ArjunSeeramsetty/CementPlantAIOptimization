@@ -1,0 +1,154 @@
+# Monitoring and Alerting Configuration for Cement Plant AI Digital Twin
+
+# Cloud Monitoring Dashboard Configuration
+dashboard:
+  displayName: "Cement Plant AI Digital Twin - Monitoring Dashboard"
+  mosaicLayout:
+    tiles:
+      - width: 6
+        height: 4
+        widget:
+          title: "Application Health"
+          xyChart:
+            dataSets:
+              - timeSeriesQuery:
+                  timeSeriesFilter:
+                    filter: 'resource.type="cloud_run_revision" AND resource.labels.service_name="cement-digital-twin"'
+                    aggregation:
+                      alignmentPeriod: "300s"
+                      perSeriesAligner: "ALIGN_RATE"
+                      crossSeriesReducer: "REDUCE_SUM"
+                      groupByFields:
+                        - "resource.labels.service_name"
+            timeshiftDuration: "0s"
+            yAxis:
+              label: "Requests/sec"
+              scale: "LINEAR"
+      
+      - width: 6
+        height: 4
+        widget:
+          title: "Response Time"
+          xyChart:
+            dataSets:
+              - timeSeriesQuery:
+                  timeSeriesFilter:
+                    filter: 'resource.type="cloud_run_revision" AND metric.type="run.googleapis.com/request_latencies"'
+                    aggregation:
+                      alignmentPeriod: "300s"
+                      perSeriesAligner: "ALIGN_MEAN"
+                      crossSeriesReducer: "REDUCE_MEAN"
+            timeshiftDuration: "0s"
+            yAxis:
+              label: "Latency (ms)"
+              scale: "LINEAR"
+      
+      - width: 6
+        height: 4
+        widget:
+          title: "Memory Usage"
+          xyChart:
+            dataSets:
+              - timeSeriesQuery:
+                  timeSeriesFilter:
+                    filter: 'resource.type="cloud_run_revision" AND metric.type="run.googleapis.com/container/memory/utilizations"'
+                    aggregation:
+                      alignmentPeriod: "300s"
+                      perSeriesAligner: "ALIGN_MEAN"
+                      crossSeriesReducer: "REDUCE_MEAN"
+            timeshiftDuration: "0s"
+            yAxis:
+              label: "Memory %"
+              scale: "LINEAR"
+      
+      - width: 6
+        height: 4
+        widget:
+          title: "CPU Usage"
+          xyChart:
+            dataSets:
+              - timeSeriesQuery:
+                  timeSeriesFilter:
+                    filter: 'resource.type="cloud_run_revision" AND metric.type="run.googleapis.com/container/cpu/utilizations"'
+                    aggregation:
+                      alignmentPeriod: "300s"
+                      perSeriesAligner: "ALIGN_MEAN"
+                      crossSeriesReducer: "REDUCE_MEAN"
+            timeshiftDuration: "0s"
+            yAxis:
+              label: "CPU %"
+              scale: "LINEAR"
+
+# Alerting Policies
+alertingPolicies:
+  - displayName: "High Error Rate"
+    conditions:
+      - displayName: "Error rate > 5%"
+        conditionThreshold:
+          filter: 'resource.type="cloud_run_revision" AND metric.type="run.googleapis.com/request_count" AND metric.labels.response_code_class!="2xx"'
+          comparison: "COMPARISON_GREATER_THAN"
+          thresholdValue: 0.05
+          duration: "300s"
+    notificationChannels:
+      - "projects/cement-ai-digital-twin/notificationChannels/email"
+    alertStrategy:
+      autoClose: "86400s"
+  
+  - displayName: "High Response Time"
+    conditions:
+      - displayName: "Response time > 5s"
+        conditionThreshold:
+          filter: 'resource.type="cloud_run_revision" AND metric.type="run.googleapis.com/request_latencies"'
+          comparison: "COMPARISON_GREATER_THAN"
+          thresholdValue: 5000
+          duration: "300s"
+    notificationChannels:
+      - "projects/cement-ai-digital-twin/notificationChannels/email"
+    alertStrategy:
+      autoClose: "86400s"
+  
+  - displayName: "High Memory Usage"
+    conditions:
+      - displayName: "Memory usage > 80%"
+        conditionThreshold:
+          filter: 'resource.type="cloud_run_revision" AND metric.type="run.googleapis.com/container/memory/utilizations"'
+          comparison: "COMPARISON_GREATER_THAN"
+          thresholdValue: 0.8
+          duration: "300s"
+    notificationChannels:
+      - "projects/cement-ai-digital-twin/notificationChannels/email"
+    alertStrategy:
+      autoClose: "86400s"
+  
+  - displayName: "High CPU Usage"
+    conditions:
+      - displayName: "CPU usage > 70%"
+        conditionThreshold:
+          filter: 'resource.type="cloud_run_revision" AND metric.type="run.googleapis.com/container/cpu/utilizations"'
+          comparison: "COMPARISON_GREATER_THAN"
+          thresholdValue: 0.7
+          duration: "300s"
+    notificationChannels:
+      - "projects/cement-ai-digital-twin/notificationChannels/email"
+    alertStrategy:
+      autoClose: "86400s"
+
+# Log-based Metrics
+logMetrics:
+  - name: "app_errors"
+    description: "Application error count"
+    filter: 'resource.type="cloud_run_revision" AND severity="ERROR"'
+    labelExtractors:
+      error_type: "EXTRACT(protoPayload.status.message)"
+  
+  - name: "app_warnings"
+    description: "Application warning count"
+    filter: 'resource.type="cloud_run_revision" AND severity="WARNING"'
+    labelExtractors:
+      warning_type: "EXTRACT(protoPayload.status.message)"
+  
+  - name: "deployment_events"
+    description: "Deployment events"
+    filter: 'resource.type="cloud_run_revision" AND protoPayload.methodName="google.appengine.v1.Versions.CreateVersion"'
+    labelExtractors:
+      version: "EXTRACT(resource.labels.revision_name)"

@@ -1,7 +1,15 @@
-# Dockerfile - Production Ready for JK Cement Digital Twin Platform
+# Production-ready Dockerfile for Cement Plant AI Digital Twin
 FROM python:3.9-slim
 
-# Set working directory
+# Set environment variables
+ENV STREAMLIT_SERVER_PORT=8080
+ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
+ENV STREAMLIT_SERVER_HEADLESS=true
+ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+ENV PYTHONUNBUFFERED=1
+ENV PYTHONDONTWRITEBYTECODE=1
+
+# Create app directory
 WORKDIR /app
 
 # Install system dependencies
@@ -9,38 +17,37 @@ RUN apt-get update && apt-get install -y \
     build-essential \
     curl \
     git \
+    libgomp1 \
     && rm -rf /var/lib/apt/lists/*
 
-# Upgrade pip and install tools
-RUN pip install --no-cache-dir --upgrade pip==23.3.2 setuptools==69.0.3 wheel==0.42.0
-
-# Copy requirements
+# Copy requirements and install Python dependencies
 COPY requirements.txt .
-
-# Install all dependencies from consolidated requirements
+RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY src/ src/
 COPY scripts/ scripts/
-COPY main.py .
-COPY demo_unified_dashboard.py .
+COPY config/ config/
+COPY .env .env
 
-# Create necessary directories
-RUN mkdir -p logs data config
+# Create required directories
+RUN mkdir -p logs data artifacts
 
-# Set environment variables
-ENV STREAMLIT_SERVER_PORT=8501
-ENV STREAMLIT_SERVER_ADDRESS=0.0.0.0
-ENV STREAMLIT_SERVER_HEADLESS=true
-ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
+# Create health check script
+COPY healthcheck.py .
+
+# Create non-root user for security
+RUN useradd --create-home --shell /bin/bash app && \
+    chown -R app:app /app
+USER app
 
 # Expose port
-EXPOSE 8501
+EXPOSE 8080
 
 # Health check
-HEALTHCHECK --interval=30s --timeout=10s --start-period=30s --retries=3 \
-  CMD curl -f http://localhost:8501/_stcore/health || exit 1
+HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+    CMD python healthcheck.py
 
 # Run application
-CMD ["streamlit", "run", "demo_unified_dashboard.py", "--server.port=8501", "--server.address=0.0.0.0"]
+CMD ["streamlit", "run", "src/cement_ai_platform/dashboard/unified_dashboard.py", "--server.port=8080", "--server.address=0.0.0.0", "--server.headless=true"]
