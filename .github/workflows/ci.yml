@@ -20,7 +20,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       
@@ -66,30 +66,13 @@ jobs:
           mypy src/ --ignore-missing-imports --no-strict-optional || echo "Type checking warnings found"
           exit 0
       
-      - name: Create basic test files
+      - name: Verify test files exist
         run: |
-          cat > tests/test_basic.py << 'EOF'
-          import sys
-          import os
-          sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..', 'src'))
-          
-          def test_basic_import():
-              """Test basic package structure"""
-              assert True
-          
-          def test_platform_availability():
-              """Test that main platform components are available"""
-              try:
-                  # Test basic Python functionality
-                  import json
-                  import datetime
-                  assert json.dumps({'test': True}) == '{"test": true}'
-                  assert datetime.datetime.now() is not None
-                  print("✅ Basic platform tests passed")
-              except Exception as e:
-                  print(f"❌ Platform test failed: {e}")
-                  assert False, f"Platform test failed: {e}"
-          EOF
+          if [ ! -f "tests/test_basic.py" ]; then
+            echo "❌ tests/test_basic.py not found"
+            exit 1
+          fi
+          echo "✅ Test files verified"
       
       - name: Run tests with pytest
         run: |
@@ -143,7 +126,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       
@@ -155,28 +138,17 @@ jobs:
       - name: Security scan with Bandit
         run: |
           echo "Running Bandit security scan..."
-          bandit -r src/ -f json -o bandit-report.json || echo "Bandit scan completed with warnings"
-          # Create basic report if scan fails
-          if [ ! -f bandit-report.json ]; then
-            echo '{"results": [], "metrics": {"_totals": {"CONFIDENCE.HIGH": 0, "SEVERITY.HIGH": 0}}}' > bandit-report.json
-          fi
+          bandit -r src/ -f json -o bandit-report.json
       
       - name: Dependency vulnerability scan with Safety
         run: |
           echo "Running Safety dependency scan..."
-          safety check --json --output safety-report.json || echo "Safety scan completed with warnings"
-          # Create basic report if scan fails
-          if [ ! -f safety-report.json ]; then
-            echo '[]' > safety-report.json
-          fi
+          safety check --json --output safety-report.json
       
       - name: Audit Python packages
         run: |
           echo "Running pip-audit..."
-          pip-audit --format=json --output=audit-report.json || echo "Audit completed with warnings"
-          if [ ! -f audit-report.json ]; then
-            echo '{"vulnerabilities": []}' > audit-report.json
-          fi
+          pip-audit --format=json --output=audit-report.json
       
       - name: Upload security reports
         uses: actions/upload-artifact@v4
@@ -256,7 +228,7 @@ jobs:
         uses: actions/checkout@v4
       
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v6
         with:
           python-version: ${{ env.PYTHON_VERSION }}
       
@@ -292,21 +264,51 @@ jobs:
             cat > Dockerfile << 'EOF'
           FROM python:3.9-slim
           
+          # Install system dependencies and healthcheck tool
+          RUN apt-get update && apt-get install -y \
+              curl \
+              && rm -rf /var/lib/apt/lists/*
+          
+          # Create non-root user
+          RUN groupadd -r appuser && useradd -r -g appuser appuser
+          
           WORKDIR /app
           
+          # Copy requirements and install Python dependencies
           COPY requirements.txt .
           RUN pip install --no-cache-dir -r requirements.txt
           
+          # Copy application code
           COPY src/ src/
           COPY scripts/ scripts/
-          COPY main.py .
+          COPY tests/ tests/
           
+          # Set app module as environment variable
+          ARG APP_MODULE=src.cement_ai_platform.dashboard.unified_dashboard
+          ENV APP_MODULE=${APP_MODULE}
+          
+          # Change ownership to non-root user
+          RUN chown -R appuser:appuser /app
+          
+          # Switch to non-root user
+          USER appuser
+          
+          # Set home directory
+          ENV HOME=/home/appuser
+          
+          # Expose port
           EXPOSE 8080
-          CMD ["python", "main.py"]
+          
+          # Health check
+          HEALTHCHECK --interval=30s --timeout=10s --start-period=5s --retries=3 \
+            CMD curl -f http://localhost:8080/health || exit 1
+          
+          # Run application
+          CMD ["python", "-m", "streamlit", "run", "src/cement_ai_platform/dashboard/unified_dashboard.py", "--server.port=8080", "--server.address=0.0.0.0"]
           EOF
           fi
           
-          docker build -t cement-ai-platform:${{ github.sha }} . || echo "Docker build completed with warnings"
+          docker build -t cement-ai-platform:${{ github.sha }} .
       
       - name: Upload build artifacts
         uses: actions/upload-artifact@v4
