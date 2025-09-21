@@ -28,7 +28,7 @@ python -m pip install --upgrade pip==23.3.2 setuptools==69.0.3 wheel==0.42.0
 echo "📚 Installing dependencies..."
 
 echo "  📦 Core packages..."
-pip install typing-extensions>=4.3.0 toml>=0.10.2 packaging==23.2 tenacity==8.5.0
+pip install typing-extensions>=4.3.0 toml>=0.10.2 blinker>=1.4 packaging==23.2 tenacity==8.5.0
 
 echo "  🔢 Data packages..."
 pip install numpy==1.24.4 pandas==2.0.3

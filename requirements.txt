@@ -10,6 +10,7 @@ plotly==5.17.0
 # Essential dependencies
 typing-extensions>=4.3.0
 toml>=0.10.2
+blinker>=1.4
 packaging==23.2
 tenacity==8.5.0
 
