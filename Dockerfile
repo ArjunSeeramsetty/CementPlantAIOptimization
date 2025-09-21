@@ -17,17 +17,8 @@ RUN pip install --no-cache-dir --upgrade pip==23.3.2 setuptools==69.0.3 wheel==0
 # Copy requirements
 COPY requirements.txt .
 
-# Install Python dependencies in stages to avoid conflicts
-RUN pip install --no-cache-dir typing-extensions>=4.3.0 && \
-    pip install --no-cache-dir toml>=0.10.2 && \
-    pip install --no-cache-dir blinker>=1.4 && \
-    pip install --no-cache-dir packaging==23.2 tenacity==8.5.0 && \
-    pip install --no-cache-dir numpy==1.24.4 pandas==2.0.3 && \
-    pip install --no-cache-dir streamlit==1.28.2 plotly==5.17.0 && \
-    pip install --no-cache-dir pyyaml==6.0.1 python-dotenv==1.0.0 requests==2.30.0 && \
-    pip install --no-cache-dir google-cloud-bigquery==3.14.1 google-cloud-storage==2.14.0 && \
-    pip install --no-cache-dir scikit-learn==1.3.2 scipy==1.11.4 && \
-    pip install --no-cache-dir openpyxl==3.1.2 xlsxwriter==3.1.9 Pillow==10.1.0
+# Install all dependencies from consolidated requirements
+RUN pip install --no-cache-dir -r requirements.txt
 
 # Copy application code
 COPY src/ src/
