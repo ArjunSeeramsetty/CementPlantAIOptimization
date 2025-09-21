@@ -17,11 +17,7 @@ class RealTimeStreamingDashboard:
     def start_demo_dashboard(self):
         """Launch real-time streaming dashboard"""
         
-        st.set_page_config(
-            page_title="🏭 Cement Plant Real-Time Streaming Demo",
-            layout="wide",
-            initial_sidebar_state="expanded"
-        )
+        # Note: st.set_page_config() is called in the main unified dashboard
         
         st.title("🏭 Cement Plant Real-Time Data Streaming")
         st.markdown("**Live sensor data via Google Cloud Pub/Sub simulation**")

@@ -9,11 +9,7 @@ from cement_ai_platform.validation.drift_detection import DataDriftDetector
 def launch_data_validation_demo():
     """Launch data validation and drift detection demo"""
     
-    st.set_page_config(
-        page_title="🧪 Data Validation & Drift Detection",
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
+    # Note: st.set_page_config() is called in the main unified dashboard
     
     st.title("🧪 Data Validation & Drift Detection")
     st.markdown("**Automated Data Quality Monitoring & Model Retraining**")

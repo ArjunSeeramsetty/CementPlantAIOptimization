@@ -303,11 +303,7 @@ class UtilityOptimizer:
 def launch_utility_optimization_demo():
     """Launch Utility Optimization Dashboard"""
     
-    st.set_page_config(
-        page_title="💧 Utility Optimization Dashboard",
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
+    # Note: st.set_page_config() is called in the main unified dashboard
     
     st.title("💧 Utility Optimization Dashboard")
     st.markdown("**Comprehensive utility management and optimization platform**")

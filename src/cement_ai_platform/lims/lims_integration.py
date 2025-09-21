@@ -329,11 +329,7 @@ class LIMSIntegration:
 def launch_lims_integration_demo():
     """Launch LIMS Integration Dashboard"""
     
-    st.set_page_config(
-        page_title="🧪 LIMS Integration Dashboard",
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
+    # Note: st.set_page_config() is called in the main unified dashboard
     
     st.title("🧪 LIMS Integration Dashboard")
     st.markdown("**Laboratory Information Management System with Robotic Lab Integration**")

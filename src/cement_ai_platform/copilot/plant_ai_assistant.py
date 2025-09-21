@@ -474,11 +474,7 @@ Feel free to ask me anything about cement plant operations - I'm here to help op
 def launch_plant_ai_assistant():
     """Launch Plant AI Assistant Interface"""
     
-    st.set_page_config(
-        page_title="🤖 Plant AI Assistant",
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
+    # Note: st.set_page_config() is called in the main unified dashboard
     
     st.title("🤖 Cement Plant AI Assistant")
     st.markdown("**Your intelligent copilot for cement plant operations**")

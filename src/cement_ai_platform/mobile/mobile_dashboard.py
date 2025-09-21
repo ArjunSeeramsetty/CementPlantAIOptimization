@@ -26,13 +26,7 @@ class MobileCementDashboard:
     def launch_mobile_dashboard(self):
         """Launch mobile-optimized dashboard"""
         
-        # Mobile-optimized page config
-        st.set_page_config(
-            page_title="🏭 Mobile Plant Monitor",
-            page_icon="🏭",
-            layout="centered",  # Better for mobile
-            initial_sidebar_state="collapsed"
-        )
+        # Note: st.set_page_config() is called in the main unified dashboard
         
         # Mobile CSS styling
         self._inject_mobile_css()

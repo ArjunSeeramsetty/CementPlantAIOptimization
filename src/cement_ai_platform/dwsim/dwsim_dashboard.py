@@ -11,11 +11,7 @@ from .dwsim_connector import DWSIMIntegrationEngine, DWSIMScenario
 def launch_dwsim_integration_demo():
     """Launch DWSIM integration demo interface"""
     
-    st.set_page_config(
-        page_title="⚗️ DWSIM Physics Integration",
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
+    # Note: st.set_page_config() is called in the main unified dashboard
     
     st.title("⚗️ DWSIM Physics-Based Digital Twin")
     st.markdown("**End-to-End Process Simulation & Scenario Analysis**")

@@ -8,11 +8,7 @@ from cement_ai_platform.maintenance.predictive_maintenance import PredictiveMain
 def launch_predictive_maintenance_demo():
     """Launch predictive maintenance demo interface"""
     
-    st.set_page_config(
-        page_title="🔧 Predictive Maintenance System",
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
+    # Note: st.set_page_config() is called in the main unified dashboard
     
     st.title("🔧 Predictive Maintenance System")
     st.markdown("**AI-Powered Equipment Health Monitoring & Failure Prediction**")

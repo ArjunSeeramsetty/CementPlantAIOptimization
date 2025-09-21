@@ -332,11 +332,7 @@ class TSRFuelOptimizer:
 def launch_tsr_fuel_optimizer_demo():
     """Launch TSR & Alternative Fuels Optimization Dashboard"""
     
-    st.set_page_config(
-        page_title="🔥 TSR & Alternative Fuels Optimizer",
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
+    # Note: st.set_page_config() is called in the main unified dashboard
     
     st.title("🔥 TSR & Alternative Fuels Optimization")
     st.markdown("**Intelligent Alternative Fuel Mix Optimization for Maximum TSR**")

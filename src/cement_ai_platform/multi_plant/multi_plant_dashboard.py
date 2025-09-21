@@ -20,11 +20,7 @@ class MultiPlantDashboard:
     def launch_multi_plant_dashboard(self):
         """Launch multi-plant management dashboard"""
         
-        st.set_page_config(
-            page_title="🏭 Multi-Plant Management Dashboard",
-            layout="wide",
-            initial_sidebar_state="expanded"
-        )
+        # Note: st.set_page_config() is called in the main unified dashboard
         
         st.title("🏭 Multi-Plant Cement Operations Dashboard")
         st.markdown("**Enterprise-Scale Plant Management System**")

@@ -398,11 +398,7 @@ class HistoricalDataAnalytics:
 def launch_historical_analytics_demo():
     """Launch Historical Data Analytics Dashboard"""
     
-    st.set_page_config(
-        page_title="📊 Historical Data Analytics",
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
+    # Note: st.set_page_config() is called in the main unified dashboard
     
     st.title("📊 Historical Data Analytics Platform")
     st.markdown("**Large-scale analytics on 10+ years of cement plant data**")

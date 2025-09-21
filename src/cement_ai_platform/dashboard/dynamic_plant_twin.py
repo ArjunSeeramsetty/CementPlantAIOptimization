@@ -335,12 +335,7 @@ class DynamicPlantTwin:
 def launch_dynamic_plant_twin():
     """Launch dynamic plant twin dashboard"""
     
-    st.set_page_config(
-        page_title="🏭 Dynamic Plant Digital Twin",
-        page_icon="🏭",
-        layout="wide",
-        initial_sidebar_state="expanded"
-    )
+    # Note: st.set_page_config() is called in the main unified dashboard
     
     # CSS for dynamic styling
     st.markdown("""
