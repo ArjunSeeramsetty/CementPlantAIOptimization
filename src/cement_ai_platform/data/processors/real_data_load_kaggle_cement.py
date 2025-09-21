@@ -25,7 +25,7 @@ def load_kaggle_cement_dataset(dataset_url: Optional[str] = None) -> pd.DataFram
     if dataset_url and _requests_available:
         try:
             # Try to load from actual URL
-            response = requests.get(dataset_url)
+            response = requests.get(dataset_url, timeout=30)
             if response.status_code == 200:
                 # Parse CSV data
                 from io import StringIO

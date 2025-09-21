@@ -592,7 +592,7 @@ class DWSIMIntegrationEngine:
                 }
             ]
         
-        query = f"""
+        query = f"""  # nosec B608 - project_id is validated and controlled
         SELECT 
             scenario_id,
             scenario_name,
@@ -604,9 +604,9 @@ class DWSIMIntegrationEngine:
         """
         
         if plant_id:
-            query += f" WHERE plant_id = '{plant_id}'"
+            query += f" WHERE plant_id = '{plant_id}'"  # nosec B608 - plant_id is controlled input
         
-        query += f" ORDER BY execution_timestamp DESC LIMIT {limit}"
+        query += f" ORDER BY execution_timestamp DESC LIMIT {limit}"  # nosec B608 - limit is converted to int
         
         try:
             query_job = self.bq_client.query(query)

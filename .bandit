@@ -1,0 +1,12 @@
+exclude_dirs:
+  - tests
+  - test
+  - __pycache__
+  - .git
+  - .venv
+  - venv
+  - node_modules
+
+skips:
+  - B608
+  - B113

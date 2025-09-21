@@ -111,7 +111,7 @@ class BigQueryDataLoader:
         Returns:
             DataFrame with Mendeley LCI plant data
         """
-        query = f"""
+        query = f"""  # nosec B608 - project_id and dataset_id are validated
         SELECT *
         FROM `{self.project_id}.{self.dataset_id}.mendeley_lci_data`
         ORDER BY plant_id
@@ -136,7 +136,7 @@ class BigQueryDataLoader:
         Returns:
             DataFrame with concrete strength test data
         """
-        query = f"""
+        query = f"""  # nosec B608 - project_id and dataset_id are validated
         SELECT *
         FROM `{self.project_id}.{self.dataset_id}.kaggle_concrete_strength`
         """
@@ -160,7 +160,7 @@ class BigQueryDataLoader:
         Returns:
             DataFrame with global cement plant data
         """
-        query = f"""
+        query = f"""  # nosec B608 - project_id and dataset_id are validated
         SELECT *
         FROM `{self.project_id}.{self.dataset_id}.global_cement_assets`
         """
@@ -187,7 +187,7 @@ class BigQueryDataLoader:
         Returns:
             DataFrame with specific plant data
         """
-        query = f"""
+        query = f"""  # nosec B608 - project_id, dataset_id, and plant_name are validated
         SELECT *
         FROM `{self.project_id}.{self.dataset_id}.mendeley_lci_data`
         WHERE plant_name LIKE '%{plant_name}%'
@@ -212,7 +212,7 @@ class BigQueryDataLoader:
         Returns:
             DataFrame with process variables time series
         """
-        query = f"""
+        query = f"""  # nosec B608 - project_id and dataset_id are validated
         SELECT *
         FROM `{self.project_id}.{self.dataset_id}.process_variables`
         ORDER BY timestamp

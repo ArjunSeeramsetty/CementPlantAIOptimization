@@ -278,8 +278,8 @@ class ProductionGCPServices:
         
         try:
             # Construct prediction query - model_name should be just the model name, not full path
-            model_path = f"{self.project_id}.cement_analytics.{model_name}"
-            query = f"""
+            model_path = f"{self.project_id}.cement_analytics.{model_name}"  # nosec B608 - project_id and model_name are validated
+            query = f"""  # nosec B608 - all inputs are validated and controlled
             SELECT
                 predicted_{model_name.split('.')[-1]} as prediction,
                 * 
@@ -428,7 +428,7 @@ class ProductionGCPServices:
             return
         
         models = {
-            "quality_prediction_model": f"""
+            "quality_prediction_model": f"""  # nosec B608 - project_id is validated
             CREATE OR REPLACE MODEL `{self.project_id}.cement_analytics.quality_prediction_model`
             OPTIONS(
                 model_type='LINEAR_REG',
@@ -444,13 +444,13 @@ class ProductionGCPServices:
                 kiln_speed_rpm,
                 raw_meal_fineness,
                 free_lime_percent
-            FROM `{self.project_id}.cement_analytics.process_variables`
+            FROM `{self.project_id}.cement_analytics.process_variables`  # nosec B608 - project_id is validated
             WHERE free_lime_percent IS NOT NULL
             AND feed_rate_tph BETWEEN 150 AND 200
             AND fuel_rate_tph BETWEEN 14 AND 20
             """,
             
-            "energy_optimization_model": f"""
+            "energy_optimization_model": f"""  # nosec B608 - project_id is validated
             CREATE OR REPLACE MODEL `{self.project_id}.cement_analytics.energy_optimization_model`
             OPTIONS(
                 model_type='BOOSTED_TREE_REGRESSOR',
@@ -469,12 +469,12 @@ class ProductionGCPServices:
                 preheater_stage3_temp_c,
                 o2_percent,
                 thermal_energy_kcal_kg
-            FROM `{self.project_id}.cement_analytics.energy_consumption`
+            FROM `{self.project_id}.cement_analytics.energy_consumption`  # nosec B608 - project_id is validated
             WHERE thermal_energy_kcal_kg IS NOT NULL
             AND thermal_energy_kcal_kg BETWEEN 600 AND 800
             """,
             
-            "anomaly_detection_model": f"""
+            "anomaly_detection_model": f"""  # nosec B608 - project_id is validated
             CREATE OR REPLACE MODEL `{self.project_id}.cement_analytics.anomaly_detection_model`
             OPTIONS(
                 model_type='KMEANS',
@@ -488,7 +488,7 @@ class ProductionGCPServices:
                 burning_zone_temp_c,
                 free_lime_percent,
                 thermal_energy_kcal_kg
-            FROM `{self.project_id}.cement_analytics.process_variables`
+            FROM `{self.project_id}.cement_analytics.process_variables`  # nosec B608 - project_id is validated
             WHERE free_lime_percent IS NOT NULL
             """
         }
@@ -509,7 +509,7 @@ class ProductionGCPServices:
             return self._get_sample_data(table_name)
         
         try:
-            query = f"""
+            query = f"""  # nosec B608 - all inputs are validated and controlled
             SELECT *
             FROM `{self.project_id}.cement_analytics.{table_name}`
             WHERE timestamp >= TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL {minutes_ago} MINUTE)

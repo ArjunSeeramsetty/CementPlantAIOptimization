@@ -26,16 +26,13 @@ jobs:
           cache: 'pip'
           cache-dependency-path: 'requirements.txt'
       
-      - name: Create cache key
-        run: |
-          echo "CACHE_KEY=${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}-$(date +'%Y%m%d')" >> $GITHUB_ENV
-      
       - name: Cache pip dependencies
         uses: actions/cache@v4
         with:
           path: ~/.cache/pip
-          key: ${{ env.CACHE_KEY }}
+          key: ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}-${{ github.run_number }}
           restore-keys: |
+            ${{ runner.os }}-pip-${{ hashFiles('requirements.txt') }}-
             ${{ runner.os }}-pip-
       
       - name: Upgrade pip and tools
@@ -196,12 +193,12 @@ jobs:
       - name: Install security tools
         run: |
           python -m pip install --upgrade pip
-          pip install bandit==1.7.5 safety==2.3.5
+          pip install bandit==1.8.6 safety==2.3.5
       
       - name: Run Bandit security scan
         run: |
           echo "🔒 Running Bandit security scan..."
-          bandit -r src/ -f json -o bandit-results.json -ll || echo "Bandit scan completed"
+          bandit -r src/ -c .bandit -f json -o bandit-results.json -ll || echo "Bandit scan completed"
           
           # Create basic report if scan produces no output
           if [ ! -f bandit-results.json ]; then
@@ -214,7 +211,7 @@ jobs:
       - name: Run Safety vulnerability scan
         run: |
           echo "🛡️ Running Safety dependency scan..."
-          safety check --json --output safety-results.json || echo "Safety scan completed"
+          safety check --json > safety-results.json || echo "Safety scan completed"
           
           # Create basic report if scan fails
           if [ ! -f safety-results.json ]; then

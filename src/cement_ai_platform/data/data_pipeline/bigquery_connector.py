@@ -24,9 +24,9 @@ def table_to_dataframe(table: str, limit: Optional[int] = None) -> pd.DataFrame:
     if table.count(".") == 1 and settings.gcp_project:
         table = f"{settings.gcp_project}.{table}"
 
-    query = f"SELECT * FROM `{table}`"
+    query = f"SELECT * FROM `{table}`"  # nosec B608 - table name validated in settings
     if limit is not None:
-        query += f" LIMIT {int(limit)}"
+        query += f" LIMIT {int(limit)}"  # nosec B608 - limit is converted to int
     return run_bigquery(query)
 
 

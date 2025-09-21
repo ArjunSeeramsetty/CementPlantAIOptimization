@@ -25,7 +25,7 @@ def load_global_cement_database(api_url: Optional[str] = None) -> pd.DataFrame:
     if api_url and _requests_available:
         try:
             # Try to load from actual API
-            response = requests.get(api_url)
+            response = requests.get(api_url, timeout=30)
             if response.status_code == 200:
                 data = response.json()
                 df = pd.DataFrame(data)
