@@ -1,4 +1,3 @@
-# .github/workflows/ci.yml - FIXED FOR DEPENDENCY CONFLICTS
 name: CI/CD Pipeline - Fixed
 
 on:

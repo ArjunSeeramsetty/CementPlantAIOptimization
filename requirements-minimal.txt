@@ -1,0 +1,45 @@
+# requirements-minimal.txt - PRODUCTION READY
+# Optimized for JK Cement Digital Twin Platform POC
+# Minimal dependencies to avoid resolution conflicts
+
+# Core Framework
+streamlit==1.28.2
+pandas==1.5.3
+numpy==1.24.4
+plotly==5.17.0
+pyyaml==6.0.1
+python-dotenv==1.0.0
+requests==2.31.0
+
+# Google Cloud Platform
+google-cloud-bigquery==3.11.4
+google-cloud-storage==2.10.0
+google-cloud-firestore==2.11.1
+google-cloud-secret-manager==2.16.4
+google-cloud-aiplatform==1.35.0
+google-generativeai==0.3.2
+
+# Machine Learning (Essential)
+scikit-learn==1.3.2
+scipy==1.10.1
+
+# Development & Testing
+pytest==7.4.3
+pytest-cov==4.1.0
+black==23.9.1
+flake8==6.1.0
+mypy==1.6.1
+bandit==1.7.5
+safety==2.3.5
+
+# Optional: Heavy ML libraries (install separately if needed)
+# tensorflow>=2.13.1  # Uncomment if TensorFlow features required
+# torch>=1.13.0       # Uncomment if PyTorch features required
+# xgboost>=1.7.0      # Uncomment if XGBoost features required
+
+# Installation Notes:
+# 1. Install core packages first: pip install streamlit pandas numpy plotly
+# 2. Install GCP packages: pip install google-cloud-bigquery google-cloud-storage
+# 3. Install ML packages: pip install scikit-learn scipy
+# 4. Install dev tools last: pip install pytest black flake8
+# 5. For heavy ML libraries, install separately to avoid conflicts
