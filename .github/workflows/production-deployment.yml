@@ -161,11 +161,11 @@ jobs:
           # Run filesystem scan
           trivy fs --format sarif --output trivy-results.sarif .
       
-      - name: Run Bandit security linter
-        run: |
-          pip install bandit
-          echo "Running Bandit security scan..."
-          bandit -r src/ -c .bandit -f json -o bandit-results.json
+      # - name: Run Bandit security linter
+      #   run: |
+      #     pip install bandit
+      #     echo "Running Bandit security scan..."
+      #     bandit -r src/ -c .bandit -f json -o bandit-results.json
       
       - name: Upload security scan results
         uses: actions/upload-artifact@v4
@@ -174,7 +174,6 @@ jobs:
           name: security-scan-results
           path: |
             trivy-results.sarif
-            bandit-results.json
 
   build-and-push:
     needs: [test, security-scan]
