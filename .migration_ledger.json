@@ -374,6 +374,468 @@
       "source_uuid": "fff421f9-8a05-4428-8f1d-41bb7cb9ad71",
       "timestamp": "2025-09-07T06:55:08.740014Z",
       "yaml_name": "pinn.train_model"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/0ba91744-31b7-4cb3-a648-5e6fc126b5c7.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "0ba91744-31b7-4cb3-a648-5e6fc126b5c7",
+      "yaml_name": "validation.temperature_profile_consistency",
+      "timestamp": "2025-09-19T12:34:09.041093Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/1409b6df-53f9-40ba-ae44-ded14d5fc9d3.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/dwsim_process_units.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "1409b6df-53f9-40ba-ae44-ded14d5fc9d3",
+      "yaml_name": "dwsim.process_units",
+      "timestamp": "2025-09-19T12:34:09.042091Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/163567a3-b5e5-4626-bf03-a301d2c20dad.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "163567a3-b5e5-4626-bf03-a301d2c20dad",
+      "yaml_name": "validation.temporal_data_integrity",
+      "timestamp": "2025-09-19T12:34:09.042859Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/1dacffcb-e1e2-410b-9c81-ba7edf6726b0.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/quality_temporal_consistency.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "1dacffcb-e1e2-410b-9c81-ba7edf6726b0",
+      "yaml_name": "quality.temporal_consistency",
+      "timestamp": "2025-09-19T12:34:09.043733Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/20163929-085f-45db-a6a0-8acc7eda1ad4.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/pinn_interpretability_analysis.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "20163929-085f-45db-a6a0-8acc7eda1ad4",
+      "yaml_name": "pinn.interpretability_analysis",
+      "timestamp": "2025-09-19T12:34:09.044403Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/22a85917-a50a-434e-ad43-ef29d0043d15.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/dwsim_framework_integration.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "22a85917-a50a-434e-ad43-ef29d0043d15",
+      "yaml_name": "dwsim.framework_integration",
+      "timestamp": "2025-09-19T12:34:09.045158Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/30ee5c18-088c-49d3-996c-f0e5d6d266e6.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/ensemble_weighted_stacking_ensemble.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "30ee5c18-088c-49d3-996c-f0e5d6d266e6",
+      "yaml_name": "ensemble.weighted_stacking_ensemble",
+      "timestamp": "2025-09-19T12:34:09.045969Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/31692ac5-c149-4660-bb71-21b13466502e.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/time_validation_walk_forward_implementation.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "31692ac5-c149-4660-bb71-21b13466502e",
+      "yaml_name": "time_validation.walk_forward_implementation",
+      "timestamp": "2025-09-19T12:34:09.046709Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/34a48d3f-e1c0-4eb5-9de7-43dd43847b88.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/advanced_models_xgboost.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "34a48d3f-e1c0-4eb5-9de7-43dd43847b88",
+      "yaml_name": "advanced_models.xgboost",
+      "timestamp": "2025-09-19T12:34:09.047443Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/3fb9a87d-1ab5-4924-bdef-317d59cf985e.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/baseline_models_random_forest.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "3fb9a87d-1ab5-4924-bdef-317d59cf985e",
+      "yaml_name": "baseline_models.random_forest",
+      "timestamp": "2025-09-19T12:34:09.048090Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/4168af74-c18e-4ecc-a63f-f481acc45415.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/quality_anomaly_tracking_dashboard.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "4168af74-c18e-4ecc-a63f-f481acc45415",
+      "yaml_name": "quality.anomaly_tracking_dashboard",
+      "timestamp": "2025-09-19T12:34:09.048770Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/422ebe50-2f78-42c7-ba06-3400c1b417f1.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/pinn_neural_network.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "422ebe50-2f78-42c7-ba06-3400c1b417f1",
+      "yaml_name": "pinn.neural_network",
+      "timestamp": "2025-09-19T12:34:09.049431Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/4234e703-6ae2-4af0-a651-c8bbb423ccfd.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/data_prep_inject_missing.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "4234e703-6ae2-4af0-a651-c8bbb423ccfd",
+      "yaml_name": "data_prep.inject_missing",
+      "timestamp": "2025-09-19T12:34:09.050010Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/439e0477-5fdc-4745-a7a8-2ec3d48a7eb6.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/data_prep_explore_data.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "439e0477-5fdc-4745-a7a8-2ec3d48a7eb6",
+      "yaml_name": "data_prep.explore_data",
+      "timestamp": "2025-09-19T12:34:09.050755Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/46f3d43e-9d56-4e2a-8dc2-958fc712508b.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/evaluation_feature_importance.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "46f3d43e-9d56-4e2a-8dc2-958fc712508b",
+      "yaml_name": "evaluation.feature_importance",
+      "timestamp": "2025-09-19T12:34:09.051493Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/48ab75ab-713c-43d1-894e-1f5eb5c65ca0.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/time_validation_ab_testing_framework.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "48ab75ab-713c-43d1-894e-1f5eb5c65ca0",
+      "yaml_name": "time_validation.ab_testing_framework",
+      "timestamp": "2025-09-19T12:34:09.052315Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/4a585b53-af57-4365-b18b-6796b14d3d02.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/time_validation_walk_forward_validation.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "4a585b53-af57-4365-b18b-6796b14d3d02",
+      "yaml_name": "time_validation.walk_forward_validation",
+      "timestamp": "2025-09-19T12:34:09.053045Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/53eb4d01-ed52-43b2-805e-11f795e9e42c.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/advanced_models_extra_trees.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "53eb4d01-ed52-43b2-805e-11f795e9e42c",
+      "yaml_name": "advanced_models.extra_trees",
+      "timestamp": "2025-09-19T12:34:09.053720Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/5420b018-a2e3-4590-931c-b4f9931e3dfb.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/dwsim_data_generator.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "5420b018-a2e3-4590-931c-b4f9931e3dfb",
+      "yaml_name": "dwsim.data_generator",
+      "timestamp": "2025-09-19T12:34:09.054440Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/542675fb-6098-4710-bdd9-d421565959a3.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/evaluation_prediction_plots.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "542675fb-6098-4710-bdd9-d421565959a3",
+      "yaml_name": "evaluation.prediction_plots",
+      "timestamp": "2025-09-19T12:34:09.055294Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/553e8d32-601e-486b-81f6-de913376590c.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/optimization_bayesian_hyperparameter_tuning.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "553e8d32-601e-486b-81f6-de913376590c",
+      "yaml_name": "optimization.bayesian_hyperparameter_tuning",
+      "timestamp": "2025-09-19T12:34:09.056484Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/58fe0a4c-e4e8-4c23-9223-a0619e3c1dce.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/data_prep_feature_scaling.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "58fe0a4c-e4e8-4c23-9223-a0619e3c1dce",
+      "yaml_name": "data_prep.feature_scaling",
+      "timestamp": "2025-09-19T12:34:09.074743Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/5919baca-ead4-4a1f-b7e9-8054b309ccc9.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/advanced_models_neural_network.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "5919baca-ead4-4a1f-b7e9-8054b309ccc9",
+      "yaml_name": "advanced_models.neural_network",
+      "timestamp": "2025-09-19T12:34:09.075499Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/5cd84312-45a7-4349-af60-48573a0df216.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/bigquery_sample_queries_benchmarks.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "5cd84312-45a7-4349-af60-48573a0df216",
+      "yaml_name": "bigquery.sample_queries_benchmarks",
+      "timestamp": "2025-09-19T12:34:09.076330Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/6872d6bb-3ff2-4242-9935-b85f2cf035d0.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/evaluation_performance_metrics.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "6872d6bb-3ff2-4242-9935-b85f2cf035d0",
+      "yaml_name": "evaluation.performance_metrics",
+      "timestamp": "2025-09-19T12:34:09.077118Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/6a51304f-6f35-42ba-8a0c-6d26529943f4.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/bigquery_ingestion_pipeline.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "6a51304f-6f35-42ba-8a0c-6d26529943f4",
+      "yaml_name": "bigquery.ingestion_pipeline",
+      "timestamp": "2025-09-19T12:34:09.077996Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/7df4b068-ba4a-4668-8d50-d55fbd37872e.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/real_data_design_unified_schema.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "7df4b068-ba4a-4668-8d50-d55fbd37872e",
+      "yaml_name": "real_data.design_unified_schema",
+      "timestamp": "2025-09-19T12:34:09.078718Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/7f9a4780-a69b-4547-a27e-b18e4419f320.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/evaluation_final_report.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "7f9a4780-a69b-4547-a27e-b18e4419f320",
+      "yaml_name": "evaluation.final_report",
+      "timestamp": "2025-09-19T12:34:09.079448Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/81d4ca6a-817b-48c6-9937-f6eea261a7b4.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/time_validation_drift_detection.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "81d4ca6a-817b-48c6-9937-f6eea261a7b4",
+      "yaml_name": "time_validation.drift_detection",
+      "timestamp": "2025-09-19T12:34:09.080119Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/829bd40f-e4a9-440a-b62e-cea517019188.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/real_data_validate_physics_constraints.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "829bd40f-e4a9-440a-b62e-cea517019188",
+      "yaml_name": "real_data.validate_physics_constraints",
+      "timestamp": "2025-09-19T12:34:09.080835Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/8b3fa469-9dc6-4bc4-a3ab-ae5c25c030ce.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/data_prep_final_summary_8b3fa469-9dc6-4bc4-a3ab-ae5c25c030ce.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "8b3fa469-9dc6-4bc4-a3ab-ae5c25c030ce",
+      "yaml_name": "data_prep.final_summary",
+      "timestamp": "2025-09-19T12:34:09.081529Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/95bf1be4-01d9-4f40-9be4-ef543853422f.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/baseline_models_decision_tree_95bf1be4-01d9-4f40-9be4-ef543853422f.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "95bf1be4-01d9-4f40-9be4-ef543853422f",
+      "yaml_name": "baseline_models.decision_tree",
+      "timestamp": "2025-09-19T12:34:09.082151Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/961fce81-6a5d-458f-85a2-3dacd0a817f1.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/real_data_integrate_datasets_961fce81-6a5d-458f-85a2-3dacd0a817f1.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "961fce81-6a5d-458f-85a2-3dacd0a817f1",
+      "yaml_name": "real_data.integrate_datasets",
+      "timestamp": "2025-09-19T12:34:09.082982Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/97685bc5-424f-47a9-9825-f1b45e4003d8.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/time_validation_comprehensive_summary_97685bc5-424f-47a9-9825-f1b45e4003d8.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "97685bc5-424f-47a9-9825-f1b45e4003d8",
+      "yaml_name": "time_validation.comprehensive_summary",
+      "timestamp": "2025-09-19T12:34:09.083797Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/9d8d69a3-ca7f-49e3-befc-1452943b16ec.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/real_data_analyze_datasets_9d8d69a3-ca7f-49e3-befc-1452943b16ec.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "9d8d69a3-ca7f-49e3-befc-1452943b16ec",
+      "yaml_name": "real_data.analyze_datasets",
+      "timestamp": "2025-09-19T12:34:09.084470Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/abea277b-d125-4486-8ff3-b4ac4fef142c.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/advanced_models_performance_comparison_abea277b-d125-4486-8ff3-b4ac4fef142c.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "abea277b-d125-4486-8ff3-b4ac4fef142c",
+      "yaml_name": "advanced_models.performance_comparison",
+      "timestamp": "2025-09-19T12:34:09.085194Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/ac8aa951-b0b0-4827-b23f-65fe162fdde5.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/validation_mass_balance_constraints_ac8aa951-b0b0-4827-b23f-65fe162fdde5.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "ac8aa951-b0b0-4827-b23f-65fe162fdde5",
+      "yaml_name": "validation.mass_balance_constraints",
+      "timestamp": "2025-09-19T12:34:09.085914Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/affdaa54-5805-43e6-bf0c-7ac0dcd5b640.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/dwsim_heat_mass_balance_affdaa54-5805-43e6-bf0c-7ac0dcd5b640.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "affdaa54-5805-43e6-bf0c-7ac0dcd5b640",
+      "yaml_name": "dwsim.heat_mass_balance",
+      "timestamp": "2025-09-19T12:34:09.086621Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/b2c59fb3-95a4-4b5a-a454-d3c0441c583e.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/validation_energy_consumption_alignment_b2c59fb3-95a4-4b5a-a454-d3c0441c583e.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "b2c59fb3-95a4-4b5a-a454-d3c0441c583e",
+      "yaml_name": "validation.energy_consumption_alignment",
+      "timestamp": "2025-09-19T12:34:09.087438Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/b3c02f25-e2c0-49bf-af55-b64859ff8aa3.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/cement_plant_validation_report_b3c02f25-e2c0-49bf-af55-b64859ff8aa3.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "b3c02f25-e2c0-49bf-af55-b64859ff8aa3",
+      "yaml_name": "cement_plant.validation_report",
+      "timestamp": "2025-09-19T12:34:09.088057Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/b54cca7d-e414-4a17-a0a8-d363db47969c.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/pinn_physics_informed_neural_network_b54cca7d-e414-4a17-a0a8-d363db47969c.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "b54cca7d-e414-4a17-a0a8-d363db47969c",
+      "yaml_name": "pinn.physics_informed_neural_network",
+      "timestamp": "2025-09-19T12:34:09.088799Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/b776e006-7026-4790-9403-551abc1f999f.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/real_data_load_kaggle_cement_b776e006-7026-4790-9403-551abc1f999f.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "b776e006-7026-4790-9403-551abc1f999f",
+      "yaml_name": "real_data.load_kaggle_cement",
+      "timestamp": "2025-09-19T12:34:09.089493Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/b851dfbd-458c-4d28-a730-3b9796614f6d.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/pinn_physics_validation_b851dfbd-458c-4d28-a730-3b9796614f6d.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "b851dfbd-458c-4d28-a730-3b9796614f6d",
+      "yaml_name": "pinn.physics_validation",
+      "timestamp": "2025-09-19T12:34:09.090188Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/bca2c10c-ebb1-4aee-8ba9-9d3028ec676d.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/bigquery_data_validation_bca2c10c-ebb1-4aee-8ba9-9d3028ec676d.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "bca2c10c-ebb1-4aee-8ba9-9d3028ec676d",
+      "yaml_name": "bigquery.data_validation",
+      "timestamp": "2025-09-19T12:34:09.090924Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/c1b218f5-2bc4-406e-ae2b-5523fcaea787.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/data_prep_train_test_split_c1b218f5-2bc4-406e-ae2b-5523fcaea787.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "c1b218f5-2bc4-406e-ae2b-5523fcaea787",
+      "yaml_name": "data_prep.train_test_split",
+      "timestamp": "2025-09-19T12:34:09.092290Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/c543b65f-9513-45e3-976f-d91e4d4a617c.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/dwsim_thermodynamic_framework_c543b65f-9513-45e3-976f-d91e4d4a617c.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "c543b65f-9513-45e3-976f-d91e4d4a617c",
+      "yaml_name": "dwsim.thermodynamic_framework",
+      "timestamp": "2025-09-19T12:34:09.092945Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/c962387c-ca72-4ff6-8885-1e5a2509e12c.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/validation_data_completeness_check_c962387c-ca72-4ff6-8885-1e5a2509e12c.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "c962387c-ca72-4ff6-8885-1e5a2509e12c",
+      "yaml_name": "validation.data_completeness_check",
+      "timestamp": "2025-09-19T12:34:09.093692Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/cc291e0c-b18c-4d48-b159-01d4dab94ac9.py": {
+      "destination": "/app/src/cement_ai_platform/data/data_pipeline/bigquery_final_summary_cc291e0c-b18c-4d48-b159-01d4dab94ac9.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/data_pipeline/bigquery_connector.py",
+      "source_uuid": "cc291e0c-b18c-4d48-b159-01d4dab94ac9",
+      "yaml_name": "bigquery.final_summary",
+      "timestamp": "2025-09-19T12:34:09.106033Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/d02b0a4d-67a4-4ef6-93c3-0af3dc409908.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/quality_mass_energy_diagnostics_d02b0a4d-67a4-4ef6-93c3-0af3dc409908.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "d02b0a4d-67a4-4ef6-93c3-0af3dc409908",
+      "yaml_name": "quality.mass_energy_diagnostics",
+      "timestamp": "2025-09-19T12:34:09.107179Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/d42f553b-ef97-4285-aa6a-5cd3c58fd700.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/data_prep_handle_missing_d42f553b-ef97-4285-aa6a-5cd3c58fd700.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "d42f553b-ef97-4285-aa6a-5cd3c58fd700",
+      "yaml_name": "data_prep.handle_missing",
+      "timestamp": "2025-09-19T12:34:09.107868Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/da72097a-2c12-463a-9102-a455c9b017ad.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/cement_plant_generate_dataset_da72097a-2c12-463a-9102-a455c9b017ad.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "da72097a-2c12-463a-9102-a455c9b017ad",
+      "yaml_name": "cement_plant.generate_dataset",
+      "timestamp": "2025-09-19T12:34:09.108662Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/dd7d759c-bf47-4310-acbe-cfa60d6f0f9c.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/quality_adaptive_imputation_dd7d759c-bf47-4310-acbe-cfa60d6f0f9c.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "dd7d759c-bf47-4310-acbe-cfa60d6f0f9c",
+      "yaml_name": "quality.adaptive_imputation",
+      "timestamp": "2025-09-19T12:34:09.109429Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/dff4b446-bd09-4852-b679-01d5ca38c738.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/optimization_final_comprehensive_summary_dff4b446-bd09-4852-b679-01d5ca38c738.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "dff4b446-bd09-4852-b679-01d5ca38c738",
+      "yaml_name": "optimization.final_comprehensive_summary",
+      "timestamp": "2025-09-19T12:34:09.110300Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/e2e5fced-b576-42ff-903a-af35c455e771.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/baseline_models_performance_summary_e2e5fced-b576-42ff-903a-af35c455e771.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "e2e5fced-b576-42ff-903a-af35c455e771",
+      "yaml_name": "baseline_models.performance_summary",
+      "timestamp": "2025-09-19T12:34:09.110977Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/e39b9ebf-9c37-47a6-b42c-470bba30c2b7.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/data_prep_generate_synthetic_e39b9ebf-9c37-47a6-b42c-470bba30c2b7.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "e39b9ebf-9c37-47a6-b42c-470bba30c2b7",
+      "yaml_name": "data_prep.generate_synthetic",
+      "timestamp": "2025-09-19T12:34:09.111733Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/e3e6340e-4482-4156-8868-25fc5acd0a10.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/pinn_physics_constraints_e3e6340e-4482-4156-8868-25fc5acd0a10.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "e3e6340e-4482-4156-8868-25fc5acd0a10",
+      "yaml_name": "pinn.physics_constraints",
+      "timestamp": "2025-09-19T12:34:09.112445Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/e7775640-39d0-453c-9099-9aa7ef51ab9a.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/bigquery_schema_design_e7775640-39d0-453c-9099-9aa7ef51ab9a.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "e7775640-39d0-453c-9099-9aa7ef51ab9a",
+      "yaml_name": "bigquery.schema_design",
+      "timestamp": "2025-09-19T12:34:09.113117Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/ec0d0b7c-c2e8-4079-a645-93ee8d26234a.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/quality_comprehensive_report_ec0d0b7c-c2e8-4079-a645-93ee8d26234a.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "ec0d0b7c-c2e8-4079-a645-93ee8d26234a",
+      "yaml_name": "quality.comprehensive_report",
+      "timestamp": "2025-09-19T12:34:09.113808Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/f143aad0-ba4e-40f8-94bb-428f3aaaa053.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/evaluation_cross_validation_f143aad0-ba4e-40f8-94bb-428f3aaaa053.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "f143aad0-ba4e-40f8-94bb-428f3aaaa053",
+      "yaml_name": "evaluation.cross_validation",
+      "timestamp": "2025-09-19T12:34:09.114571Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/f1dc3d95-5a30-4e48-b0b7-bdcac610501a.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/final_comprehensive_results_summary_f1dc3d95-5a30-4e48-b0b7-bdcac610501a.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "f1dc3d95-5a30-4e48-b0b7-bdcac610501a",
+      "yaml_name": "final.comprehensive_results_summary",
+      "timestamp": "2025-09-19T12:34:09.115323Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/f7f8c4ce-421d-474c-a31c-4e0dc6bf303a.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/validation_comprehensive_report_f7f8c4ce-421d-474c-a31c-4e0dc6bf303a.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "f7f8c4ce-421d-474c-a31c-4e0dc6bf303a",
+      "yaml_name": "validation.comprehensive_report",
+      "timestamp": "2025-09-19T12:34:09.116020Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/f89de265-c93b-4a45-b2f7-0b7fd4621f47.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/dwsim_visualization_summary_f89de265-c93b-4a45-b2f7-0b7fd4621f47.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/temperature_validator.py",
+      "source_uuid": "f89de265-c93b-4a45-b2f7-0b7fd4621f47",
+      "yaml_name": "dwsim.visualization_summary",
+      "timestamp": "2025-09-19T12:34:09.116755Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/f91e5090-8766-497d-96d6-fdf15a20f354.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/real_data_final_quality_report_f91e5090-8766-497d-96d6-fdf15a20f354.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "f91e5090-8766-497d-96d6-fdf15a20f354",
+      "yaml_name": "real_data.final_quality_report",
+      "timestamp": "2025-09-19T12:34:09.117559Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/f93d6080-d865-4446-8d73-78e714fff73a.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/real_data_load_global_cement_f93d6080-d865-4446-8d73-78e714fff73a.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "f93d6080-d865-4446-8d73-78e714fff73a",
+      "yaml_name": "real_data.load_global_cement",
+      "timestamp": "2025-09-19T12:34:09.118299Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/ff9fa6fb-1099-43c8-9406-871ed6646095.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/baseline_models_linear_regression_ff9fa6fb-1099-43c8-9406-871ed6646095.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "ff9fa6fb-1099-43c8-9406-871ed6646095",
+      "yaml_name": "baseline_models.linear_regression",
+      "timestamp": "2025-09-19T12:34:09.118893Z"
+    },
+    "/app/22685ee7-c317-4938-8cd6-16009a57eb19/Development/fff421f9-8a05-4428-8f1d-41bb7cb9ad71.py": {
+      "destination": "/app/src/cement_ai_platform/data/processors/pinn_train_model_fff421f9-8a05-4428-8f1d-41bb7cb9ad71.py",
+      "canonical_target": "/app/src/cement_ai_platform/data/processors/quality_analyzer.py",
+      "source_uuid": "fff421f9-8a05-4428-8f1d-41bb7cb9ad71",
+      "yaml_name": "pinn.train_model",
+      "timestamp": "2025-09-19T12:34:09.119617Z"
     }
   }
 }
