@@ -103,7 +103,7 @@ demo/
 
 1. **Environment Setup**:
    ```bash
-   export CEMENT_GCP_PROJECT=cement-ai-opt-38517
+   export CEMENT_GCP_PROJECT=cement-ai-optimization
    export CEMENT_BQ_DATASET=cement_analytics
    export CEMENT_ENV=demo
    ```

@@ -33,7 +33,7 @@ provider "google-beta" {
 variable "project_id" {
   description = "GCP Project ID"
   type        = string
-  default     = "cement-ai-opt-38517"
+  default     = "cement-ai-optimization"
 }
 
 variable "region" {
@@ -121,7 +121,7 @@ resource "google_bigquery_dataset" "cement_analytics" {
   
   access {
     role          = "OWNER"
-    user_by_email = "cement-ops@cement-ai-opt-38517.iam.gserviceaccount.com"
+    user_by_email = "cement-ops@cement-ai-optimization.iam.gserviceaccount.com"
   }
   
   depends_on = [google_project_service.apis]
@@ -228,7 +228,7 @@ resource "google_bigquery_table" "energy_consumption" {
   depends_on = [google_bigquery_dataset.cement_analytics]
 }
 
-# GKE Cluster for production deployment
+/* GKE Cluster for production deployment
 resource "google_container_cluster" "cement_plant_cluster" {
   name     = "cement-plant-cluster"
   location = var.region
@@ -256,7 +256,7 @@ resource "google_container_node_pool" "cement_plant_nodes" {
     preemptible  = false
     machine_type = "e2-standard-4"
     
-    service_account = "cement-ops@cement-ai-opt-38517.iam.gserviceaccount.com"
+    service_account = "cement-ops@cement-ai-optimization.iam.gserviceaccount.com"
     oauth_scopes = [
       "https://www.googleapis.com/auth/cloud-platform"
     ]
@@ -275,7 +275,7 @@ resource "google_container_node_pool" "cement_plant_nodes" {
     auto_repair  = true
     auto_upgrade = true
   }
-}
+} */
 
 # Artifact Registry for container images
 resource "google_artifact_registry_repository" "cement_plant_repo" {
@@ -294,7 +294,7 @@ resource "google_cloud_run_v2_service" "cement_plant_service" {
   
   template {
     scaling {
-      min_instance_count = 2
+      min_instance_count = 0
       max_instance_count = 100
     }
     
@@ -324,7 +324,7 @@ resource "google_cloud_run_v2_service" "cement_plant_service" {
       }
     }
     
-    service_account = "cement-ops@cement-ai-opt-38517.iam.gserviceaccount.com"
+    service_account = "cement-ops@cement-ai-optimization.iam.gserviceaccount.com"
   }
   
   depends_on = [google_project_service.apis]
@@ -351,17 +351,17 @@ resource "google_project_iam_member" "cement_plant_sa_roles" {
   
   project = var.project_id
   role    = each.value
-  member  = "serviceAccount:cement-ops@cement-ai-opt-38517.iam.gserviceaccount.com"
+  member  = "serviceAccount:cement-ops@cement-ai-optimization.iam.gserviceaccount.com"
 }
 
 # Outputs
-output "cluster_endpoint" {
+/* output "cluster_endpoint" {
   value = google_container_cluster.cement_plant_cluster.endpoint
 }
 
 output "cluster_ca_certificate" {
   value = google_container_cluster.cement_plant_cluster.master_auth[0].cluster_ca_certificate
-}
+} */
 
 output "model_artifacts_bucket" {
   value = google_storage_bucket.model_artifacts.name

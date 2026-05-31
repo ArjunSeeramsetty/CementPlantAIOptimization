@@ -9,7 +9,7 @@ on:
 
 env:
   PYTHON_VERSION: "3.9"
-  PROJECT_ID: "cement-ai-opt-38517"
+  PROJECT_ID: "cement-ai-optimization"
 
 jobs:
   test:

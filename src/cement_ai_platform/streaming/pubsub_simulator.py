@@ -40,7 +40,7 @@ class CementPlantPubSubSimulator:
             Stops the streaming simulation
     """
     
-    def __init__(self, project_id: str = "cement-ai-opt-38517"):
+    def __init__(self, project_id: str = "cement-ai-optimization"):
         self.project_id = project_id
         self.publisher = pubsub_v1.PublisherClient()
         self.subscriber = SubscriberClient()

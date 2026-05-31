@@ -15,19 +15,19 @@ spec:
   template:
     metadata:
       annotations:
-        run.googleapis.com/cloudsql-instances: "cement-ai-opt-38517:us-central1:cement-plant-db"
+        run.googleapis.com/cloudsql-instances: "cement-ai-optimization:us-central1:cement-plant-db"
         run.googleapis.com/vpc-access-connector: "cement-plant-connector"
         run.googleapis.com/vpc-access-egress: "private-ranges-only"
     spec:
       containerConcurrency: 100
       timeoutSeconds: 3600
       containers:
-      - image: gcr.io/cement-ai-opt-38517/cement-plant-ai:latest
+      - image: gcr.io/cement-ai-optimization/cement-plant-ai:latest
         ports:
         - containerPort: 8080
         env:
         - name: CEMENT_GCP_PROJECT
-          value: cement-ai-opt-38517
+          value: cement-ai-optimization
         - name: CEMENT_BQ_DATASET
           value: cement_analytics
         - name: CEMENT_ENV
@@ -72,7 +72,7 @@ spec:
           initialDelaySeconds: 10
           periodSeconds: 10
           failureThreshold: 30
-      serviceAccountName: cement-plant-sa@cement-ai-opt-38517.iam.gserviceaccount.com
+      serviceAccountName: cement-plant-sa@cement-ai-optimization.iam.gserviceaccount.com
 ---
 apiVersion: v1
 kind: Service

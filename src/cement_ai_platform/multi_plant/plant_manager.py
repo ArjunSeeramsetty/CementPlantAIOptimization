@@ -34,7 +34,7 @@ class MultiPlantManager:
     and tenant isolation for scalable cement plant management
     """
     
-    def __init__(self, project_id: str = "cement-ai-opt-38517"):
+    def __init__(self, project_id: str = "cement-ai-optimization"):
         self.project_id = project_id
         
         try:

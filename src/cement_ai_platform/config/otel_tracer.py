@@ -22,7 +22,7 @@ def setup_tracing(service_name: str, project_id: str = None):
     try:
         # Get project ID
         if project_id is None:
-            project_id = os.getenv('CEMENT_GCP_PROJECT', 'cement-ai-opt-38517')
+            project_id = os.getenv('CEMENT_GCP_PROJECT', 'cement-ai-optimization')
         
         # Create resource with service information
         resource = Resource.create({

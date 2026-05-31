@@ -1,4 +1,4 @@
-#!/usr/bin/env python3
+.#!/usr/bin/env python3
 """
 BigQuery Environment Setup Script
 Sets up BigQuery environment using existing code blocks from the project.

@@ -12,7 +12,7 @@ class MobileCementDashboard:
     Mobile-optimized cement plant dashboard with Firebase push notifications
     """
     
-    def __init__(self, project_id: str = "cement-ai-opt-38517"):
+    def __init__(self, project_id: str = "cement-ai-optimization"):
         self.project_id = project_id
         
         try:
@@ -34,7 +34,7 @@ class MobileCementDashboard:
         # Register service worker for PWA functionality
         self._register_service_worker()
         
-        st.title("📱 Mobile Plant Monitor")
+        # Title is handled by unified dashboard
         st.markdown("**Real-time cement plant monitoring on mobile**")
         
         # Mobile navigation

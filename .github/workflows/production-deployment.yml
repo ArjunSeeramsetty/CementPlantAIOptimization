@@ -18,7 +18,7 @@ on:
         - production
 
 env:
-  PROJECT_ID: cement-ai-opt-38517
+  PROJECT_ID: cement-ai-optimization
   GAR_LOCATION: us-central1
   REPOSITORY: cement-plant-ai
   SERVICE: cement-plant-digital-twin

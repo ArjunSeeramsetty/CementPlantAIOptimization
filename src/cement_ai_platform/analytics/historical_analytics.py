@@ -15,8 +15,11 @@ class HistoricalDataAnalytics:
     Handles 10+ years of plant data with BigQuery integration
     """
     
-    def __init__(self, project_id: str = "cement-ai-opt-38517"):
+    def __init__(self, project_id: str = "cement-ai-optimization"):
         self.project_id = project_id
+        
+        # Initialize historical_data attribute
+        self.historical_data = {}
         
         # Data categories and their retention periods
         self.data_categories = {
@@ -59,12 +62,18 @@ class HistoricalDataAnalytics:
         
         base_date = datetime(2020, 1, 1)
         
+        # Generate process data first
+        process_data = self._generate_process_history(days)
+        
+        # Generate energy data
+        energy_data = self._generate_energy_history(days)
+        
         self.historical_data = {
             'dates': [base_date + timedelta(days=i) for i in range(days)],
-            'process_data': self._generate_process_history(days),
-            'quality_data': self._generate_quality_history(days),
-            'energy_data': self._generate_energy_history(days),
-            'environmental_data': self._generate_environmental_history(days),
+            'process_data': process_data,
+            'quality_data': self._generate_quality_history(days, process_data),
+            'energy_data': energy_data,
+            'environmental_data': self._generate_environmental_history(days, energy_data),
             'production_data': self._generate_production_history(days)
         }
     
@@ -104,14 +113,14 @@ class HistoricalDataAnalytics:
         
         return process_data
     
-    def _generate_quality_history(self, days: int) -> Dict:
+    def _generate_quality_history(self, days: int, process_data: Dict) -> Dict:
         """Generate synthetic quality history"""
         
         quality_data = {}
         
         for i in range(days):
             # Quality correlates with process stability
-            process_stability = 1.0 - abs(self.historical_data['process_data'][i]['kiln_temp_c'] - 1450) / 50
+            process_stability = 1.0 - abs(process_data[i]['kiln_temp_c'] - 1450) / 50
             
             # Gradual quality improvement over time
             quality_trend = (i / days) * 0.05  # 5% quality improvement
@@ -151,14 +160,14 @@ class HistoricalDataAnalytics:
         
         return energy_data
     
-    def _generate_environmental_history(self, days: int) -> Dict:
+    def _generate_environmental_history(self, days: int, energy_data: Dict) -> Dict:
         """Generate synthetic environmental data"""
         
         environmental_data = {}
         
         for i in range(days):
             # Environmental performance improves with alt fuel usage
-            tsr_factor = self.historical_data['energy_data'][i]['alt_fuel_tsr_pct'] / 100
+            tsr_factor = energy_data[i]['alt_fuel_tsr_pct'] / 100
             
             # Regulatory tightening over time
             regulation_factor = 1 - (i / days) * 0.15  # 15% stricter limits

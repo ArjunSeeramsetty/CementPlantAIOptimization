@@ -11,10 +11,10 @@ from typing import Dict, Any
 
 # Add src to path for imports
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from simulation.dcs_simulator import CementPlantDCSSimulator
-from data_sourcing.real_world_integrator import RealWorldDataIntegrator
+from cement_ai_platform.simulation.dcs_simulator import CementPlantDCSSimulator
+from cement_ai_platform.data_sourcing.real_world_integrator import RealWorldDataIntegrator
 
 logger = logging.getLogger(__name__)
 

@@ -16,7 +16,7 @@ except ImportError:
     # Fallback implementation
     class ProductionCementPlantGPT:
         def __init__(self, project_id=None, location="us-central1"):
-            self.project_id = project_id or "cement-ai-opt-38517"
+            self.project_id = project_id or "cement-ai-optimization"
             self.location = location
             print("🔄 Using fallback GPT implementation")
         

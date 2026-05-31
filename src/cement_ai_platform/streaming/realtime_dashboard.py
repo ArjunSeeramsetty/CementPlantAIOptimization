@@ -19,7 +19,7 @@ class RealTimeStreamingDashboard:
         
         # Note: st.set_page_config() is called in the main unified dashboard
         
-        st.title("🏭 Cement Plant Real-Time Data Streaming")
+        # Title is handled by unified dashboard
         st.markdown("**Live sensor data via Google Cloud Pub/Sub simulation**")
         
         # Initialize streaming simulator

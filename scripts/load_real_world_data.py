@@ -11,9 +11,9 @@ from typing import Dict, Any
 
 # Add src to path for imports
 import sys
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from data_sourcing.bigquery_data_loader import BigQueryDataLoader
+from cement_ai_platform.data_sourcing.bigquery_data_loader import BigQueryDataLoader
 
 logger = logging.getLogger(__name__)
 

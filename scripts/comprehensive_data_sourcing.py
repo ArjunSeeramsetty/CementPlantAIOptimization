@@ -27,7 +27,7 @@ class ComprehensiveDataSourcing:
     
     def __init__(self):
         """Initialize the data sourcing system."""
-        self.project_id = "cement-ai-opt-38517"
+        self.project_id = "cement-ai-optimization"
         self.dataset_id = "cement_analytics"
         self.results = {}
         

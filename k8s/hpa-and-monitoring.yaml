@@ -176,10 +176,10 @@ spec:
           serviceAccountName: cement-plant-sa
           containers:
           - name: backup
-            image: gcr.io/cement-ai-opt-38517/cement-plant-backup:latest
+            image: gcr.io/cement-ai-optimization/cement-plant-backup:latest
             env:
             - name: CEMENT_GCP_PROJECT
-              value: "cement-ai-opt-38517"
+              value: "cement-ai-optimization"
             - name: CEMENT_BQ_DATASET
               value: "cement_analytics"
             resources:

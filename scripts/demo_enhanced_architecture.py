@@ -9,12 +9,12 @@ from datetime import datetime
 import json
 
 # Add src to path
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from data_sourcing.fetch_data import download_all_datasets
-from simulation.dcs_simulator import generate_dcs_data
-from simulation.process_models import create_process_models, RawMealComposition, CoalProperties
-from training.train_gan import generate_massive_dataset
+from cement_ai_platform.data_sourcing.fetch_data import download_all_datasets
+from cement_ai_platform.simulation.dcs_simulator import generate_dcs_data
+from cement_ai_platform.simulation.process_models import create_process_models, RawMealComposition, CoalProperties
+from cement_ai_platform.training.train_gan import generate_massive_dataset
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)

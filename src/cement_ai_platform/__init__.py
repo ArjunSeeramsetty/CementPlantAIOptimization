@@ -11,6 +11,9 @@ __all__ = [
     "Objective",
     "CementNSGA2Optimizer",
     "ObjectiveFn",
+    "data_sourcing",
+    "simulation",
+    "training",
 ]
 
 # Convenience re-exports for common entrypoints

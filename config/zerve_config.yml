@@ -1,0 +1,151 @@
+# Zerve AI Configuration for Cement Plant AI Optimization
+# Documentation: https://www.zerve.ai/workflows
+
+zerve:
+  # API Configuration
+  api:
+    # Set your Zerve API endpoint (default: https://api.zerve.ai)
+    endpoint: "${ZERVE_API_ENDPOINT:https://api.zerve.ai}"
+    # Your Zerve API key (set via environment variable)
+    api_key: "${ZERVE_API_KEY}"
+    # API version
+    version: "v1"
+    # Request timeout in seconds
+    timeout: 300
+    
+  # Workspace Configuration
+  workspace:
+    # Your Zerve workspace ID
+    workspace_id: "${ZERVE_WORKSPACE_ID}"
+    # Default project name
+    project_name: "CementPlantAIOptimization"
+    # Environment type: development, staging, production
+    environment: "${ZERVE_ENVIRONMENT:development}"
+    
+  # Agent Configuration
+  agents:
+    # Enable multi-agent orchestration
+    multi_agent_enabled: true
+    # Maximum number of parallel agents
+    max_parallel_agents: 5
+    # Agent types to enable
+    enabled_agents:
+      - data_pipeline
+      - ml_training
+      - optimization
+      - analysis
+      - deployment
+    
+  # Compute Configuration
+  compute:
+    # Default compute profile
+    default_profile: "standard"
+    # Available compute profiles
+    profiles:
+      lightweight:
+        cpu: 2
+        memory: "8Gi"
+        gpu: false
+      standard:
+        cpu: 4
+        memory: "16Gi"
+        gpu: false
+      gpu_training:
+        cpu: 8
+        memory: "32Gi"
+        gpu: true
+        gpu_type: "nvidia-tesla-t4"
+      fleet:
+        # For massively parallel jobs
+        enable_fleet: true
+        max_workers: 10
+        
+  # Workflow Configuration
+  workflows:
+    # Auto-save workflow state
+    auto_save: true
+    # Enable state inspection
+    state_inspection: true
+    # Enable live previews
+    live_preview: true
+    # Workflow storage location
+    storage_path: "workflows/"
+    
+  # Integration Settings
+  integrations:
+    # BigQuery integration
+    bigquery:
+      enabled: true
+      project_id: "${GCP_PROJECT_ID}"
+      dataset: "cement_plant_data"
+    
+    # GitHub integration for CI/CD
+    github:
+      enabled: false
+      repo: "${GITHUB_REPO}"
+      
+    # Cloud Storage
+    storage:
+      enabled: true
+      provider: "gcp"
+      bucket: "${GCS_BUCKET}"
+      
+  # Deployment Configuration
+  deployment:
+    # Enable app builder for dashboards
+    app_builder:
+      enabled: true
+      port: 8050
+    # API deployment
+    api_deployment:
+      enabled: true
+      port: 8000
+    # Scheduled jobs
+    scheduler:
+      enabled: true
+      default_timezone: "UTC"
+      
+  # Logging and Monitoring
+  logging:
+    level: "INFO"
+    format: "json"
+    output: "logs/zerve.log"
+    
+  monitoring:
+    # Enable workflow monitoring
+    enabled: true
+    # Metrics collection interval (seconds)
+    interval: 60
+    # Alert on failures
+    alert_on_failure: true
+
+# Cement Plant Specific Configuration
+cement_plant:
+  # Data sources for Zerve agents
+  data_sources:
+    - name: "dcs_realtime"
+      type: "bigquery"
+      table: "cement_plant_data.realtime_sensor_data"
+    - name: "quality_metrics"
+      type: "bigquery"
+      table: "cement_plant_data.quality_control"
+    - name: "maintenance_logs"
+      type: "bigquery"
+      table: "cement_plant_data.maintenance_history"
+      
+  # ML model registry
+  model_registry:
+    path: "models/"
+    types:
+      - pinn
+      - bigquery_ml
+      - scikit_learn
+      
+  # Optimization targets
+  optimization:
+    targets:
+      - energy_efficiency
+      - clinker_quality
+      - emissions_reduction
+      - cost_optimization
+

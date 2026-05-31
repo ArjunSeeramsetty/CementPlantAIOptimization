@@ -11,7 +11,7 @@ def launch_data_validation_demo():
     
     # Note: st.set_page_config() is called in the main unified dashboard
     
-    st.title("🧪 Data Validation & Drift Detection")
+    # Title is handled by unified dashboard
     st.markdown("**Automated Data Quality Monitoring & Model Retraining**")
     
     # Initialize drift detector

@@ -1,0 +1,37 @@
+---
+description: Enforce low-cost GCP deployments with ON/OFF controls
+alwaysApply: true
+---
+
+# GCP Cost Control and Service Switch Rule
+
+When proposing, creating, or updating cloud deployment workflows:
+
+- Default to serverless, scale-to-zero services (Cloud Run with `min-instances=0`).
+- Avoid always-on infrastructure unless explicitly requested (no idle VMs/GKE by default).
+- Include a clear ON/OFF mechanism for each deployable service.
+- Prefer reusable scripts for operational toggles (`*_on.ps1` and `*_off.ps1` or `.sh` equivalents).
+- Ensure OFF flow disables traffic/invocation and pauses schedulers/triggers.
+- Ensure ON flow restores invocation and resumes required schedulers/triggers.
+- Add budget/quota guardrails in setup guidance (budget alerts, BigQuery caps, log retention controls).
+
+## Required Implementation Pattern
+
+For any new production/deployment instructions, include:
+
+1. **Start command/script**: brings service online safely.
+2. **Stop command/script**: prevents billable background activity.
+3. **Cost defaults**: conservative scaling and resource limits.
+4. **Verification step**: how to confirm ON and OFF states.
+
+## Example
+
+```bash
+# ON
+gcloud scheduler jobs resume <job> --location=<region>
+gcloud run services add-iam-policy-binding <service> --member="allUsers" --role="roles/run.invoker" --region=<region>
+
+# OFF
+gcloud scheduler jobs pause <job> --location=<region>
+gcloud run services remove-iam-policy-binding <service> --member="allUsers" --role="roles/run.invoker" --region=<region>
+```

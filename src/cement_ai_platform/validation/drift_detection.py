@@ -15,9 +15,14 @@ class DataDriftDetector:
     with Google Cloud integration for cement plant data
     """
     
-    def __init__(self, project_id: str = "cement-ai-opt-38517"):
+    def __init__(self, project_id: str = "cement-ai-optimization"):
         self.project_id = project_id
-        self.bq_client = bigquery.Client(project=project_id)
+        
+        try:
+            self.bq_client = bigquery.Client(project=project_id)
+        except Exception as e:
+            print(f"⚠️ BigQuery client warning: {e}")
+            self.bq_client = None
         
         try:
             self.monitoring_client = monitoring_v3.MetricServiceClient()

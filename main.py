@@ -10,10 +10,10 @@ import pandas as pd
 # Add src to path for imports
 sys.path.append(os.path.join(os.path.dirname(__file__), '..'))
 
-from data_sourcing.fetch_data import download_all_datasets
-from simulation.dcs_simulator import generate_dcs_data
-from simulation.process_models import create_process_models
-from training.train_gan import generate_massive_dataset
+from cement_ai_platform.data_sourcing.fetch_data import download_all_datasets
+from cement_ai_platform.simulation.dcs_simulator import generate_dcs_data
+from cement_ai_platform.simulation.process_models import create_process_models
+from cement_ai_platform.training.train_gan import generate_massive_dataset
 
 # Configure logging
 logging.basicConfig(

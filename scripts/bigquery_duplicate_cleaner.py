@@ -22,7 +22,7 @@ class BigQueryDuplicateCleaner:
     
     def __init__(self):
         """Initialize the BigQuery cleaner."""
-        self.project_id = "cement-ai-opt-38517"
+        self.project_id = "cement-ai-optimization"
         self.dataset_id = "cement_analytics"
         self.duplicates_found = []
         self.tables_deleted = []

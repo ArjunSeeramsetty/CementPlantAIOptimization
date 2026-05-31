@@ -29,7 +29,7 @@ spec:
         fsGroup: 2000
       containers:
       - name: cement-plant-api
-        image: gcr.io/cement-ai-opt-38517/cement-plant-ai:latest
+        image: gcr.io/cement-ai-optimization/cement-plant-ai:latest
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -40,7 +40,7 @@ spec:
           protocol: TCP
         env:
         - name: CEMENT_GCP_PROJECT
-          value: "cement-ai-opt-38517"
+          value: "cement-ai-optimization"
         - name: CEMENT_ENV
           value: "production"
         - name: CEMENT_BQ_DATASET
@@ -273,7 +273,7 @@ metadata:
   name: cement-plant-sa
   namespace: cement-plant-ai
   annotations:
-    iam.gke.io/gcp-service-account: cement-plant-sa@cement-ai-opt-38517.iam.gserviceaccount.com
+    iam.gke.io/gcp-service-account: cement-plant-sa@cement-ai-optimization.iam.gserviceaccount.com
 ---
 apiVersion: v1
 kind: Secret

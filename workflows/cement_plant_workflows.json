@@ -1,0 +1,250 @@
+{
+  "workflows": {
+    "realtime_optimization": {
+      "name": "Real-time Plant Optimization",
+      "description": "Continuously optimize cement plant operations using real-time sensor data",
+      "agent_type": "optimization",
+      "compute_profile": "standard",
+      "schedule": "*/15 * * * *",
+      "blocks": [
+        {
+          "id": "fetch_sensor_data",
+          "type": "data_ingestion",
+          "language": "python",
+          "description": "Fetch real-time sensor data from BigQuery",
+          "code_template": "# Fetch latest sensor readings\nfrom google.cloud import bigquery\nclient = bigquery.Client()\n\nquery = '''\nSELECT * FROM `{project}.cement_plant_data.realtime_sensor_data`\nWHERE timestamp > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 15 MINUTE)\nORDER BY timestamp DESC\n'''\n\ndf = client.query(query).to_dataframe()"
+        },
+        {
+          "id": "process_sensor_data",
+          "type": "transformation",
+          "language": "python",
+          "description": "Clean and normalize sensor data",
+          "dependencies": ["fetch_sensor_data"],
+          "code_template": "# Data preprocessing\nimport pandas as pd\nimport numpy as np\n\n# Remove outliers\ndf_clean = df[(np.abs(df - df.mean()) <= (3 * df.std())).all(axis=1)]\n\n# Normalize values\nfrom sklearn.preprocessing import StandardScaler\nscaler = StandardScaler()\ndf_normalized = pd.DataFrame(scaler.fit_transform(df_clean), columns=df_clean.columns)"
+        },
+        {
+          "id": "run_optimization",
+          "type": "optimization",
+          "language": "python",
+          "description": "Execute multi-objective optimization",
+          "dependencies": ["process_sensor_data"],
+          "code_template": "# Multi-objective optimization\nfrom scipy.optimize import minimize\n\ndef objective(x):\n    # Minimize energy consumption while maximizing quality\n    energy = x[0] * temperature + x[1] * fan_speed\n    quality = predict_quality(x)\n    return energy - 0.5 * quality\n\nresult = minimize(objective, x0, constraints=constraints)"
+        },
+        {
+          "id": "generate_recommendations",
+          "type": "output",
+          "language": "python",
+          "description": "Generate actionable recommendations",
+          "dependencies": ["run_optimization"],
+          "code_template": "# Generate recommendations\nrecommendations = {\n    'timestamp': datetime.now().isoformat(),\n    'kiln_temperature': result.x[0],\n    'fan_speed': result.x[1],\n    'expected_savings': calculate_savings(result.x),\n    'quality_impact': quality\n}\n\n# Save to BigQuery\nsave_recommendations(recommendations)"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "dashboard",
+          "title": "Real-time Optimization Dashboard",
+          "refresh_interval": 900
+        },
+        {
+          "type": "api",
+          "endpoint": "/api/v1/optimization/current"
+        }
+      ]
+    },
+    "predictive_maintenance": {
+      "name": "Predictive Maintenance Analysis",
+      "description": "Analyze sensor data and predict equipment failures",
+      "agent_type": "analysis",
+      "compute_profile": "gpu_training",
+      "schedule": "0 */6 * * *",
+      "blocks": [
+        {
+          "id": "load_historical_data",
+          "type": "data_ingestion",
+          "language": "python",
+          "description": "Load historical sensor and maintenance data",
+          "code_template": "# Load maintenance history\nquery = '''\nSELECT \n    sensor_data.*,\n    maintenance.failure_type,\n    maintenance.days_to_failure\nFROM `{project}.cement_plant_data.realtime_sensor_data` sensor_data\nLEFT JOIN `{project}.cement_plant_data.maintenance_history` maintenance\n    ON sensor_data.equipment_id = maintenance.equipment_id\n    AND DATE(sensor_data.timestamp) = DATE(maintenance.failure_date)\nWHERE sensor_data.timestamp > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 90 DAY)\n'''\n\ndf_maintenance = client.query(query).to_dataframe()"
+        },
+        {
+          "id": "feature_engineering",
+          "type": "transformation",
+          "language": "python",
+          "description": "Engineer features for failure prediction",
+          "dependencies": ["load_historical_data"],
+          "code_template": "# Feature engineering\ndf_features = df_maintenance.copy()\n\n# Rolling statistics\ndf_features['temp_ma_24h'] = df_features['temperature'].rolling(24).mean()\ndf_features['vibration_std_12h'] = df_features['vibration'].rolling(12).std()\n\n# Trend features\ndf_features['temp_trend'] = df_features['temperature'].diff()\n\n# Interaction features\ndf_features['temp_vibration'] = df_features['temperature'] * df_features['vibration']"
+        },
+        {
+          "id": "train_failure_model",
+          "type": "ml_training",
+          "language": "python",
+          "description": "Train failure prediction model",
+          "dependencies": ["feature_engineering"],
+          "code_template": "# Train model\nfrom xgboost import XGBClassifier\nfrom sklearn.model_selection import train_test_split\n\nX = df_features.drop(['failure_type', 'days_to_failure'], axis=1)\ny = (df_features['days_to_failure'] <= 7).astype(int)\n\nX_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2)\n\nmodel = XGBClassifier(n_estimators=100, max_depth=5)\nmodel.fit(X_train, y_train)\n\n# Evaluate\nfrom sklearn.metrics import classification_report\nprint(classification_report(y_test, model.predict(X_test)))"
+        },
+        {
+          "id": "predict_failures",
+          "type": "prediction",
+          "language": "python",
+          "description": "Predict upcoming failures",
+          "dependencies": ["train_failure_model"],
+          "code_template": "# Predict on current data\ncurrent_data = fetch_current_sensor_data()\npredictions = model.predict_proba(current_data)\n\n# Identify high-risk equipment\nhigh_risk = predictions[:, 1] > 0.7\nalerts = current_data[high_risk][['equipment_id', 'location']]\nalerts['failure_probability'] = predictions[high_risk, 1]\n\n# Send alerts\nsend_maintenance_alerts(alerts)"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "alert",
+          "channels": ["email", "slack"]
+        },
+        {
+          "type": "dashboard",
+          "title": "Predictive Maintenance Dashboard"
+        }
+      ]
+    },
+    "quality_prediction": {
+      "name": "Clinker Quality Prediction",
+      "description": "Predict clinker quality based on process parameters using PINN",
+      "agent_type": "ml_training",
+      "compute_profile": "gpu_training",
+      "schedule": "0 2 * * *",
+      "blocks": [
+        {
+          "id": "load_quality_data",
+          "type": "data_ingestion",
+          "language": "python",
+          "description": "Load quality control data",
+          "code_template": "# Load quality data\nquery = '''\nSELECT \n    qc.*,\n    process.kiln_temperature,\n    process.raw_mill_feed_rate,\n    process.coal_consumption\nFROM `{project}.cement_plant_data.quality_control` qc\nJOIN `{project}.cement_plant_data.process_parameters` process\n    ON qc.batch_id = process.batch_id\nWHERE qc.test_date > DATE_SUB(CURRENT_DATE(), INTERVAL 180 DAY)\n'''\n\ndf_quality = client.query(query).to_dataframe()"
+        },
+        {
+          "id": "prepare_pinn_data",
+          "type": "transformation",
+          "language": "python",
+          "description": "Prepare data for Physics-Informed Neural Network",
+          "dependencies": ["load_quality_data"],
+          "code_template": "# Prepare PINN training data\nimport torch\n\n# Convert to tensors\nX = torch.tensor(df_quality[feature_columns].values, dtype=torch.float32)\ny = torch.tensor(df_quality[target_columns].values, dtype=torch.float32)\n\n# Add physics constraints\nphysics_constraints = {\n    'energy_balance': lambda x: x['heat_input'] - x['heat_output'],\n    'mass_balance': lambda x: x['raw_materials'] - x['clinker_output'] - x['emissions']\n}"
+        },
+        {
+          "id": "train_pinn",
+          "type": "ml_training",
+          "language": "python",
+          "description": "Train Physics-Informed Neural Network",
+          "dependencies": ["prepare_pinn_data"],
+          "code_template": "# PINN training\nimport torch.nn as nn\nimport torch.optim as optim\n\nclass PINN(nn.Module):\n    def __init__(self, input_dim, hidden_dim, output_dim):\n        super().__init__()\n        self.net = nn.Sequential(\n            nn.Linear(input_dim, hidden_dim),\n            nn.Tanh(),\n            nn.Linear(hidden_dim, hidden_dim),\n            nn.Tanh(),\n            nn.Linear(hidden_dim, output_dim)\n        )\n    \n    def forward(self, x):\n        return self.net(x)\n\nmodel = PINN(input_dim=10, hidden_dim=64, output_dim=3)\noptimizer = optim.Adam(model.parameters(), lr=0.001)\n\n# Train with physics loss\nfor epoch in range(1000):\n    optimizer.zero_grad()\n    predictions = model(X)\n    \n    # Data loss\n    data_loss = nn.MSELoss()(predictions, y)\n    \n    # Physics loss\n    physics_loss = compute_physics_loss(predictions, X)\n    \n    # Total loss\n    loss = data_loss + 0.1 * physics_loss\n    loss.backward()\n    optimizer.step()"
+        },
+        {
+          "id": "deploy_model",
+          "type": "deployment",
+          "language": "python",
+          "description": "Deploy model for real-time prediction",
+          "dependencies": ["train_pinn"],
+          "code_template": "# Save and deploy model\ntorch.save(model.state_dict(), 'models/pinn/quality_predictor.pt')\n\n# Create prediction API\nfrom fastapi import FastAPI\n\napp = FastAPI()\n\n@app.post('/predict')\ndef predict_quality(process_params: dict):\n    with torch.no_grad():\n        input_tensor = prepare_input(process_params)\n        prediction = model(input_tensor)\n    return {'quality': prediction.tolist()}"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "model_registry",
+          "location": "models/pinn/"
+        },
+        {
+          "type": "api",
+          "endpoint": "/api/v1/quality/predict"
+        }
+      ]
+    },
+    "energy_optimization": {
+      "name": "Energy Consumption Optimization",
+      "description": "Optimize energy usage across cement plant operations",
+      "agent_type": "optimization",
+      "compute_profile": "standard",
+      "schedule": "0 */4 * * *",
+      "blocks": [
+        {
+          "id": "fetch_energy_data",
+          "type": "data_ingestion",
+          "language": "python",
+          "description": "Fetch energy consumption data",
+          "code_template": "# Energy data collection\nquery = '''\nSELECT \n    timestamp,\n    kiln_power,\n    mill_power,\n    fan_power,\n    total_power,\n    production_volume,\n    (total_power / production_volume) as specific_energy\nFROM `{project}.cement_plant_data.energy_consumption`\nWHERE timestamp > TIMESTAMP_SUB(CURRENT_TIMESTAMP(), INTERVAL 7 DAY)\n'''\n\ndf_energy = client.query(query).to_dataframe()"
+        },
+        {
+          "id": "analyze_energy_patterns",
+          "type": "analysis",
+          "language": "python",
+          "description": "Analyze energy consumption patterns",
+          "dependencies": ["fetch_energy_data"],
+          "code_template": "# Pattern analysis\nimport matplotlib.pyplot as plt\nimport seaborn as sns\n\n# Time series decomposition\nfrom statsmodels.tsa.seasonal import seasonal_decompose\ndecomposition = seasonal_decompose(df_energy['specific_energy'], model='additive', period=24)\n\n# Identify inefficiencies\nbaseline = df_energy['specific_energy'].quantile(0.25)\ninefficient_periods = df_energy[df_energy['specific_energy'] > baseline * 1.2]"
+        },
+        {
+          "id": "optimize_energy",
+          "type": "optimization",
+          "language": "python",
+          "description": "Run energy optimization algorithm",
+          "dependencies": ["analyze_energy_patterns"],
+          "code_template": "# Energy optimization\nfrom scipy.optimize import minimize\n\ndef energy_objective(params):\n    kiln_temp, mill_speed, fan_rpm = params\n    \n    # Energy consumption model\n    energy = (\n        0.5 * kiln_temp +\n        0.3 * mill_speed +\n        0.2 * fan_rpm\n    )\n    \n    # Production constraint\n    production = predict_production(kiln_temp, mill_speed, fan_rpm)\n    \n    # Penalty for low production\n    if production < target_production:\n        energy += 1000 * (target_production - production)\n    \n    return energy\n\n# Constraints\nconstraints = [\n    {'type': 'ineq', 'fun': lambda x: x[0] - min_kiln_temp},\n    {'type': 'ineq', 'fun': lambda x: max_kiln_temp - x[0]},\n    {'type': 'ineq', 'fun': lambda x: predict_quality(x) - min_quality}\n]\n\nresult = minimize(energy_objective, x0, constraints=constraints)"
+        },
+        {
+          "id": "calculate_savings",
+          "type": "analysis",
+          "language": "python",
+          "description": "Calculate potential energy savings",
+          "dependencies": ["optimize_energy"],
+          "code_template": "# Savings calculation\ncurrent_energy = df_energy['total_power'].mean()\noptimized_energy = predict_energy(result.x)\n\nsavings = {\n    'current_kwh': current_energy,\n    'optimized_kwh': optimized_energy,\n    'savings_kwh': current_energy - optimized_energy,\n    'savings_percent': ((current_energy - optimized_energy) / current_energy) * 100,\n    'cost_savings_per_day': (current_energy - optimized_energy) * energy_cost,\n    'co2_reduction_kg': (current_energy - optimized_energy) * co2_factor\n}"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "dashboard",
+          "title": "Energy Optimization Dashboard"
+        },
+        {
+          "type": "report",
+          "format": "pdf",
+          "schedule": "weekly"
+        }
+      ]
+    },
+    "fleet_batch_processing": {
+      "name": "Batch Processing with Fleet",
+      "description": "Process multiple batches in parallel using Zerve Fleet",
+      "agent_type": "data_pipeline",
+      "compute_profile": "fleet",
+      "blocks": [
+        {
+          "id": "prepare_batch_tasks",
+          "type": "setup",
+          "language": "python",
+          "description": "Prepare tasks for fleet execution",
+          "code_template": "# Prepare batch tasks\nbatches = df.groupby('batch_id')\n\ntasks = []\nfor batch_id, batch_data in batches:\n    task = {\n        'batch_id': batch_id,\n        'data': batch_data.to_dict('records'),\n        'function': 'process_batch',\n        'params': {'quality_threshold': 95}\n    }\n    tasks.append(task)"
+        },
+        {
+          "id": "execute_fleet",
+          "type": "fleet_execution",
+          "language": "python",
+          "description": "Execute tasks in parallel using fleet",
+          "dependencies": ["prepare_batch_tasks"],
+          "code_template": "# Fleet execution\nfrom cement_ai_platform.integrations import ZerveClient, ZerveFleet\n\nclient = ZerveClient.from_yaml()\nfleet = client.create_fleet(\n    name='batch_processing_fleet',\n    num_workers=10\n)\n\n# Submit tasks\nbatch_id = fleet.submit_tasks(tasks)\n\n# Wait for results\nresults = fleet.get_results(batch_id, wait=True)\n\n# Cleanup\nfleet.shutdown()"
+        },
+        {
+          "id": "aggregate_results",
+          "type": "aggregation",
+          "language": "python",
+          "description": "Aggregate results from fleet execution",
+          "dependencies": ["execute_fleet"],
+          "code_template": "# Aggregate results\nimport pandas as pd\n\nall_results = pd.DataFrame(results)\n\nsummary = {\n    'total_batches': len(results),\n    'successful': sum(r['status'] == 'success' for r in results),\n    'failed': sum(r['status'] == 'failed' for r in results),\n    'avg_processing_time': all_results['processing_time'].mean(),\n    'total_throughput': all_results['volume'].sum()\n}"
+        }
+      ],
+      "outputs": [
+        {
+          "type": "bigquery",
+          "table": "cement_plant_data.batch_processing_results"
+        }
+      ]
+    }
+  },
+  "agent_templates": {
+    "data_scientist": "You are a data scientist specializing in cement plant optimization. Analyze the provided data and generate insights for improving energy efficiency, quality control, and predictive maintenance.",
+    "ml_engineer": "You are an ML engineer building production-ready models for cement plant operations. Focus on model performance, scalability, and interpretability.",
+    "process_engineer": "You are a process engineer with deep knowledge of cement manufacturing. Ensure all recommendations comply with safety standards and operational constraints.",
+    "optimization_specialist": "You are an optimization specialist. Design multi-objective optimization solutions that balance energy consumption, product quality, emissions, and cost."
+  }
+}
+

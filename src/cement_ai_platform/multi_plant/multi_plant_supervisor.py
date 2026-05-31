@@ -19,7 +19,7 @@ class MultiPlantSupervisor:
     Provides centralized coordination, aggregation, and cross-plant decision making
     """
     
-    def __init__(self, project_id: str = "cement-ai-opt-38517"):
+    def __init__(self, project_id: str = "cement-ai-optimization"):
         self.project_id = project_id
         
         # Initialize plant manager

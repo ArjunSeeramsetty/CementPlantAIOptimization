@@ -29,7 +29,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY src/ src/
 COPY scripts/ scripts/
 COPY config/ config/
-COPY .env .env
+
+# Create empty .env file for local development compatibility
+RUN touch .env
 
 # Create required directories
 RUN mkdir -p logs data artifacts

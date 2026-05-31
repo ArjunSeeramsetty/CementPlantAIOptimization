@@ -21,7 +21,7 @@ class SecretManager:
         Args:
             project_id (str, optional): GCP project ID. If None, uses environment variable.
         """
-        self.project_id = project_id or os.getenv('CEMENT_GCP_PROJECT', 'cement-ai-opt-38517')
+        self.project_id = project_id or os.getenv('CEMENT_GCP_PROJECT', 'cement-ai-optimization')
         
         try:
             self.client = secretmanager.SecretManagerServiceClient()

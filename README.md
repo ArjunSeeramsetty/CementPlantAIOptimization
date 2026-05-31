@@ -1,108 +1,109 @@
-# Cement Plant AI Optimization
+# Cement Plant AI Optimization Platform
 
-Production-grade repository structure for a generative AI–driven optimization platform for cement plants. This repo organizes data pipelines, models (PINNs, optimization, generative), and cloud integrations into a coherent Python package with tests, docs, and deployment scaffolding.
+A production-grade generative AI–driven optimization platform for cement plant operations. This platform coordinates physics-informed neural networks (PINNs), multi-objective optimization algorithms, streaming telemetry data pipelines, and serverless Google Cloud Platform (GCP) / Zerve AI integrations.
 
-## Highlights
+---
 
-- Organized package under `src/cement_ai_platform`
-- Config management with environment variables and Google Cloud helpers
-- Scaffolds for data pipelines (BigQuery, synthetic generation), processors, and models
-- Integrations: Vertex AI, Gemini, Vision, Firebase
-- Tests, scripts, docs, and notebooks directories
+## 📖 Developer Documentation Index
 
-## Repository Structure
+All technical documentation has been consolidated into a structured, modular format under the [docs/](file:///c:/Users/arjun/Desktop/CementPlantAIOptimization/docs/) directory:
+
+- **[Dependency Resolution Guide](file:///c:/Users/arjun/Desktop/CementPlantAIOptimization/docs/dependency-guide.md)**: Details on core environment setup, version compatibility (Streamlit, Pandas, NumPy), and package troubleshooting.
+- **[Architecture & ML Features](file:///c:/Users/arjun/Desktop/CementPlantAIOptimization/docs/architecture-and-features.md)**: Architectural specifications, predictive maintenance models, physics-informed neural networks (PINN), and streaming analytics.
+- **[GCP Production Deployment](file:///c:/Users/arjun/Desktop/CementPlantAIOptimization/docs/deployment/gcp-deployment.md)**: Instructions for compiling and deploying the serverless containerized setup on Google Cloud Run, setting up GitHub Secrets, and configuring infrastructure.
+- **[Zerve AI Integration Guide](file:///c:/Users/arjun/Desktop/CementPlantAIOptimization/docs/deployment/zerve-integration.md)**: Full details on connecting client modules with Zerve Canvas deployments, usage examples, and API definitions.
+
+---
+
+## 🏗️ Repository Layout
 
 ```
 CementPlantAIOptimization/
-├── src/cement_ai_platform/
-│   ├── config/
-│   ├── data/
-│   ├── models/
-│   ├── vertex_ai/
-│   ├── gemini/
-│   ├── vision/
-│   └── dashboard/
-├── tests/
-├── scripts/
-├── docs/
-├── notebooks/
-├── config/
-├── setup.py
-├── requirements.txt
-└── implementation-guide.md
+├── src/cement_ai_platform/             # Core Python package
+│   ├── config/                         # Environment & configuration loaders
+│   ├── data/                           # Data pipelines & generators (BigQuery, synthetic)
+│   ├── models/                         # ML Models & Physics-Informed Neural Networks (PINN)
+│   ├── integrations/                   # Zerve AI deployment clients & connectors
+│   ├── vertex_ai/                      # Vertex AI integration modules
+│   ├── gemini/                         # Gemini & Generative AI modules
+│   ├── vision/                         # Vision analysis models
+│   └── dashboard/                      # Real-time Streamlit dashboard UI
+├── tests/                              # Unit and integration test suites
+├── scripts/                            # Automation and runtime scripts
+├── config/                             # App configuration files (e.g. zerve_config.yml)
+├── docs/                               # Modular documentation directory
+│   ├── README.md                       # Sub-documentation index
+│   ├── dependency-guide.md
+│   ├── architecture-and-features.md
+│   └── deployment/
+│       ├── gcp-deployment.md
+│       └── zerve-integration.md
+├── deploy/                             # Cloud deployment and setup scripts
+│   ├── deploy_production.bat           # Windows GCP build and deploy script
+│   ├── deploy_production.sh            # Linux GCP build and deploy script
+│   ├── setup_gcp_project.ps1           # GCP workspace setup script
+│   └── ...
+├── manage_service.py                   # Streamlit Cloud Run toggle switch (Cost control)
+├── setup.py                            # Editable Python package config
+├── requirements.txt                    # Main package dependencies
+└── .env.example                        # Example environment variables
 ```
 
-## Quickstart
-### Unified data platform
+---
 
-```python
-from cement_ai_platform.data import create_unified_platform
+## ⚡ Quickstart
 
-platform = create_unified_platform()
-# Generate enhanced chemistry-based dataset
-data = platform.enhanced_generator.generate_complete_dataset(500)
-
-# Preprocess and validate
-pre = platform.preprocess(data, handle_missing=True, do_split=True)
-reports = platform.validate(pre["data"])  # dict of validation reports
-
-# Baselines & optimization prep
-base_models = platform.train_baselines(pre["data"], target="free_lime")
-opt_prep = platform.optimization_prep
-opt_ds = opt_prep.create_optimization_dataset()
-opt_report = platform.optimization_report(opt_ds)
-```
-
-### CLI
-
+### 1. Python Environment Setup
+We recommend setting up a virtual environment to manage dependencies:
 ```bash
-python scripts/run_preprocess.py --input path/to/input.csv --outdir artifacts --split
-python scripts/run_validate.py --input artifacts/preprocessed.csv --outdir artifacts
-python scripts/run_simulate_dwsim.py --input artifacts/preprocessed.csv --outdir artifacts
-```
-
-
-1) Python setup
-
-```bash
+# Create and activate virtual environment
 python -m venv .venv
-./.venv/Scripts/activate  # Windows PowerShell: .venv\\Scripts\\Activate.ps1
+# On Windows PowerShell:
+.\.venv\Scripts\Activate.ps1
+# On Linux/macOS:
+source .venv/bin/activate
+
+# Upgrade pip and install package
 python -m pip install --upgrade pip
 pip install -r requirements.txt
 pip install -e .
 ```
 
-2) Environment configuration
-
-Create a `.env` or export environment variables (see `src/cement_ai_platform/config/settings.py`). Minimum suggested variables:
-
-```
+### 2. Configuration Setup
+Create a `.env` file at the root of the project (referencing `.env.example` if available, or using settings in [settings.py](file:///c:/Users/arjun/Desktop/CementPlantAIOptimization/src/cement_ai_platform/config/settings.py)):
+```bash
 CEMENT_ENV=dev
-CEMENT_GCP_PROJECT=your-gcp-project
+CEMENT_GCP_PROJECT=cement-ai-optimization
 CEMENT_GCP_REGION=us-central1
 CEMENT_BQ_DATASET=cement_analytics
-CEMENT_VERTEX_BUCKET=gs://your-staging-bucket
+CEMENT_VERTEX_BUCKET=gs://cement-ai-optimization-staging
+ZERVE_API_KEY=your_zerve_api_key_here
 ```
 
-3) Run tests
-
+### 3. Run Verification Tests
+Validate that the packages, configurations, and connections are running correctly:
 ```bash
-pytest -q
+# Run unit and integration tests
+pytest
 ```
 
-4) Analyze existing UUID-named files
+---
 
+## 🛠️ CLI Utilities
+
+The platform includes command-line scripts to trigger pipelines locally:
 ```bash
-python scripts/analyze_uuid_files.py --root 22685ee7-c317-4938-8cd6-16009a57eb19/Development
+# Run preprocessing pipeline
+python scripts/run_preprocess.py --input path/to/input.csv --outdir artifacts --split
+
+# Validate preprocessed datasets
+python scripts/run_validate.py --input artifacts/preprocessed.csv --outdir artifacts
+
+# Run physical simulation generator
+python scripts/run_simulate_dwsim.py --input artifacts/preprocessed.csv --outdir artifacts
 ```
 
-See `implementation-guide.md` for a step-by-step restructuring workflow.
+---
 
-## Google Cloud
-
-Authenticate with `gcloud auth application-default login` and set the project. Initialize Vertex AI via `init_vertex_ai()` from `cement_ai_platform.config.google_cloud_config`.
-
-## License
-
+## 📜 License
 Proprietary. All rights reserved.
-

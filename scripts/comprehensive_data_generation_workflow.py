@@ -14,13 +14,13 @@ from datetime import datetime
 import json
 
 # Add the src directory to the Python path
-sys.path.insert(0, str(Path(__file__).parent.parent))
+sys.path.insert(0, str(Path(__file__).parent.parent / 'src'))
 
-from data_sourcing.real_world_integrator import RealWorldDataIntegrator
-from data_sourcing.bigquery_data_loader import BigQueryDataLoader
-from training.quality_model_trainer import QualityModelTrainer
-from simulation.dcs_simulator import CementPlantDCSSimulator
-from training.train_gan import CementPlantDataGenerator
+from cement_ai_platform.data_sourcing.real_world_integrator import RealWorldDataIntegrator
+from cement_ai_platform.data_sourcing.bigquery_data_loader import BigQueryDataLoader
+from cement_ai_platform.training.quality_model_trainer import QualityModelTrainer
+from cement_ai_platform.simulation.dcs_simulator import CementPlantDCSSimulator
+from cement_ai_platform.training.train_gan import CementPlantDataGenerator
 
 logger = logging.getLogger(__name__)
 

@@ -26,7 +26,7 @@ class ProductionMonitoring:
     """
     
     def __init__(self, project_id: str = None):
-        self.project_id = project_id or os.getenv('GOOGLE_CLOUD_PROJECT', 'cement-ai-opt-38517')
+        self.project_id = project_id or os.getenv('GOOGLE_CLOUD_PROJECT', 'cement-ai-optimization')
         
         if MONITORING_AVAILABLE:
             self._initialize_monitoring()

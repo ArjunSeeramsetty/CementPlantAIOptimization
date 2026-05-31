@@ -2,9 +2,9 @@
 
 import sys
 import os
-sys.path.append(os.path.join(os.path.dirname(__file__), 'src'))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
-from simulation.dcs_simulator import generate_dcs_data
+from cement_ai_platform.simulation.dcs_simulator import generate_dcs_data
 import logging
 
 logging.basicConfig(level=logging.INFO)

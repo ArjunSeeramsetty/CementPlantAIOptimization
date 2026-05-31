@@ -13,7 +13,7 @@ from typing import Dict, List, Any
 from datetime import datetime
 
 # Add src to path for imports
-sys.path.append(os.path.join(os.path.dirname(__file__), '..', 'src'))
+sys.path.insert(0, os.path.abspath(os.path.join(os.path.dirname(__file__), '..', 'src')))
 
 logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
@@ -22,7 +22,7 @@ class ProductionDeploymentVerifier:
     """Verifies production deployment components"""
     
     def __init__(self):
-        self.project_id = "cement-ai-opt-38517"
+        self.project_id = "cement-ai-optimization"
         self.region = "us-central1"
         self.service_name = "cement-plant-digital-twin"
         self.verification_results = {}
@@ -106,7 +106,7 @@ class ProductionDeploymentVerifier:
         logger.info("📊 Verifying data processing pipeline...")
         
         try:
-            from data_sourcing.bigquery_data_loader import BigQueryDataLoader
+            from cement_ai_platform.data_sourcing.bigquery_data_loader import BigQueryDataLoader
             
             # Test BigQuery loader
             loader = BigQueryDataLoader()
@@ -250,8 +250,8 @@ class ProductionDeploymentVerifier:
                 "terraform/main.tf",
                 "terraform/terraform.tfvars",
                 "Dockerfile",
-                "deploy_production.sh",
-                "deploy_production.bat",
+                "deploy/deploy_production.sh",
+                "deploy/deploy_production.bat",
                 "k8s/cement-plant-deployment.yaml",
                 "k8s/cloudrun-deployment.yaml",
                 "k8s/hpa-and-monitoring.yaml"
@@ -347,11 +347,11 @@ class ProductionDeploymentVerifier:
 2. **Deployment Commands**:
    ```bash
    # Linux/Mac
-   chmod +x deploy_production.sh
-   ./deploy_production.sh
+   chmod +x deploy/deploy_production.sh
+   ./deploy/deploy_production.sh
    
    # Windows
-   deploy_production.bat
+   deploy\\deploy_production.bat
    ```
 
 3. **Manual Steps**:

@@ -15,7 +15,7 @@ on:
         - staging
 
 env:
-  PROJECT_ID: cement-ai-opt-38517
+  PROJECT_ID: cement-ai-optimization
   SERVICE_NAME: cement-digital-twin
   REGION: us-central1
   IMAGE_NAME: cement-app

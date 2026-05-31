@@ -31,7 +31,7 @@ class PredictiveMaintenanceEngine:
     and CMMS integration for cement plant equipment
     """
     
-    def __init__(self, project_id: str = "cement-ai-opt-38517"):
+    def __init__(self, project_id: str = "cement-ai-optimization"):
         self.project_id = project_id
         
         # Models for different equipment types

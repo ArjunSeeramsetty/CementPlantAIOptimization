@@ -32,7 +32,7 @@ class DWSIMIntegrationEngine:
     with Google Cloud Pub/Sub and storage integration
     """
     
-    def __init__(self, project_id: str = "cement-ai-opt-38517"):
+    def __init__(self, project_id: str = "cement-ai-optimization"):
         self.project_id = project_id
         
         # Initialize Google Cloud clients

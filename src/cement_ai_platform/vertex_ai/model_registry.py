@@ -25,7 +25,7 @@ class CementPlantModelRegistry:
     """
     
     def __init__(self, project_id: str = None, location: str = "us-central1"):
-        self.project_id = project_id or os.getenv('GOOGLE_CLOUD_PROJECT', 'cement-ai-opt-38517')
+        self.project_id = project_id or os.getenv('GOOGLE_CLOUD_PROJECT', 'cement-ai-optimization')
         self.location = location
         
         if VERTEX_AI_AVAILABLE:

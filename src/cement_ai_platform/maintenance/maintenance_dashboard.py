@@ -10,7 +10,7 @@ def launch_predictive_maintenance_demo():
     
     # Note: st.set_page_config() is called in the main unified dashboard
     
-    st.title("🔧 Predictive Maintenance System")
+    # Title is handled by unified dashboard
     st.markdown("**AI-Powered Equipment Health Monitoring & Failure Prediction**")
     
     # Initialize system

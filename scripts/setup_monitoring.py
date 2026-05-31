@@ -24,7 +24,7 @@ class ProductionMonitoringSetup:
     
     def __init__(self):
         self.gcp_services = get_production_services()
-        self.project_id = "cement-ai-opt-38517"
+        self.project_id = "cement-ai-optimization"
         
     def setup_custom_metrics(self):
         """Create custom metric descriptors for cement plant KPIs"""

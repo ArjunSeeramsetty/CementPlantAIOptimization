@@ -30,7 +30,7 @@ class ProductionGCPServices:
     Replaces all mock implementations with actual GCP services.
     """
     
-    def __init__(self, project_id: str = "cement-ai-opt-38517", 
+    def __init__(self, project_id: str = "cement-ai-optimization", 
                  region: str = "us-central1",
                  service_account_path: str = ".secrets/cement-ops-key.json"):
         self.project_id = project_id

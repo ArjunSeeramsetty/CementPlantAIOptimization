@@ -22,7 +22,7 @@ class MultiPlantDashboard:
         
         # Note: st.set_page_config() is called in the main unified dashboard
         
-        st.title("🏭 Multi-Plant Cement Operations Dashboard")
+        # Title is handled by unified dashboard
         st.markdown("**Enterprise-Scale Plant Management System**")
         
         # Sidebar - Tenant and Plant Selection
