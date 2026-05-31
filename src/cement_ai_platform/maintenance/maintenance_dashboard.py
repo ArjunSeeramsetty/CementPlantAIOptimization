@@ -19,6 +19,12 @@ def launch_predictive_maintenance_demo():
     
     pm_engine = st.session_state.pm_engine
     
+    # Visual indicator of SOTA RUL model status
+    if getattr(pm_engine, 'sota_rul_model', None) is not None:
+        st.success("🤖 **SOTA Predictive Maintenance Mode Active**: Loaded pre-trained RandomForest RUL model (trained on NASA C-MAPSS parameters).")
+    else:
+        st.warning("⚠️ Running in baseline demo mode. Standard synthetic failure models active.")
+    
     # Sidebar
     with st.sidebar:
         st.header("🏭 Plant Selection")

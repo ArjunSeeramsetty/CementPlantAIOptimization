@@ -7,6 +7,8 @@ from sklearn.ensemble import RandomForestRegressor
 from sklearn.preprocessing import StandardScaler
 from sklearn.model_selection import train_test_split
 import random
+import os
+import joblib
 import streamlit as st
 import plotly.graph_objects as go
 import plotly.express as px
@@ -88,14 +90,24 @@ class PredictiveMaintenanceEngine:
     
     def _load_or_train_models(self):
         """Load existing models or train new ones"""
-        
+        self.sota_rul_model = None
+        try:
+            model_path = os.path.join(os.getcwd(), "models", "pdm_rul_model.joblib")
+            if os.path.exists(model_path):
+                self.sota_rul_model = joblib.load(model_path)
+                print(f"Loaded SOTA RUL model from {model_path}")
+            else:
+                print("SOTA RUL model file not found, running demo initialization.")
+        except Exception as e:
+            print(f"Error loading SOTA RUL model: {e}")
+
         for equipment_type in self.equipment_configs:
             try:
                 # Train a new model with synthetic data for demo
                 self._train_failure_model(equipment_type)
                 
             except Exception as e:
-                print(f"❌ Error training model for {equipment_type}: {e}")
+                print(f"Error training model for {equipment_type}: {e}")
     
     def _train_failure_model(self, equipment_type: str):
         """Train failure prediction model for specific equipment type"""
@@ -241,6 +253,27 @@ class PredictiveMaintenanceEngine:
         # Predict failure probability and time to failure
         failure_prob = self.failure_models[equipment_type]['failure_probability'].predict(features_scaled)[0]
         ttf_hours = self.failure_models[equipment_type]['time_to_failure'].predict(features_scaled)[0]
+        
+        # Overlay SOTA RUL prediction if available
+        sota_rul_hours = None
+        if self.sota_rul_model is not None:
+            try:
+                # Features for SOTA model: ["cycle", "vibration", "temperature", "oil_pressure", "rpm"]
+                cycle = float(equipment_data.get('cycle', 120.0))
+                vib = float(equipment_data.get(f'{equipment_type}_vibration', 3.5))
+                temp = float(equipment_data.get(f'{equipment_type}_temperature', 75.0))
+                oil_pres = float(equipment_data.get(f'{equipment_type}_oil_analysis', 0.05)) * 1000.0 + 300.0
+                rpm = float(equipment_data.get('rpm', 1450.0))
+                
+                sota_features = np.array([[cycle, vib, temp, oil_pres, rpm]])
+                sota_rul_cycles = self.sota_rul_model.predict(sota_features)[0]
+                
+                # Convert cycles to mock hours (e.g. 1 cycle = 4 hours)
+                sota_rul_hours = float(sota_rul_cycles * 4.0)
+                # Override ttf_hours for SOTA enhancement
+                ttf_hours = sota_rul_hours
+            except Exception as e:
+                print(f"SOTA prediction error: {e}")
         
         # Calculate confidence
         confidence = min(0.95, max(0.6, 1 - abs(failure_prob - 0.5)))

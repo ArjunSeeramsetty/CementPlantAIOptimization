@@ -157,8 +157,11 @@ logs/
 .streamlit/secrets.toml
 .zerve_cache/
 
-# Data files (large)
-data/raw/**/*.csv
+# Data files (large & external datasets)
+data/raw/*
+data/external/*
+!data/raw/README.md
+!data/external/README.md
 data/processed/**/*.csv
 !data/processed/test_*.csv
 

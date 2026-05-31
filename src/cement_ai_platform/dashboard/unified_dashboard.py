@@ -144,6 +144,8 @@ def show_module_status():
     
     modules = [
         ("Live Plant Twin", DYNAMIC_TWIN_AVAILABLE),
+        ("🛡️ Perimeter & Vision Safety", True),
+        ("⚛️ Process Drift Simulation", True),
         ("🔬 Enhanced Plant Config", ENHANCED_CONFIG_AVAILABLE),
         ("⚛️ Physics-Based Models", PHYSICS_MODELS_AVAILABLE),
         ("🔥 Advanced TSR Optimizer", ADVANCED_TSR_AVAILABLE),
@@ -371,6 +373,8 @@ def main():
         "🔥 Advanced TSR Optimizer",
         "📊 Multi-Plant Analytics",
         "🤖 Enhanced AI Copilot",
+        "🛡️ Perimeter & Vision Safety",
+        "⚛️ Process Drift Simulation",
         "🔥 TSR & Fuel Optimizer",
         "🤖 Plant AI Copilot",
         "💧 Utility Optimization",
@@ -448,6 +452,12 @@ def main():
         else:
             st.error("❌ Enhanced AI Copilot module is not available")
             st.info("Please ensure the enhanced AI copilot module is properly installed and configured.")
+
+    elif choice == "🛡️ Perimeter & Vision Safety":
+        launch_vision_safety_demo()
+
+    elif choice == "⚛️ Process Drift Simulation":
+        launch_process_drift_demo()
     
     elif choice == "🔥 TSR & Fuel Optimizer":
         if TSR_OPTIMIZER_AVAILABLE:
@@ -1326,6 +1336,203 @@ def launch_enhanced_ai_copilot_demo():
     except Exception as e:
         st.error(f"❌ Error in enhanced AI copilot demo: {e}")
         st.info("Please ensure all dependencies are installed correctly.")
+
+
+def launch_vision_safety_demo():
+    """Launch Perimeter & Vision Safety monitoring dashboard"""
+    st.title("🛡️ Perimeter & Vision Safety Monitoring")
+    st.markdown("**Real-Time Computer Vision Alerts & PPE Compliance**")
+
+    # Import modules lazily
+    from cement_ai_platform.vision.safety_monitor import SafetyMonitor
+    import time
+
+    if 'safety_monitor' not in st.session_state:
+        st.session_state.safety_monitor = SafetyMonitor()
+    
+    monitor = st.session_state.safety_monitor
+
+    # Video stream state
+    if 'frame_id' not in st.session_state:
+        st.session_state.frame_id = 0
+
+    col1, col2 = st.columns([1, 2])
+
+    with col1:
+        st.subheader("📸 Camera Streams")
+        camera = st.radio("Select Camera Feed:", [
+            "CAM-NORTH-FENCE - Perimeter Limit Check",
+            "CAM-LOADING-BAY-3 - PPE Compliance Check"
+        ])
+        
+        feed_type = 'boundary' if "FENCE" in camera else 'ppe'
+        camera_id = "CAM-NORTH-FENCE" if feed_type == 'boundary' else "CAM-LOADING-BAY-3"
+        
+        st.markdown("---")
+        st.subheader("🔔 Live Alert Center")
+        
+        # Pull live status
+        if feed_type == 'boundary':
+            status = monitor.check_boundary_violation(st.session_state.frame_id)
+            if status["is_violation"]:
+                st.error("🚨 **CRITICAL**: Perimeter intrusion detected! Intruder crossed north fence boundary.")
+                st.session_state.last_incident_obs = "Unidentified individual crossed the designated yellow fence zone."
+            else:
+                st.success("✅ **STATUS**: Secure zone clear. No anomalies.")
+        else:
+            status = monitor.check_ppe_compliance(st.session_state.frame_id)
+            detection = status["detections"][0]
+            if not detection["compliant"]:
+                st.warning(f"⚠️ **WARNING**: Safety breach! {detection['label']} is missing {detection['violation'].lower()}.")
+                st.session_state.last_incident_obs = f"Worker detected in loading zone without safety equipment: {detection['violation']}."
+            else:
+                st.success("✅ **STATUS**: All workers fully compliant with PPE regulations.")
+
+        # Interactive controls
+        st.markdown("---")
+        col_ctrl1, col_ctrl2 = st.columns(2)
+        with col_ctrl1:
+            if st.button("🔄 Next Frame"):
+                st.session_state.frame_id += 1
+                st.rerun()
+        with col_ctrl2:
+            auto_play = st.checkbox("Auto-play Feed", value=True)
+
+    with col2:
+        st.subheader("📺 Video Monitor")
+        
+        # Loop animation if auto-play is checked
+        frame_placeholder = st.empty()
+        
+        if auto_play:
+            # Play a short sequence of 15 frames per interaction to keep Streamlit responsive
+            for i in range(15):
+                st.session_state.frame_id += 1
+                frame_bytes = monitor.generate_mock_frame_bytes(feed_type, st.session_state.frame_id)
+                if frame_bytes:
+                    frame_placeholder.image(frame_bytes, use_column_width=True)
+                time.sleep(0.08)
+        else:
+            frame_bytes = monitor.generate_mock_frame_bytes(feed_type, st.session_state.frame_id)
+            if frame_bytes:
+                frame_placeholder.image(frame_bytes, use_column_width=True)
+
+    st.markdown("---")
+    st.subheader("📝 Gemini Incident Reporting")
+    
+    col_rep1, col_rep2 = st.columns([1, 2])
+    with col_rep1:
+        st.markdown("Generates a formal, compliance-grade safety report (ISO 45001) using Gemini.")
+        report_button = st.button("📋 Generate Incident Report via Gemini", type="primary")
+    
+    with col_rep2:
+        if report_button:
+            with st.spinner("Invoking Gemini for compliance audit..."):
+                obs = getattr(st.session_state, 'last_incident_obs', "No active breaches in current frame.")
+                incident_type = "Restricted Boundary Breach" if feed_type == 'boundary' else "Missing PPE Violation"
+                report_md = monitor.generate_safety_incident_report(camera_id, incident_type, obs)
+                st.markdown(report_md)
+
+
+def launch_process_drift_demo():
+    """Launch Tennessee Eastman process drift simulator dashboard"""
+    st.title("⚛️ TEP Process Anomaly & Drift Simulator")
+    st.markdown("**Dynamic Chemical Reactor Mass/Energy Balance & Process Control**")
+
+    # Import modules lazily
+    from cement_ai_platform.simulation.tep_simulator import TennesseeEastmanSimulator
+    import time
+
+    if 'tep_sim' not in st.session_state:
+        st.session_state.tep_sim = TennesseeEastmanSimulator()
+    
+    sim = st.session_state.tep_sim
+
+    # Active drift tracker
+    if 'active_drift_type' not in st.session_state:
+        st.session_state.active_drift_type = None
+
+    # Sidebar parameters
+    st.sidebar.subheader("🎛️ TEP Control Setpoints")
+    cooling_valve = st.sidebar.slider("Reactor Cooling Valve (%)", 20.0, 80.0, float(sim.controls["reactor_cooling_valve"]))
+    steam_valve = st.sidebar.slider("Stripper Steam Valve (%)", 10.0, 50.0, float(sim.controls["stripper_steam_valve"]))
+    
+    # Apply slider controls to simulator state
+    sim.controls["reactor_cooling_valve"] = cooling_valve
+    sim.controls["stripper_steam_valve"] = steam_valve
+
+    col1, col2 = st.columns([1, 2])
+
+    with col1:
+        st.subheader("🚨 Anomaly Drift Injector")
+        st.markdown("Inject operational deviations to evaluate drift-detection thresholds.")
+
+        # Drift trigger buttons
+        if st.button("🔥 Inject Catalyst Decay (Slow Anomaly)"):
+            sim.inject_drift("catalyst_decay")
+            st.session_state.active_drift_type = "catalyst_decay"
+            st.warning("Catalyst Decay anomaly injected (Slow loss of product yield)")
+
+        if st.button("🌡️ Inject Cooling Valve Stiction (Oscillations)"):
+            sim.inject_drift("reactor_valve_stiction")
+            st.session_state.active_drift_type = "reactor_valve_stiction"
+            st.warning("Cooling Water Valve Stiction anomaly injected (Temperature oscillations)")
+
+        if st.button("❄️ Inject Feed D Temperature Step"):
+            sim.inject_drift("feed_d_temp_step")
+            st.session_state.active_drift_type = "feed_d_temp_step"
+            st.warning("Feed D Temperature Step anomaly injected (Sudden ambient heat increase)")
+
+        if st.button("💨 Inject Feed A Composition Shift (Pressure Buildup)"):
+            sim.inject_drift("feed_a_composition")
+            st.session_state.active_drift_type = "feed_a_composition"
+            st.warning("Feed A Composition Shift anomaly injected (Rapid pressure climb)")
+
+        st.markdown("---")
+        if st.button("🔄 Reset Simulator & Clear Drifts", type="primary"):
+            sim.clear_drifts()
+            sim.reset()
+            st.session_state.active_drift_type = None
+            st.success("Simulator reset to stable steady-state conditions!")
+
+        st.markdown("---")
+        st.subheader("💡 TEP Process State")
+        st.metric("Reactor Temperature", f"{sim.state['reactor_temp']:.2f} °C", delta="Trip Limit: 135°C")
+        st.metric("Reactor Pressure", f"{sim.state['reactor_pressure']:.1f} kPa", delta="Trip Limit: 3100 kPa")
+        st.metric("Separator Level", f"{sim.state['separator_level']:.2f} %", delta="Target: 50%")
+
+    with col2:
+        st.subheader("📈 Real-Time Process Telemetry")
+        
+        # Run dynamic simulation history
+        history = sim.generate_history(num_steps=100, drift_to_inject=st.session_state.active_drift_type)
+        df = pd.DataFrame(history)
+        
+        # Check safety trip
+        if sim.safety_tripped:
+            st.error(f"🚨 **SYSTEM CRITICALLY TRIPPED**: {sim.trip_reason}")
+            st.info("System is cooling down passively. Reset the simulator to restore operations.")
+
+        # Plotly charts
+        # Temperature
+        fig_temp = px.line(df, x="step_idx", y="reactor_temp", 
+                          title="Reactor Temperature Profile (°C)", 
+                          color_discrete_sequence=["#FF5722"])
+        fig_temp.add_hline(y=135.0, line_dash="dash", line_color="red", annotation_text="Safety Limit (135°C)")
+        st.plotly_chart(fig_temp, use_container_width=True)
+
+        # Pressure
+        fig_press = px.line(df, x="step_idx", y="reactor_pressure", 
+                           title="Reactor Pressure Profile (kPa)",
+                           color_discrete_sequence=["#2196F3"])
+        fig_press.add_hline(y=3100.0, line_dash="dash", line_color="red", annotation_text="Safety Limit (3100 kPa)")
+        st.plotly_chart(fig_press, use_container_width=True)
+
+        # Levels
+        fig_level = px.line(df, x="step_idx", y=["separator_level", "stripper_level"], 
+                           title="Vessel Levels (%)")
+        st.plotly_chart(fig_level, use_container_width=True)
+
 
 if __name__ == "__main__":
     main()
