@@ -21,6 +21,10 @@ Welcome to the technical documentation directory. This folder contains structure
   - Perimeter safety and YOLO-based compliance auditing
   - Kiln flame scan and HSV color-space temperature segmentation
   - SOTA upgrade paths (YOLOv8/11, SAM, RL visual servoing)
+- **[Cloud Pipeline Gap Analysis](file:///c:/Users/arjun/Desktop/CementPlantAIOptimization/docs/cloud-pipeline-gap-analysis.md)**
+  - Existing cloud-native components (Pub/Sub, BigQuery, PINNs)
+  - Missing pipeline components (Dataflow, Feature Store, Datadog)
+  - Extensions for edge processing and Reinforcement Learning
 - **[GCP Production Deployment](file:///c:/Users/arjun/Desktop/CementPlantAIOptimization/docs/deployment/gcp-deployment.md)**
   - Architecture overview of Google Cloud Run and Firebase integrations
   - Compilation & packaging with GCP Cloud Build
