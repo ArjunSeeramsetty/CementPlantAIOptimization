@@ -5,8 +5,11 @@ Manages model lifecycle, deployment, and monitoring in production.
 
 import os
 import json
+import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 # Production Google Cloud imports
 try:
@@ -16,7 +19,7 @@ try:
     VERTEX_AI_AVAILABLE = True
 except ImportError:
     VERTEX_AI_AVAILABLE = False
-    print("Warning: Vertex AI not available. Using mock implementation.")
+    logger.warning("Vertex AI not available. Using mock implementation.")
 
 class CementPlantModelRegistry:
     """
@@ -25,7 +28,7 @@ class CementPlantModelRegistry:
     """
     
     def __init__(self, project_id: str = None, location: str = "us-central1"):
-        self.project_id = project_id or os.getenv('GOOGLE_CLOUD_PROJECT', 'cement-ai-optimization')
+        self.project_id = project_id or os.getenv('CEMENT_GCP_PROJECT') or os.getenv('GOOGLE_CLOUD_PROJECT') or 'cement-ai-opt-38517'
         self.location = location
         
         if VERTEX_AI_AVAILABLE:
@@ -46,10 +49,10 @@ class CementPlantModelRegistry:
             # Storage client for model artifacts
             self.storage_client = storage.Client(project=self.project_id)
             
-            print(f"✅ Vertex AI Model Registry initialized for project: {self.project_id}")
+            logger.info("Vertex AI Model Registry initialized for project: %s", self.project_id)
             
         except Exception as e:
-            print(f"⚠️ Vertex AI initialization failed: {e}")
+            logger.warning("Vertex AI initialization failed: %s", e)
             self._initialize_mock()
     
     def _initialize_mock(self):
@@ -58,7 +61,7 @@ class CementPlantModelRegistry:
         self.endpoint_client = None
         self.pipeline_client = None
         self.storage_client = None
-        print("🔄 Using mock Vertex AI implementation")
+        logger.warning("Using mock Vertex AI implementation")
     
     def register_pinn_model(self, model_path: str, model_name: str, 
                            model_metadata: Dict = None) -> str:
@@ -112,11 +115,11 @@ class CementPlantModelRegistry:
                 metadata=metadata
             )
             
-            print(f"✅ PINN model registered: {model.resource_name}")
+            logger.info("PINN model registered: %s", model.resource_name)
             return model.resource_name
             
         except Exception as e:
-            print(f"❌ Model registration failed: {e}")
+            logger.error("Model registration failed: %s", e)
             return self._mock_model_registration(model_name)
     
     def register_timegan_model(self, model_path: str, model_name: str) -> str:
@@ -157,11 +160,11 @@ class CementPlantModelRegistry:
                 }
             )
             
-            print(f"✅ TimeGAN model registered: {model.resource_name}")
+            logger.info("TimeGAN model registered: %s", model.resource_name)
             return model.resource_name
             
         except Exception as e:
-            print(f"❌ TimeGAN registration failed: {e}")
+            logger.error("TimeGAN registration failed: %s", e)
             return self._mock_model_registration(f"timegan-{model_name}")
     
     def deploy_to_endpoint(self, model_resource_name: str, endpoint_name: str,
@@ -207,11 +210,11 @@ class CementPlantModelRegistry:
                 service_account=f"cement-plant-sa@{self.project_id}.iam.gserviceaccount.com"
             )
             
-            print(f"✅ Model deployed to endpoint: {endpoint.resource_name}")
+            logger.info("Model deployed to endpoint: %s", endpoint.resource_name)
             return endpoint.resource_name
             
         except Exception as e:
-            print(f"❌ Endpoint deployment failed: {e}")
+            logger.error("Endpoint deployment failed: %s", e)
             return self._mock_endpoint_deployment(endpoint_name)
     
     def create_batch_prediction_job(self, model_resource_name: str, 
@@ -252,11 +255,11 @@ class CementPlantModelRegistry:
                 }
             )
             
-            print(f"✅ Batch prediction job created: {job.resource_name}")
+            logger.info("Batch prediction job created: %s", job.resource_name)
             return job.resource_name
             
         except Exception as e:
-            print(f"❌ Batch prediction job failed: {e}")
+            logger.error("Batch prediction job failed: %s", e)
             return self._mock_batch_job(job_name)
     
     def monitor_model_performance(self, model_resource_name: str) -> Dict:
@@ -298,7 +301,7 @@ class CementPlantModelRegistry:
             return performance_data
             
         except Exception as e:
-            print(f"❌ Performance monitoring failed: {e}")
+            logger.error("Performance monitoring failed: %s", e)
             return self._mock_performance_monitoring()
     
     def _upload_model_artifacts(self, local_path: str, bucket_name: str, model_name: str) -> str:
@@ -326,12 +329,12 @@ class CementPlantModelRegistry:
             blob.upload_from_string(json.dumps(mock_model_data))
             
             artifact_uri = f"gs://{bucket_name}/{blob_name}"
-            print(f"✅ Model artifacts uploaded to: {artifact_uri}")
+            logger.info("Model artifacts uploaded to: %s", artifact_uri)
             
             return artifact_uri
             
         except Exception as e:
-            print(f"❌ Artifact upload failed: {e}")
+            logger.error("Artifact upload failed: %s", e)
             return f"gs://{bucket_name}/models/{model_name}/mock"
     
     def _mock_model_registration(self, model_name: str) -> str:

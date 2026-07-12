@@ -3,7 +3,7 @@
 Setup script for JK Cement Digital Twin Platform
 """
 
-from setuptools import setup, find_packages
+from setuptools import setup, find_namespace_packages
 import os
 
 # Read the README file
@@ -31,7 +31,7 @@ setup(
     author="JK Cement AI Team",
     author_email="ai-team@jkcement.com",
     url="https://github.com/ArjunSeeramsetty/CementPlantAIOptimization",
-    packages=find_packages(where="src"),
+    packages=find_namespace_packages(where="src"),
     package_dir={"": "src"},
     classifiers=[
         "Development Status :: 4 - Beta",

@@ -4,17 +4,35 @@ Unified Dashboard for JK Cement Digital Twin Platform POC
 Provides a single navigation interface for all seven enhancement modules
 """
 
-import streamlit as st
+import logging
 import sys
-import os
+import streamlit as st
 import pandas as pd
 import numpy as np
 import plotly.express as px
 import plotly.graph_objects as go
-from pathlib import Path
 
-# Add src to path for imports
-sys.path.append(str(Path(__file__).parent.parent.parent))
+logger = logging.getLogger(__name__)
+
+MODULE_IMPORT_ERRORS = {}
+
+
+def show_runtime_environment_notice():
+    """Warn when the dashboard is launched outside the project virtual environment."""
+    executable_path = sys.executable.lower()
+    in_project_venv = "\\.venv\\" in executable_path or "/.venv/" in executable_path
+    running_in_container = executable_path.startswith("/usr/local/bin/python")
+
+    if not in_project_venv and not running_in_container:
+        st.warning(
+            "Dashboard is not running from the project virtual environment. "
+            "This commonly causes many modules to appear unavailable."
+        )
+        st.code(
+            ".venv\\Scripts\\streamlit.exe run src/cement_ai_platform/dashboard/unified_dashboard.py",
+            language="powershell",
+        )
+        st.caption(f"Current interpreter: {sys.executable}")
 
 # Import each dashboard module
 try:
@@ -22,84 +40,96 @@ try:
     STREAMING_AVAILABLE = True
 except ImportError as e:
     STREAMING_AVAILABLE = False
-    print(f"Streaming dashboard not available: {e}")
+    MODULE_IMPORT_ERRORS["streaming"] = str(e)
+    logger.warning("Streaming dashboard not available: %s", e)
 
 try:
     from cement_ai_platform.multi_plant.multi_plant_dashboard import launch_multi_plant_demo
     MULTI_PLANT_AVAILABLE = True
 except ImportError as e:
     MULTI_PLANT_AVAILABLE = False
-    print(f"Multi-plant dashboard not available: {e}")
+    MODULE_IMPORT_ERRORS["multi_plant"] = str(e)
+    logger.warning("Multi-plant dashboard not available: %s", e)
 
 try:
     from cement_ai_platform.mobile.mobile_dashboard import launch_mobile_demo
     MOBILE_AVAILABLE = True
 except ImportError as e:
     MOBILE_AVAILABLE = False
-    print(f"Mobile dashboard not available: {e}")
+    MODULE_IMPORT_ERRORS["mobile"] = str(e)
+    logger.warning("Mobile dashboard not available: %s", e)
 
 try:
     from cement_ai_platform.maintenance.maintenance_dashboard import launch_predictive_maintenance_demo
     MAINTENANCE_AVAILABLE = True
 except ImportError as e:
     MAINTENANCE_AVAILABLE = False
-    print(f"Maintenance dashboard not available: {e}")
+    MODULE_IMPORT_ERRORS["maintenance"] = str(e)
+    logger.warning("Maintenance dashboard not available: %s", e)
 
 try:
     from cement_ai_platform.validation.validation_dashboard import launch_data_validation_demo
     VALIDATION_AVAILABLE = True
 except ImportError as e:
     VALIDATION_AVAILABLE = False
-    print(f"Validation dashboard not available: {e}")
+    MODULE_IMPORT_ERRORS["validation"] = str(e)
+    logger.warning("Validation dashboard not available: %s", e)
 
 try:
     from cement_ai_platform.dwsim.dwsim_dashboard import launch_dwsim_integration_demo
     DWSIM_AVAILABLE = True
 except ImportError as e:
     DWSIM_AVAILABLE = False
-    print(f"DWSIM dashboard not available: {e}")
+    MODULE_IMPORT_ERRORS["dwsim"] = str(e)
+    logger.warning("DWSIM dashboard not available: %s", e)
 
 try:
     from cement_ai_platform.dashboard.dynamic_plant_twin import launch_dynamic_plant_twin
     DYNAMIC_TWIN_AVAILABLE = True
 except ImportError as e:
     DYNAMIC_TWIN_AVAILABLE = False
-    print(f"Dynamic Plant Twin not available: {e}")
+    MODULE_IMPORT_ERRORS["dynamic_twin"] = str(e)
+    logger.warning("Dynamic Plant Twin not available: %s", e)
 
 try:
     from cement_ai_platform.tsr_optimization.tsr_fuel_optimizer import launch_tsr_fuel_optimizer_demo
     TSR_OPTIMIZER_AVAILABLE = True
 except ImportError as e:
     TSR_OPTIMIZER_AVAILABLE = False
-    print(f"TSR Optimizer not available: {e}")
+    MODULE_IMPORT_ERRORS["tsr_optimizer"] = str(e)
+    logger.warning("TSR Optimizer not available: %s", e)
 
 try:
     from cement_ai_platform.copilot.plant_ai_assistant import launch_plant_ai_assistant
     PLANT_COPILOT_AVAILABLE = True
 except ImportError as e:
     PLANT_COPILOT_AVAILABLE = False
-    print(f"Plant Copilot not available: {e}")
+    MODULE_IMPORT_ERRORS["plant_copilot"] = str(e)
+    logger.warning("Plant Copilot not available: %s", e)
 
 try:
     from cement_ai_platform.utilities.utility_optimizer import launch_utility_optimization_demo
     UTILITY_OPTIMIZER_AVAILABLE = True
 except ImportError as e:
     UTILITY_OPTIMIZER_AVAILABLE = False
-    print(f"Utility Optimizer not available: {e}")
+    MODULE_IMPORT_ERRORS["utility_optimizer"] = str(e)
+    logger.warning("Utility Optimizer not available: %s", e)
 
 try:
     from cement_ai_platform.lims.lims_integration import launch_lims_integration_demo
     LIMS_AVAILABLE = True
 except ImportError as e:
     LIMS_AVAILABLE = False
-    print(f"LIMS Integration not available: {e}")
+    MODULE_IMPORT_ERRORS["lims"] = str(e)
+    logger.warning("LIMS Integration not available: %s", e)
 
 try:
     from cement_ai_platform.analytics.historical_analytics import launch_historical_analytics_demo
     ANALYTICS_AVAILABLE = True
 except ImportError as e:
     ANALYTICS_AVAILABLE = False
-    print(f"Historical Analytics not available: {e}")
+    MODULE_IMPORT_ERRORS["analytics"] = str(e)
+    logger.warning("Historical Analytics not available: %s", e)
 
 # New Enhanced Modules
 try:
@@ -107,35 +137,50 @@ try:
     ENHANCED_CONFIG_AVAILABLE = True
 except ImportError as e:
     ENHANCED_CONFIG_AVAILABLE = False
-    print(f"Enhanced Plant Config not available: {e}")
+    MODULE_IMPORT_ERRORS["enhanced_config"] = str(e)
+    logger.warning("Enhanced Plant Config not available: %s", e)
 
 try:
     from cement_ai_platform.models.physics_models import DynamicProcessDataGenerator, PhysicsBasedProcessModel
     PHYSICS_MODELS_AVAILABLE = True
 except ImportError as e:
     PHYSICS_MODELS_AVAILABLE = False
-    print(f"Physics Models not available: {e}")
+    MODULE_IMPORT_ERRORS["physics_models"] = str(e)
+    logger.warning("Physics Models not available: %s", e)
 
 try:
     from cement_ai_platform.optimization.tsr_optimizer import AdvancedTSROptimizer, FuelOptimizationResult
     ADVANCED_TSR_AVAILABLE = True
 except ImportError as e:
     ADVANCED_TSR_AVAILABLE = False
-    print(f"Advanced TSR Optimizer not available: {e}")
+    MODULE_IMPORT_ERRORS["advanced_tsr"] = str(e)
+    logger.warning("Advanced TSR Optimizer not available: %s", e)
 
 try:
     from cement_ai_platform.analytics.multi_plant_analytics import create_enhanced_multi_plant_dashboard
     MULTI_PLANT_ANALYTICS_AVAILABLE = True
 except ImportError as e:
     MULTI_PLANT_ANALYTICS_AVAILABLE = False
-    print(f"Multi-Plant Analytics not available: {e}")
+    MODULE_IMPORT_ERRORS["multi_plant_analytics"] = str(e)
+    logger.warning("Multi-Plant Analytics not available: %s", e)
 
 try:
     from cement_ai_platform.copilot.enhanced_ai_assistant import CementPlantCopilot
     ENHANCED_COPILOT_AVAILABLE = True
 except ImportError as e:
     ENHANCED_COPILOT_AVAILABLE = False
-    print(f"Enhanced AI Copilot not available: {e}")
+    MODULE_IMPORT_ERRORS["enhanced_copilot"] = str(e)
+    logger.warning("Enhanced AI Copilot not available: %s", e)
+
+
+def show_module_unavailable(module_label: str, error_key: str) -> None:
+    """Render a consistent unavailable-module message with the root import error."""
+    st.error(f"{module_label} module is not available")
+    error_message = MODULE_IMPORT_ERRORS.get(error_key)
+    if error_message:
+        st.code(error_message)
+    else:
+        st.info("Please ensure the module is properly installed and configured.")
 
 def show_module_status():
     """Display the status of each module"""
@@ -151,13 +196,10 @@ def show_module_status():
         ("🔥 Advanced TSR Optimizer", ADVANCED_TSR_AVAILABLE),
         ("📊 Multi-Plant Analytics", MULTI_PLANT_ANALYTICS_AVAILABLE),
         ("🤖 Enhanced AI Copilot", ENHANCED_COPILOT_AVAILABLE),
-        ("TSR & Fuel Optimizer", TSR_OPTIMIZER_AVAILABLE),
-        ("Plant AI Copilot", PLANT_COPILOT_AVAILABLE),
         ("Utility Optimization", UTILITY_OPTIMIZER_AVAILABLE),
         ("LIMS Integration", LIMS_AVAILABLE),
         ("Historical Analytics", ANALYTICS_AVAILABLE),
         ("Real-Time Streaming", STREAMING_AVAILABLE),
-        ("Multi-Plant Support", MULTI_PLANT_AVAILABLE),
         ("Mobile Dashboard", MOBILE_AVAILABLE),
         ("Predictive Maintenance", MAINTENANCE_AVAILABLE),
         ("Data Validation", VALIDATION_AVAILABLE),
@@ -363,6 +405,7 @@ def main():
     # Sidebar navigation
     st.sidebar.title("🏭 Cement Plant POC")
     st.sidebar.markdown("**Unified Dashboard**")
+    show_runtime_environment_notice()
     
     # Navigation options
     nav_options = [
@@ -375,13 +418,10 @@ def main():
         "🤖 Enhanced AI Copilot",
         "🛡️ Perimeter & Vision Safety",
         "⚛️ Process Drift Simulation",
-        "🔥 TSR & Fuel Optimizer",
-        "🤖 Plant AI Copilot",
         "💧 Utility Optimization",
         "🧪 LIMS Integration",
         "📊 Historical Analytics",
         "🔄 Real-Time Streaming",
-        "🏭 Multi-Plant Support",
         "📱 Mobile Dashboard",
         "🔧 Predictive Maintenance",
         "🔬 Data Validation",
@@ -415,8 +455,7 @@ def main():
         if DYNAMIC_TWIN_AVAILABLE:
             launch_dynamic_plant_twin()
         else:
-            st.error("❌ Live Plant Twin module is not available")
-            st.info("Please ensure the dynamic plant twin module is properly installed and configured.")
+            show_module_unavailable("Live Plant Twin", "dynamic_twin")
 
     elif choice == "🔬 Enhanced Plant Config":
         if ENHANCED_CONFIG_AVAILABLE:
@@ -436,8 +475,7 @@ def main():
         if ADVANCED_TSR_AVAILABLE:
             launch_advanced_tsr_demo()
         else:
-            st.error("❌ Advanced TSR Optimizer module is not available")
-            st.info("Please ensure the advanced TSR optimizer module is properly installed and configured.")
+            show_module_unavailable("Advanced TSR Optimizer", "advanced_tsr")
 
     elif choice == "📊 Multi-Plant Analytics":
         if MULTI_PLANT_ANALYTICS_AVAILABLE:
@@ -477,8 +515,7 @@ def main():
         if UTILITY_OPTIMIZER_AVAILABLE:
             launch_utility_optimization_demo()
         else:
-            st.error("❌ Utility Optimization module is not available")
-            st.info("Please ensure the utility optimizer module is properly installed and configured.")
+            show_module_unavailable("Utility Optimization", "utility_optimizer")
     
     elif choice == "🧪 LIMS Integration":
         if LIMS_AVAILABLE:
@@ -531,8 +568,7 @@ def main():
             st.title("🔬 Data Validation Dashboard")
             launch_data_validation_demo()
         else:
-            st.error("❌ Data Validation module is not available")
-            st.info("Please ensure the validation module is properly installed and configured.")
+            show_module_unavailable("Data Validation", "validation")
             
     elif choice == "⚗️ DWSIM Integration":
         if DWSIM_AVAILABLE:

@@ -432,7 +432,7 @@ def launch_lims_integration_demo():
                 
                 st.markdown(f"""
                 <div style="border-left: 4px solid {'#F44336' if alert['severity'] == 'High' else '#FF9800' if alert['severity'] == 'Medium' else '#4CAF50'}; 
-                            padding: 1rem; margin: 0.5rem 0; background: #f9f9f9; border-radius: 0 8px 8px 0;">
+                            padding: 1rem; margin: 0.5rem 0; background: #f9f9f9; color: #1a1a1a; border-radius: 0 8px 8px 0;">
                     <strong>{severity_color} {alert['material'].replace('_', ' ').title()} - {alert['parameter'].upper()}</strong><br>
                     Current: {alert['current_value']:.2f} | Spec: {alert['specification'][0]}-{alert['specification'][1]}<br>
                     Deviation: {alert['deviation']:.2f} ({alert['severity']} Priority)
@@ -689,7 +689,7 @@ def launch_lims_integration_demo():
                 
                 st.markdown(f"""
                 <div style="border-left: 4px solid {'#F44336' if alarm['severity'] == 'High' else '#FF9800' if alarm['severity'] == 'Medium' else '#4CAF50'}; 
-                            padding: 1rem; margin: 0.5rem 0; background: #fff3f3; border-radius: 0 8px 8px 0;">
+                            padding: 1rem; margin: 0.5rem 0; background: #fff3f3; color: #1a1a1a; border-radius: 0 8px 8px 0;">
                     <strong>{severity_color} {alarm['equipment']}</strong><br>
                     {alarm['message']}<br>
                     <small>Priority: {alarm['severity']}</small>

@@ -90,7 +90,11 @@ $ROLES = @(
     "roles/run.invoker",
     "roles/logging.logWriter",
     "roles/monitoring.metricWriter",
-    "roles/secretmanager.secretAccessor"
+    "roles/secretmanager.secretAccessor",
+    "roles/cloudbuild.builds.editor",
+    "roles/run.admin",
+    "roles/iam.serviceAccountUser",
+    "roles/serviceusage.serviceUsageConsumer"
 )
 
 foreach ($role in $ROLES) {

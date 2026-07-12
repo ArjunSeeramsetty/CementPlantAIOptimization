@@ -4,8 +4,11 @@ import numpy as np
 import pandas as pd
 from typing import Dict, List, Optional, Tuple, Any
 import warnings
+import logging
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 try:
     import torch
@@ -245,7 +248,7 @@ class PinaCementPINN:
             }
             
         except Exception as e:
-            print(f"PINA training failed: {e}")
+            logger.warning(f"PINA training failed: {e}")
             return self._train_pytorch(X, y, epochs, physics_weight)
     
     def _train_pytorch(self, X: np.ndarray, y: np.ndarray, epochs: int, physics_weight: float) -> Dict[str, Any]:
@@ -281,9 +284,9 @@ class PinaCementPINN:
             losses.append(total_loss.item())
             
             if epoch % 100 == 0:
-                print(f"Epoch {epoch}: Data Loss = {data_loss.item():.4f}, "
-                      f"Physics Loss = {physics_loss.item():.4f}, "
-                      f"Total Loss = {total_loss.item():.4f}")
+                logger.info(f"Epoch {epoch}: Data Loss = {data_loss.item():.4f}, "
+                            f"Physics Loss = {physics_loss.item():.4f}, "
+                            f"Total Loss = {total_loss.item():.4f}")
         
         self.is_trained = True
         

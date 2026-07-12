@@ -27,7 +27,7 @@ class ComprehensiveDataSourcing:
     
     def __init__(self):
         """Initialize the data sourcing system."""
-        self.project_id = "cement-ai-optimization"
+        self.project_id = os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-opt-38517"
         self.dataset_id = "cement_analytics"
         self.results = {}
         

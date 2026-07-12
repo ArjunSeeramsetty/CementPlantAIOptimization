@@ -15,8 +15,9 @@ class HistoricalDataAnalytics:
     Handles 10+ years of plant data with BigQuery integration
     """
     
-    def __init__(self, project_id: str = "cement-ai-optimization"):
-        self.project_id = project_id
+    def __init__(self, project_id: str = None):
+        import os
+        self.project_id = project_id or os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-optimization"
         
         # Initialize historical_data attribute
         self.historical_data = {}
@@ -617,7 +618,7 @@ def launch_historical_analytics_demo():
                 
                 st.markdown(f"""
                 <div style="border-left: 4px solid {'#F44336' if correlation_strength > 0.7 else '#FF9800' if correlation_strength > 0.4 else '#4CAF50'}; 
-                            padding: 1rem; margin: 0.5rem 0; background: #f9f9f9; border-radius: 0 8px 8px 0;">
+                            padding: 1rem; margin: 0.5rem 0; background: #f9f9f9; color: #1a1a1a; border-radius: 0 8px 8px 0;">
                     <strong>{color} {row['parameter_1'].replace('_', ' ').title()} ↔ {row['parameter_2'].replace('_', ' ').title()}</strong><br>
                     Correlation: {row['correlation_coefficient']:.3f} ({row['strength']} {row['direction']}) {direction_arrow}<br>
                     <small>When {row['parameter_1'].replace('_', ' ')} changes, {row['parameter_2'].replace('_', ' ')} tends to change in the {row['direction'].lower()} direction</small>
@@ -676,7 +677,7 @@ def launch_historical_analytics_demo():
                 else:
                     return 'background-color: #e8f5e8'
             
-            styled_benchmark = benchmark_df.style.applymap(color_status, subset=['status'])
+            styled_benchmark = benchmark_df.style.map(color_status, subset=['status'])
             st.dataframe(styled_benchmark, use_container_width=True)
     
     with tab4:

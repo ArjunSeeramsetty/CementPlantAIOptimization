@@ -2,24 +2,28 @@
 import streamlit as st
 from streamlit_javascript import st_javascript
 import json
+import logging
 from google.cloud import firestore
 import random
 from datetime import datetime
 from typing import Dict, List
+
+logger = logging.getLogger(__name__)
 
 class MobileCementDashboard:
     """
     Mobile-optimized cement plant dashboard with Firebase push notifications
     """
     
-    def __init__(self, project_id: str = "cement-ai-optimization"):
-        self.project_id = project_id
+    def __init__(self, project_id: str = None):
+        import os
+        self.project_id = project_id or os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-opt-38517"
         
         try:
-            self.firestore_client = firestore.Client(project=project_id)
+            self.firestore_client = firestore.Client(project=self.project_id)
             self.cloud_available = True
         except Exception as e:
-            print(f"⚠️ Firestore initialization warning: {e}")
+            logger.warning("Firestore initialization warning: %s", e)
             self.firestore_client = None
             self.cloud_available = False
     
@@ -88,6 +92,7 @@ class MobileCementDashboard:
             padding: 1rem;
             margin: 0.5rem 0;
             background: #fff;
+            color: #1a1a1a;
             border-radius: 0 8px 8px 0;
             box-shadow: 0 2px 4px rgba(0,0,0,0.1);
         }

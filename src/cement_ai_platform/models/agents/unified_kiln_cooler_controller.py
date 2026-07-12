@@ -345,16 +345,18 @@ class UnifiedKilnCoolerController:
             logger.warning(f"Could not load config: {e}")
             return {}
 
-    def compute_setpoints(self, sensor_data: Dict[str, Any]) -> Dict[str, Any]:
+    def compute_setpoints(self, sensor_data: Dict[str, Any], use_rl: bool = False) -> Dict[str, Any]:
         """
         Compute optimal setpoints for unified kiln-cooler control
         
         Args:
             sensor_data: Current sensor readings and process parameters
+            use_rl: Whether to use RL policy to adjust setpoints
             
         Returns:
             Optimized setpoints for all process units
         """
+        import os
         logger.info("🔄 Computing unified process setpoints...")
         
         # Extract sensor data
@@ -408,6 +410,57 @@ class UnifiedKilnCoolerController:
         optimized_setpoints = self._generate_optimized_setpoints(
             sensor_data, control_adjustments
         )
+        
+        # Override with RL if enabled
+        if use_rl:
+            try:
+                from cement_ai_platform.control.kiln_rl_agent import PPOAgent
+                agent = PPOAgent(state_dim=7, action_dim=3)
+                
+                # Check for model file paths in different possible locations
+                model_paths = [
+                    "models/kiln_rl_actor.pt",
+                    "../models/kiln_rl_actor.pt",
+                    os.path.join(os.path.dirname(__file__), "..", "..", "..", "models", "kiln_rl_actor.pt")
+                ]
+                model_loaded = False
+                for mp in model_paths:
+                    if os.path.exists(mp):
+                        if agent.load(mp):
+                            model_loaded = True
+                            break
+                
+                # Construct RL state representation
+                state = np.array([
+                    float(sensor_data.get('burning_zone_temp_c', 1450.0)),
+                    float(sensor_data.get('fuel_rate_tph', 15.0)),
+                    float(sensor_data.get('kiln_speed_rpm', 3.0)),
+                    float(sensor_data.get('feed_rate_tph', 200.0)),
+                    float(sensor_data.get('free_lime_percent', 1.2)),
+                    float(sensor_data.get('nox_mg_nm3', 500.0)),
+                    float(sensor_data.get('preheater_temp_c', sensor_data.get('preheater_outlet_temp', 550.0)))
+                ], dtype=np.float32)
+                
+                action, _, _ = agent.select_action(state)
+                
+                # Map action adjustments continuous space: speed_adj, fuel_adj, feed_adj
+                speed_adj = np.clip(action[0], -0.2, 0.2)
+                fuel_adj = np.clip(action[1], -0.5, 0.5)
+                feed_adj = np.clip(action[2], -2.0, 2.0)
+                
+                # Update setpoints based on adjustments
+                new_speed = float(np.clip(sensor_data.get('kiln_speed_rpm', 3.0) + speed_adj, 1.0, 4.5))
+                new_fuel = float(np.clip(sensor_data.get('fuel_rate_tph', 15.0) + fuel_adj, 5.0, 25.0))
+                new_feed = float(np.clip(sensor_data.get('feed_rate_tph', 200.0) + feed_adj, 100.0, 250.0))
+                
+                optimized_setpoints['kiln_speed_rpm'] = new_speed
+                optimized_setpoints['fuel_rate_tph'] = new_fuel
+                optimized_setpoints['feed_rate_tph'] = new_feed
+                optimized_setpoints['burning_zone_temp_c'] = 1450.0 + fuel_adj * 10
+                
+                logger.info("🤖 RL Control Policy successfully adjusted kiln setpoints")
+            except Exception as e:
+                logger.warning(f"RL Control failed, falling back to PID: {e}")
         
         # 6. Validate setpoints against constraints
         validated_setpoints = self._validate_setpoints(optimized_setpoints)

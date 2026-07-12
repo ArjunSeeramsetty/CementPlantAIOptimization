@@ -6,8 +6,11 @@ Replaces all mock implementations with actual GCP services.
 import os
 import json
 import time
+import logging as std_logging
 from typing import Dict, Any, Optional, List
 import pandas as pd
+
+logger = std_logging.getLogger(__name__)
 
 # Google Cloud imports
 try:
@@ -22,7 +25,7 @@ try:
     GCP_AVAILABLE = True
 except ImportError:
     GCP_AVAILABLE = False
-    print("⚠️ Google Cloud libraries not available. Using enhanced fallback.")
+    logger.warning("Google Cloud libraries not available. Using enhanced fallback.")
 
 class ProductionGCPServices:
     """
@@ -30,12 +33,12 @@ class ProductionGCPServices:
     Replaces all mock implementations with actual GCP services.
     """
     
-    def __init__(self, project_id: str = "cement-ai-optimization", 
-                 region: str = "us-central1",
-                 service_account_path: str = ".secrets/cement-ops-key.json"):
-        self.project_id = project_id
-        self.region = region
-        self.service_account_path = service_account_path
+    def __init__(self, project_id: Optional[str] = None, 
+                 region: Optional[str] = None,
+                 service_account_path: Optional[str] = None):
+        self.project_id = project_id or os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-optimization"
+        self.region = region or os.getenv("CEMENT_GCP_REGION") or "us-central1"
+        self.service_account_path = service_account_path or os.getenv("GOOGLE_APPLICATION_CREDENTIALS") or ".secrets/cement-ops-key.json"
         self.gcp_available = GCP_AVAILABLE
         
         if self.gcp_available:
@@ -49,7 +52,7 @@ class ProductionGCPServices:
             # Set authentication from service account key
             if os.path.exists(self.service_account_path):
                 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = os.path.abspath(self.service_account_path)
-                print(f"✅ Using service account: {self.service_account_path}")
+                logger.info("Using service account: %s", self.service_account_path)
             
             # Initialize Vertex AI
             vertexai.init(project=self.project_id, location=self.region)
@@ -63,30 +66,30 @@ class ProductionGCPServices:
             
             try:
                 self.bigquery_client = bigquery.Client(project=self.project_id)
-                print("✅ BigQuery client initialized")
+                logger.info("BigQuery client initialized")
             except Exception as e:
-                print(f"⚠️ BigQuery client initialization failed: {e}")
+                logger.warning("BigQuery client initialization failed: %s", e)
             
             try:
                 self.monitoring_client = monitoring_v3.MetricServiceClient()
-                print("✅ Monitoring client initialized")
+                logger.info("Monitoring client initialized")
             except Exception as e:
-                print(f"⚠️ Monitoring client initialization failed: {e}")
+                logger.warning("Monitoring client initialization failed: %s", e)
             
             try:
                 self.logging_client = logging.Client(project=self.project_id)
-                print("✅ Logging client initialized")
+                logger.info("Logging client initialized")
             except Exception as e:
-                print(f"⚠️ Logging client initialization failed: {e}")
+                logger.warning("Logging client initialization failed: %s", e)
             
             try:
                 self.storage_client = storage.Client(project=self.project_id)
-                print("✅ Storage client initialized")
+                logger.info("Storage client initialized")
             except Exception as e:
-                print(f"⚠️ Storage client initialization failed: {e}")
+                logger.warning("Storage client initialization failed: %s", e)
             
             # Initialize Gemini model
-            self.gemini_model = GenerativeModel("gemini-2.5-pro")
+            self.gemini_model = GenerativeModel("gemini-1.5-pro")
             
             # Configure safety settings for industrial use
             self.safety_settings = {
@@ -96,16 +99,16 @@ class ProductionGCPServices:
                 HarmCategory.HARM_CATEGORY_HARASSMENT: HarmBlockThreshold.BLOCK_MEDIUM_AND_ABOVE,
             }
             
-            print(f"✅ Initialized production GCP services for project: {self.project_id}")
+            logger.info("Initialized production GCP services for project: %s", self.project_id)
             
         except Exception as e:
-            print(f"❌ GCP initialization failed: {e}")
+            logger.exception("GCP initialization failed: %s", e)
             self.gcp_available = False
             self._initialize_fallback()
     
     def _initialize_fallback(self):
         """Initialize enhanced fallback services"""
-        print("🔄 Using enhanced fallback services")
+        logger.warning("Using enhanced fallback services")
         self.gemini_model = None
         self.bigquery_client = None
         self.monitoring_client = None
@@ -139,7 +142,7 @@ class ProductionGCPServices:
             try:
                 self._log_ai_usage(prompt, response, context_data)
             except Exception as log_error:
-                print(f"⚠️ Logging failed (non-critical): {log_error}")
+                logger.warning("Logging failed (non-critical): %s", log_error)
             
             return {
                 'success': True,
@@ -156,12 +159,12 @@ class ProductionGCPServices:
                     'candidates_token_count': response.usage_metadata.candidates_token_count,
                     'total_token_count': response.usage_metadata.total_token_count
                 },
-                'model_version': "gemini-2.5-pro",
+                'model_version': "gemini-1.5-pro",
                 'enterprise_features': True
             }
             
         except Exception as e:
-            print(f"⚠️ Gemini query failed, using fallback: {str(e)}")
+            logger.warning("Gemini query failed, using fallback: %s", e)
             return self._fallback_gemini_query(prompt, context_data)
     
     def _fallback_gemini_query(self, prompt: str, context_data: Optional[Dict] = None) -> Dict[str, Any]:
@@ -253,7 +256,7 @@ class ProductionGCPServices:
             
             logger.log_struct(log_entry, severity="INFO")
         except Exception as e:
-            print(f"⚠️ Logging failed: {e}")
+            logger.warning("Logging failed: %s", e)
     
     def _log_error(self, error_message: str):
         """Log errors for monitoring"""
@@ -267,7 +270,7 @@ class ProductionGCPServices:
                 "message": error_message
             }, severity="ERROR")
         except Exception as e:
-            print(f"⚠️ Error logging failed: {e}")
+            logger.warning("Error logging failed: %s", e)
     
     def execute_bigquery_ml_prediction(self, model_name: str, input_data: Dict) -> Dict:
         """
@@ -277,16 +280,31 @@ class ProductionGCPServices:
             return self._fallback_ml_prediction(model_name, input_data)
         
         try:
-            # Construct prediction query - model_name should be just the model name, not full path
-            model_path = f"{self.project_id}.cement_analytics.{model_name}"  # nosec B608 - project_id and model_name are validated
-            query = f"""  # nosec B608 - all inputs are validated and controlled
+            model_path = f"{self.project_id}.cement_analytics.{model_name}"
+            # Determine the predicted column name based on the model name
+            predicted_col = "predicted_free_lime_percent" if "quality" in model_name.lower() else "predicted_thermal_energy_kcal_kg" if "energy" in model_name.lower() else f"predicted_{model_name.split('.')[-1]}"
+            
+            # Format inputs as literals
+            select_items = []
+            for k, v in input_data.items():
+                if isinstance(v, (int, float)):
+                    select_items.append(f"{v} as {k}")
+                elif isinstance(v, bool):
+                    select_items.append(f"{str(v).upper()} as {k}")
+                elif v is None:
+                    select_items.append(f"NULL as {k}")
+                else:
+                    escaped_v = str(v).replace("'", "\\'")
+                    select_items.append(f"'{escaped_v}' as {k}")
+                    
+            query = f"""
             SELECT
-                predicted_{model_name.split('.')[-1]} as prediction,
+                {predicted_col} as prediction,
                 * 
             FROM
                 ML.PREDICT(MODEL `{model_path}`, 
                 (SELECT 
-                    {', '.join([f'{k} as {k}' for k in input_data.keys()])}
+                    {', '.join(select_items)}
                 ))
             """
             
@@ -306,7 +324,7 @@ class ProductionGCPServices:
             }
             
         except Exception as e:
-            print(f"⚠️ BigQuery ML prediction failed, using fallback: {str(e)}")
+            logger.warning("BigQuery ML prediction failed, using fallback: %s", e)
             return self._fallback_ml_prediction(model_name, input_data)
     
     def _fallback_ml_prediction(self, model_name: str, input_data: Dict) -> Dict:
@@ -410,13 +428,13 @@ class ProductionGCPServices:
             return True
             
         except Exception as e:
-            print(f"⚠️ Metric sending failed, using fallback: {str(e)}")
+            logger.warning("Metric sending failed, using fallback: %s", e)
             return self._fallback_metric_sending(metric_name, value, labels)
     
     def _fallback_metric_sending(self, metric_name: str, value: float, 
                                 labels: Dict[str, str]) -> bool:
         """Enhanced fallback for metric sending"""
-        print(f"📊 [FALLBACK] Metric: {metric_name} = {value}, Labels: {labels}")
+        logger.info("[FALLBACK] Metric: %s = %s, Labels: %s", metric_name, value, labels)
         return True
     
     def create_bigquery_ml_models(self):
@@ -424,7 +442,7 @@ class ProductionGCPServices:
         Create production BigQuery ML models for cement plant optimization
         """
         if not self.gcp_available or not self.bigquery_client:
-            print("⚠️ BigQuery not available. Skipping ML model creation.")
+            logger.warning("BigQuery not available. Skipping ML model creation.")
             return
         
         models = {
@@ -497,9 +515,9 @@ class ProductionGCPServices:
             try:
                 query_job = self.bigquery_client.query(query)
                 query_job.result()
-                print(f"✅ Created BigQuery ML model: {model_name}")
+                logger.info("Created BigQuery ML model: %s", model_name)
             except Exception as e:
-                print(f"❌ Failed to create model {model_name}: {str(e)}")
+                logger.error("Failed to create model %s: %s", model_name, e)
     
     def load_real_time_data(self, table_name: str, minutes_ago: int = 60) -> pd.DataFrame:
         """Load real-time data from production BigQuery tables"""
@@ -519,7 +537,7 @@ class ProductionGCPServices:
             return self.bigquery_client.query(query).to_dataframe()
             
         except Exception as e:
-            print(f"⚠️ BigQuery query failed: {e}")
+            logger.warning("BigQuery query failed: %s", e)
             return self._get_sample_data(table_name)
     
     def _get_sample_data(self, table_name: str) -> pd.DataFrame:

@@ -1,6 +1,7 @@
 # NEW FILE: src/cement_ai_platform/multi_plant/plant_manager.py
 import yaml
 import json
+import logging
 from typing import Dict, List, Optional
 from dataclasses import dataclass, asdict
 from pathlib import Path
@@ -8,6 +9,8 @@ import os
 from google.cloud import firestore
 from google.cloud import storage
 from google.cloud import bigquery
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class PlantConfiguration:
@@ -34,22 +37,23 @@ class MultiPlantManager:
     and tenant isolation for scalable cement plant management
     """
     
-    def __init__(self, project_id: str = "cement-ai-optimization"):
-        self.project_id = project_id
+    def __init__(self, project_id: str = None):
+        import os
+        self.project_id = project_id or os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-opt-38517"
         
         try:
-            self.firestore_client = firestore.Client(project=project_id)
-            self.storage_client = storage.Client(project=project_id)
-            self.bq_client = bigquery.Client(project=project_id)
+            self.firestore_client = firestore.Client(project=self.project_id)
+            self.storage_client = storage.Client(project=self.project_id)
+            self.bq_client = bigquery.Client(project=self.project_id)
             self.cloud_available = True
         except Exception as e:
-            print(f"⚠️ Google Cloud services not available: {e}")
+            logger.warning("Google Cloud services not available: %s", e)
             self.firestore_client = None
             self.storage_client = None
             self.bq_client = None
             self.cloud_available = False
         
-        self.bucket_name = f"{project_id}-plant-configs"
+        self.bucket_name = f"{self.project_id}-plant-configs"
         
         # Plant registry cache
         self.plant_registry = {}
@@ -65,12 +69,12 @@ class MultiPlantManager:
             # Create Cloud Storage bucket for plant configurations
             try:
                 bucket = self.storage_client.create_bucket(self.bucket_name)
-                print(f"✅ Created plant config bucket: {self.bucket_name}")
+                logger.info("Created plant config bucket: %s", self.bucket_name)
             except Exception as e:
                 if "already exists" in str(e).lower():
-                    print(f"ℹ️ Plant config bucket already exists: {self.bucket_name}")
+                    logger.info("Plant config bucket already exists: %s", self.bucket_name)
                 else:
-                    print(f"❌ Error creating bucket: {e}")
+                    logger.error("Error creating bucket: %s", e)
             
             # Initialize Firestore collections for multi-plant data
             self._setup_firestore_collections()
@@ -94,7 +98,7 @@ class MultiPlantManager:
             doc_ref = self.firestore_client.collection(collection).document('_init')
             doc_ref.set({'initialized': True, 'timestamp': firestore.SERVER_TIMESTAMP})
             
-            print(f"✅ Initialized Firestore collection: {collection}")
+            logger.info("Initialized Firestore collection: %s", collection)
     
     def _load_default_plant_configs(self):
         """Load default plant configurations for demo"""
@@ -250,11 +254,11 @@ class MultiPlantManager:
                 self.tenant_isolation[config.tenant_id] = []
             self.tenant_isolation[config.tenant_id].append(config.plant_id)
             
-            print(f"✅ Registered plant: {config.plant_name} ({config.plant_id})")
+            logger.info("Registered plant: %s (%s)", config.plant_name, config.plant_id)
             return True
             
         except Exception as e:
-            print(f"❌ Error registering plant {config.plant_id}: {e}")
+            logger.error("Error registering plant %s: %s", config.plant_id, e)
             return False
     
     def get_plant_config(self, plant_id: str) -> Optional[PlantConfiguration]:
@@ -276,11 +280,11 @@ class MultiPlantManager:
                     self.plant_registry[plant_id] = config
                     return config
                 else:
-                    print(f"❌ Plant not found: {plant_id}")
+                    logger.error("Plant not found: %s", plant_id)
                     return None
                     
             except Exception as e:
-                print(f"❌ Error loading plant config {plant_id}: {e}")
+                logger.error("Error loading plant config %s: %s", plant_id, e)
                 return None
         
         return None
@@ -303,7 +307,7 @@ class MultiPlantManager:
                 return tenant_plants
                 
             except Exception as e:
-                print(f"❌ Error loading tenant plants for {tenant_id}: {e}")
+                logger.error("Error loading tenant plants for %s: %s", tenant_id, e)
                 return []
         else:
             # Return cached plants for demo
@@ -324,14 +328,14 @@ class MultiPlantManager:
         
         try:
             dataset = self.bq_client.create_dataset(dataset, timeout=30)
-            print(f"✅ Created tenant dataset: {dataset_id}")
+            logger.info("Created tenant dataset: %s", dataset_id)
             return dataset_id
         except Exception as e:
             if "already exists" in str(e).lower():
-                print(f"ℹ️ Tenant dataset already exists: {dataset_id}")
+                logger.info("Tenant dataset already exists: %s", dataset_id)
                 return dataset_id
             else:
-                print(f"❌ Error creating tenant dataset: {e}")
+                logger.error("Error creating tenant dataset: %s", e)
                 return None
     
     def get_cross_plant_benchmarks(self, tenant_id: str) -> Dict:

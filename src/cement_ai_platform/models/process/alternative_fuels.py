@@ -8,6 +8,9 @@ from typing import Dict, List, Optional, Any
 from dataclasses import dataclass, field
 import numpy as np
 import pandas as pd
+import logging
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class FuelProperties:
@@ -118,9 +121,9 @@ class AlternativeFuelProcessor:
             'max_ash_in_fuel': 30.0          # % max ash content in fuel blend
         }
 
-        print("🔥 Alternative Fuel Processor initialized")
-        print(f"📊 Fuel database: {len(self.fuel_database)} fuel types")
-        print(f"🌍 Environmental limits configured")
+        logger.info("🔥 Alternative Fuel Processor initialized")
+        logger.info(f"📊 Fuel database: {len(self.fuel_database)} fuel types")
+        logger.info("🌍 Environmental limits configured")
 
     def optimize_fuel_blend(self, 
                           available_fuels: Dict[str, Dict],
@@ -267,7 +270,7 @@ class AlternativeFuelProcessor:
             )
         except Exception as e:
             # Fallback to simpler optimization
-            print(f"SLSQP failed, trying COBYLA: {e}")
+            logger.warning(f"SLSQP failed, trying COBYLA: {e}")
             result = minimize(
                 objective_function, x0,
                 method='COBYLA',
@@ -296,7 +299,7 @@ class AlternativeFuelProcessor:
             }
         else:
             # Fallback: simple heuristic blend
-            print(f"Optimization failed: {result.message}, using heuristic blend")
+            logger.warning(f"Optimization failed: {result.message}, using heuristic blend")
             heuristic_blend = self._create_heuristic_blend(fuel_names, target_thermal_substitution, available_fuels)
             
             if heuristic_blend:

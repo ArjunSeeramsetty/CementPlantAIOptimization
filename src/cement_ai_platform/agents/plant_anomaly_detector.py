@@ -1,5 +1,6 @@
 import numpy as np
 import pandas as pd
+import logging
 from typing import Dict, List, Optional, Tuple
 from dataclasses import dataclass
 from sklearn.ensemble import IsolationForest
@@ -7,6 +8,8 @@ from sklearn.preprocessing import StandardScaler
 from sklearn.cluster import DBSCAN
 import warnings
 warnings.filterwarnings('ignore')
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class AnomalyThresholds:
@@ -398,7 +401,11 @@ class ProcessAnomalyDetector:
         self.feature_columns = feature_columns
         self.is_fitted = True
         
-        print(f"Anomaly detector trained on {len(X)} samples with {len(feature_columns)} features")
+        logger.info(
+            "Anomaly detector trained on %s samples with %s features",
+            len(X),
+            len(feature_columns),
+        )
     
     def detect_anomalies(self, current_data: Dict) -> Dict:
         """Detect anomalies in current process data"""

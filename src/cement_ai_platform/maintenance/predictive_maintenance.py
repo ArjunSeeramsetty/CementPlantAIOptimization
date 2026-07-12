@@ -1,3 +1,4 @@
+import logging
 import numpy as np
 import pandas as pd
 from typing import Dict, List, Optional, Tuple
@@ -12,6 +13,8 @@ import joblib
 import streamlit as st
 import plotly.graph_objects as go
 import plotly.express as px
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class MaintenanceRecommendation:
@@ -33,8 +36,9 @@ class PredictiveMaintenanceEngine:
     and CMMS integration for cement plant equipment
     """
     
-    def __init__(self, project_id: str = "cement-ai-optimization"):
-        self.project_id = project_id
+    def __init__(self, project_id: str = None):
+        import os
+        self.project_id = project_id or os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-opt-38517"
         
         # Models for different equipment types
         self.failure_models = {}
@@ -86,7 +90,7 @@ class PredictiveMaintenanceEngine:
         # Load or train failure prediction models
         self._load_or_train_models()
         
-        print("✅ Predictive maintenance system initialized")
+        logger.info("Predictive maintenance system initialized")
     
     def _load_or_train_models(self):
         """Load existing models or train new ones"""
@@ -95,11 +99,11 @@ class PredictiveMaintenanceEngine:
             model_path = os.path.join(os.getcwd(), "models", "pdm_rul_model.joblib")
             if os.path.exists(model_path):
                 self.sota_rul_model = joblib.load(model_path)
-                print(f"Loaded SOTA RUL model from {model_path}")
+                logger.info("Loaded SOTA RUL model from %s", model_path)
             else:
-                print("SOTA RUL model file not found, running demo initialization.")
+                logger.info("SOTA RUL model file not found, running demo initialization.")
         except Exception as e:
-            print(f"Error loading SOTA RUL model: {e}")
+            logger.warning("Error loading SOTA RUL model: %s", e)
 
         for equipment_type in self.equipment_configs:
             try:
@@ -107,7 +111,7 @@ class PredictiveMaintenanceEngine:
                 self._train_failure_model(equipment_type)
                 
             except Exception as e:
-                print(f"Error training model for {equipment_type}: {e}")
+                logger.warning("Error training model for %s: %s", equipment_type, e)
     
     def _train_failure_model(self, equipment_type: str):
         """Train failure prediction model for specific equipment type"""
@@ -161,7 +165,7 @@ class PredictiveMaintenanceEngine:
         X_train, X_test, y_train, y_test = train_test_split(X_scaled, y_failure_prob, test_size=0.2)
         test_score = failure_model.score(X_test, y_test)
         
-        print(f"✅ Trained {equipment_type} failure model - R²: {test_score:.3f}")
+        logger.info("Trained %s failure model - R²: %.3f", equipment_type, test_score)
     
     def _generate_synthetic_maintenance_data(self, equipment_type: str, n_samples: int = 2000) -> pd.DataFrame:
         """Generate synthetic maintenance data for training"""
@@ -240,7 +244,7 @@ class PredictiveMaintenanceEngine:
         equipment_type = equipment_data.get('equipment_type', 'kiln')
         
         if equipment_type not in self.failure_models:
-            print(f"❌ No model available for equipment type: {equipment_type}")
+            logger.warning("No model available for equipment type: %s", equipment_type)
             return None
         
         # Prepare features
@@ -273,7 +277,7 @@ class PredictiveMaintenanceEngine:
                 # Override ttf_hours for SOTA enhancement
                 ttf_hours = sota_rul_hours
             except Exception as e:
-                print(f"SOTA prediction error: {e}")
+                logger.warning("SOTA prediction error: %s", e)
         
         # Calculate confidence
         confidence = min(0.95, max(0.6, 1 - abs(failure_prob - 0.5)))

@@ -6,9 +6,12 @@ Integrates all five critical agents for comprehensive cement plant optimization
 import os
 import json
 import pandas as pd
+import argparse
 from typing import Dict, List, Optional, Any
 from datetime import datetime
 import logging
+
+logger = logging.getLogger(__name__)
 
 # Import all agent modules
 from .alternative_fuel_optimizer import AlternativeFuelOptimizer
@@ -16,6 +19,7 @@ from .cement_plant_gpt import CementPlantGPT
 from .unified_kiln_cooler_controller import UnifiedKilnCoolerController
 from .utility_optimizer import UtilityOptimizer
 from .plant_anomaly_detector import PlantAnomalyDetector
+from ..services import DiagnosticService, MultiPlantService, SimulationService, StreamingService
 
 # Import streaming capabilities
 try:
@@ -23,31 +27,15 @@ try:
     STREAMING_AVAILABLE = True
 except ImportError:
     STREAMING_AVAILABLE = False
-    print("⚠️ Streaming modules not available - install google-cloud-pubsub")
-
-# Import predictive maintenance capabilities
-try:
-    from ..maintenance.predictive_maintenance import PredictiveMaintenanceEngine
-    MAINTENANCE_AVAILABLE = True
-except ImportError:
-    MAINTENANCE_AVAILABLE = False
-    print("⚠️ Maintenance modules not available")
-
-# Import data validation capabilities
-try:
-    from ..validation.drift_detection import DataDriftDetector
-    VALIDATION_AVAILABLE = True
-except ImportError:
-    VALIDATION_AVAILABLE = False
-    print("⚠️ Validation modules not available")
+    logger.warning("Streaming modules not available - install google-cloud-pubsub")
 
 # Import DWSIM integration capabilities
 try:
-    from ..dwsim.dwsim_connector import DWSIMIntegrationEngine, DWSIMScenario
+    from ..dwsim.dwsim_connector import DWSIMIntegrationEngine
     DWSIM_AVAILABLE = True
 except ImportError:
     DWSIM_AVAILABLE = False
-    print("⚠️ DWSIM modules not available")
+    logger.warning("DWSIM modules not available")
 
 # Import Multi-Plant capabilities
 try:
@@ -55,9 +43,7 @@ try:
     MULTI_PLANT_AVAILABLE = True
 except ImportError:
     MULTI_PLANT_AVAILABLE = False
-    print("⚠️ Multi-Plant modules not available")
-
-logger = logging.getLogger(__name__)
+    logger.warning("Multi-Plant modules not available")
 
 class JKCementDigitalTwinPlatform:
     """
@@ -90,18 +76,6 @@ class JKCementDigitalTwinPlatform:
             self.realtime_processor = None
             self.streaming_active = False
 
-        # Initialize predictive maintenance if available
-        if MAINTENANCE_AVAILABLE:
-            self.maintenance_engine = PredictiveMaintenanceEngine()
-        else:
-            self.maintenance_engine = None
-
-        # Initialize data validation if available
-        if VALIDATION_AVAILABLE:
-            self.drift_detector = DataDriftDetector()
-        else:
-            self.drift_detector = None
-
         # Initialize DWSIM integration if available
         if DWSIM_AVAILABLE:
             self.dwsim_engine = DWSIMIntegrationEngine()
@@ -113,6 +87,12 @@ class JKCementDigitalTwinPlatform:
             self.multi_plant_supervisor = MultiPlantSupervisor()
         else:
             self.multi_plant_supervisor = None
+
+        # Service layer orchestration
+        self.streaming_service = StreamingService(self)
+        self.simulation_service = SimulationService(self)
+        self.diagnostic_service = DiagnosticService(self)
+        self.multi_plant_service = MultiPlantService(self)
         
         # Platform state
         self.current_plant_data = {}
@@ -158,7 +138,7 @@ class JKCementDigitalTwinPlatform:
         utility_optimization_results = self._optimize_utilities(plant_data)
         
         # 4. Plant Anomaly Detection
-        anomaly_results = self._detect_anomalies(plant_data)
+        anomaly_results = self.diagnostic_service.detect_anomalies(plant_data)
         
         # 5. GPT Analysis and Recommendations
         gpt_results = self._generate_gpt_analysis(plant_data, {
@@ -376,6 +356,21 @@ class JKCementDigitalTwinPlatform:
         anomaly_results = self.anomaly_detector.monitor_plant_status(plant_monitoring_data)
         
         return anomaly_results
+
+    def detect_anomalies(self, plant_data: Dict) -> Dict:
+        """Public anomaly-detection entrypoint delegated to the diagnostic service."""
+
+        return self.diagnostic_service.detect_anomalies(plant_data)
+
+    def run_predictive_maintenance_check(self, plant_id: str = "JK_Rajasthan_1", days_ahead: int = 30) -> Dict:
+        """Public maintenance entrypoint delegated to the diagnostic service."""
+
+        return self.diagnostic_service.run_predictive_maintenance_check(plant_id, days_ahead)
+
+    def run_data_drift_validation(self, current_data, reference_snapshot: str = "baseline") -> Dict:
+        """Public drift-validation entrypoint delegated to the diagnostic service."""
+
+        return self.diagnostic_service.run_data_drift_validation(current_data, reference_snapshot)
     
     def _generate_gpt_analysis(self, plant_data: Dict, analysis_context: Dict) -> Dict:
         """Generate GPT analysis and recommendations"""
@@ -645,12 +640,12 @@ class JKCementDigitalTwinPlatform:
                 'simulator_initialized': self.pubsub_simulator is not None
             },
             'maintenance_capabilities': {
-                'available': MAINTENANCE_AVAILABLE,
-                'engine_initialized': self.maintenance_engine is not None
+                'available': self.diagnostic_service.maintenance_available,
+                'engine_initialized': self.diagnostic_service.maintenance_engine is not None
             },
             'validation_capabilities': {
-                'available': VALIDATION_AVAILABLE,
-                'detector_initialized': self.drift_detector is not None
+                'available': self.diagnostic_service.validation_available,
+                'detector_initialized': self.diagnostic_service.drift_detector is not None
             },
             'dwsim_capabilities': {
                 'available': DWSIM_AVAILABLE,
@@ -671,8 +666,8 @@ class JKCementDigitalTwinPlatform:
                 'utility_optimization': '✅ Implemented',
                 'plant_anomaly_detection': '✅ Implemented',
                 'real_time_streaming': '✅ Implemented' if STREAMING_AVAILABLE else '⚠️ Requires google-cloud-pubsub',
-                'predictive_maintenance': '✅ Implemented' if MAINTENANCE_AVAILABLE else '⚠️ Requires sklearn',
-                'data_validation_drift_detection': '✅ Implemented' if VALIDATION_AVAILABLE else '⚠️ Requires scipy',
+                'predictive_maintenance': '✅ Implemented' if self.diagnostic_service.maintenance_available else '⚠️ Requires sklearn',
+                'data_validation_drift_detection': '✅ Implemented' if self.diagnostic_service.validation_available else '⚠️ Requires scipy',
                 'dwsim_physics_simulation': '✅ Implemented' if DWSIM_AVAILABLE else '⚠️ Requires google-cloud-pubsub',
                 'multi_plant_support': '✅ Implemented' if MULTI_PLANT_AVAILABLE else '⚠️ Requires google-cloud-firestore'
             }
@@ -680,42 +675,11 @@ class JKCementDigitalTwinPlatform:
     
     def start_real_time_streaming(self, interval_seconds: int = 2) -> bool:
         """Start real-time data streaming simulation"""
-        
-        if not STREAMING_AVAILABLE:
-            logger.warning("⚠️ Streaming not available - install google-cloud-pubsub")
-            return False
-        
-        if self.streaming_active:
-            logger.info("ℹ️ Streaming already active")
-            return True
-        
-        try:
-            self.pubsub_simulator.start_streaming_simulation(interval_seconds)
-            self.streaming_active = True
-            logger.info(f"🚀 Real-time streaming started (interval: {interval_seconds}s)")
-            return True
-        except Exception as e:
-            logger.error(f"❌ Failed to start streaming: {e}")
-            return False
+        return self.streaming_service.start_realtime_stream(interval_seconds)
     
     def stop_real_time_streaming(self) -> bool:
         """Stop real-time data streaming"""
-        
-        if not STREAMING_AVAILABLE:
-            return False
-        
-        if not self.streaming_active:
-            logger.info("ℹ️ Streaming not active")
-            return True
-        
-        try:
-            self.pubsub_simulator.stop_streaming()
-            self.streaming_active = False
-            logger.info("⏹️ Real-time streaming stopped")
-            return True
-        except Exception as e:
-            logger.error(f"❌ Failed to stop streaming: {e}")
-            return False
+        return self.streaming_service.stop_realtime_stream()
     
     def subscribe_to_process_data(self, callback_func=None):
         """Subscribe to process variables stream"""
@@ -761,290 +725,55 @@ class JKCementDigitalTwinPlatform:
     
     def get_streaming_status(self) -> Dict:
         """Get current streaming status"""
-        
-        if not STREAMING_AVAILABLE:
-            return {
-                'streaming_available': False,
-                'error': 'google-cloud-pubsub not installed'
-            }
-        
-        return {
-            'streaming_available': True,
-            'streaming_active': self.streaming_active,
-            'topics_configured': list(self.pubsub_simulator.topics.keys()) if self.pubsub_simulator else [],
-            'project_id': self.pubsub_simulator.project_id if self.pubsub_simulator else None
-        }
+        return self.streaming_service.get_realtime_stream_status()
 
     def generate_maintenance_report(self, plant_id: str = "JK_Rajasthan_1", days_ahead: int = 30) -> Dict:
         """Generate predictive maintenance report"""
-        if not MAINTENANCE_AVAILABLE:
-            return {
-                'success': False,
-                'error': 'Maintenance modules not available'
-            }
-        
-        try:
-            report = self.maintenance_engine.generate_maintenance_report(plant_id, days_ahead)
-            return {
-                'success': True,
-                'report': report
-            }
-        except Exception as e:
-            return {
-                'success': False,
-                'error': f'Error generating maintenance report: {str(e)}'
-            }
+        return self.diagnostic_service.generate_maintenance_report(plant_id, days_ahead)
 
     def predict_equipment_failure(self, equipment_data: Dict) -> Dict:
         """Predict failure for specific equipment"""
-        if not MAINTENANCE_AVAILABLE:
-            return {
-                'success': False,
-                'error': 'Maintenance modules not available'
-            }
-        
-        try:
-            recommendation = self.maintenance_engine.predict_equipment_failure(equipment_data)
-            if recommendation:
-                return {
-                    'success': True,
-                    'recommendation': recommendation
-                }
-            else:
-                return {
-                    'success': False,
-                    'error': 'Failed to generate maintenance recommendation'
-                }
-        except Exception as e:
-            return {
-                'success': False,
-                'error': f'Error predicting equipment failure: {str(e)}'
-            }
+        return self.diagnostic_service.predict_equipment_failure(equipment_data)
 
     def detect_data_drift(self, current_data, reference_snapshot: str = "baseline") -> Dict:
         """Detect data drift in process variables"""
-        if not VALIDATION_AVAILABLE:
-            return {
-                'success': False,
-                'error': 'Validation modules not available'
-            }
-        
-        try:
-            drift_results = self.drift_detector.detect_data_drift(current_data, reference_snapshot)
-            return {
-                'success': True,
-                'drift_results': drift_results
-            }
-        except Exception as e:
-            return {
-                'success': False,
-                'error': f'Error detecting data drift: {str(e)}'
-            }
+        return self.diagnostic_service.detect_data_drift(current_data, reference_snapshot)
 
     def create_reference_snapshot(self, data, snapshot_name: str = "baseline") -> Dict:
         """Create reference snapshot for drift detection"""
-        if not VALIDATION_AVAILABLE:
-            return {
-                'success': False,
-                'error': 'Validation modules not available'
-            }
-        
-        try:
-            success = self.drift_detector.create_reference_snapshot(data, snapshot_name)
-            return {
-                'success': success,
-                'snapshot_name': snapshot_name
-            }
-        except Exception as e:
-            return {
-                'success': False,
-                'error': f'Error creating reference snapshot: {str(e)}'
-            }
+        return self.diagnostic_service.create_reference_snapshot(data, snapshot_name)
 
     def trigger_model_retraining(self, drift_summary: Dict) -> Dict:
         """Trigger model retraining based on drift detection"""
-        if not VALIDATION_AVAILABLE:
-            return {
-                'success': False,
-                'error': 'Validation modules not available'
-            }
-        
-        try:
-            retraining_result = self.drift_detector.trigger_model_retraining(drift_summary)
-            return {
-                'success': True,
-                'retraining_result': retraining_result
-            }
-        except Exception as e:
-            return {
-                'success': False,
-                'error': f'Error triggering model retraining: {str(e)}'
-            }
+        return self.diagnostic_service.trigger_model_retraining(drift_summary)
     
     def execute_dwsim_scenario(self, scenario_name: str, plant_id: str = "JK_Rajasthan_1") -> Dict:
         """Execute a DWSIM physics simulation scenario"""
-        
-        if not DWSIM_AVAILABLE or not self.dwsim_engine:
-            return {
-                'success': False,
-                'error': 'DWSIM integration not available'
-            }
-        
-        try:
-            # Get scenario from standard scenarios
-            if scenario_name in self.dwsim_engine.standard_scenarios:
-                scenario = self.dwsim_engine.standard_scenarios[scenario_name]
-            else:
-                return {
-                    'success': False,
-                    'error': f'Scenario {scenario_name} not found'
-                }
-            
-            # Execute scenario
-            result = self.dwsim_engine.execute_scenario(scenario, plant_id)
-            
-            # Log execution
-            logger.info(f"DWSIM scenario {scenario_name} executed: {result['success']}")
-            
-            return result
-            
-        except Exception as e:
-            logger.error(f"Error executing DWSIM scenario: {e}")
-            return {
-                'success': False,
-                'error': str(e)
-            }
+        return self.simulation_service.run_dwsim_scenario(scenario_name, plant_id)
     
     def create_custom_dwsim_scenario(self, scenario_config: Dict, plant_id: str = "JK_Rajasthan_1") -> Dict:
         """Create and execute a custom DWSIM scenario"""
-        
-        if not DWSIM_AVAILABLE or not self.dwsim_engine:
-            return {
-                'success': False,
-                'error': 'DWSIM integration not available'
-            }
-        
-        try:
-            import time
-            
-            # Create custom scenario
-            custom_scenario = DWSIMScenario(
-                scenario_id=f"custom_{int(time.time())}",
-                scenario_name=scenario_config.get('name', 'Custom Scenario'),
-                description=scenario_config.get('description', 'Custom process simulation'),
-                input_parameters=scenario_config.get('parameters', {}),
-                expected_outputs=scenario_config.get('outputs', ['burning_zone_temp', 'free_lime_percent']),
-                simulation_duration=scenario_config.get('duration', 1800),
-                priority=scenario_config.get('priority', 'medium')
-            )
-            
-            # Execute scenario
-            result = self.dwsim_engine.execute_scenario(custom_scenario, plant_id)
-            
-            # Log execution
-            logger.info(f"Custom DWSIM scenario executed: {result['success']}")
-            
-            return result
-            
-        except Exception as e:
-            logger.error(f"Error creating custom DWSIM scenario: {e}")
-            return {
-                'success': False,
-                'error': str(e)
-            }
+        return self.simulation_service.create_custom_dwsim_scenario(scenario_config, plant_id)
     
     def get_dwsim_scenario_history(self, plant_id: str = "JK_Rajasthan_1", limit: int = 20) -> List[Dict]:
         """Get DWSIM scenario execution history"""
-        
-        if not DWSIM_AVAILABLE or not self.dwsim_engine:
-            return []
-        
-        try:
-            history = self.dwsim_engine.get_scenario_history(plant_id, limit)
-            return history
-            
-        except Exception as e:
-            logger.error(f"Error retrieving DWSIM scenario history: {e}")
-            return []
+        return self.simulation_service.get_dwsim_scenario_history(plant_id, limit)
     
     def get_multi_plant_status(self) -> Dict:
         """Get multi-plant supervisor status"""
-        
-        if not MULTI_PLANT_AVAILABLE or not self.multi_plant_supervisor:
-            return {
-                'success': False,
-                'error': 'Multi-Plant support not available'
-            }
-        
-        try:
-            status = self.multi_plant_supervisor.get_supervisor_status()
-            return {
-                'success': True,
-                'status': status
-            }
-            
-        except Exception as e:
-            logger.error(f"Error getting multi-plant status: {e}")
-            return {
-                'success': False,
-                'error': str(e)
-            }
+        return self.multi_plant_service.get_multi_plant_status()
     
     def start_multi_plant_orchestration(self) -> bool:
         """Start multi-plant orchestration"""
-        
-        if not MULTI_PLANT_AVAILABLE or not self.multi_plant_supervisor:
-            logger.warning("Multi-Plant support not available")
-            return False
-        
-        try:
-            self.multi_plant_supervisor.start_orchestration()
-            logger.info("Multi-plant orchestration started")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Error starting multi-plant orchestration: {e}")
-            return False
+        return self.multi_plant_service.start_multi_plant_orchestration()
     
     def stop_multi_plant_orchestration(self) -> bool:
         """Stop multi-plant orchestration"""
-        
-        if not MULTI_PLANT_AVAILABLE or not self.multi_plant_supervisor:
-            logger.warning("Multi-Plant support not available")
-            return False
-        
-        try:
-            self.multi_plant_supervisor.stop_orchestration()
-            logger.info("Multi-plant orchestration stopped")
-            return True
-            
-        except Exception as e:
-            logger.error(f"Error stopping multi-plant orchestration: {e}")
-            return False
+        return self.multi_plant_service.stop_multi_plant_orchestration()
     
     def deploy_model_to_tenant(self, tenant_id: str, model_config: Dict) -> Dict:
         """Deploy AI model to all plants in a tenant"""
-        
-        if not MULTI_PLANT_AVAILABLE or not self.multi_plant_supervisor:
-            return {
-                'success': False,
-                'error': 'Multi-Plant support not available'
-            }
-        
-        try:
-            result = self.multi_plant_supervisor.deploy_model_to_tenant(tenant_id, model_config)
-            logger.info(f"Model deployed to tenant {tenant_id}: {result['successful_deployments']}/{result['total_plants']}")
-            return {
-                'success': True,
-                'deployment_result': result
-            }
-            
-        except Exception as e:
-            logger.error(f"Error deploying model to tenant {tenant_id}: {e}")
-            return {
-                'success': False,
-                'error': str(e)
-            }
+        return self.multi_plant_service.deploy_model_to_tenant(tenant_id, model_config)
 
 def create_unified_platform(config_file: str = "config/plant_config.yml") -> JKCementDigitalTwinPlatform:
     """
@@ -1075,3 +804,21 @@ def create_unified_platform(config_file: str = "config/plant_config.yml") -> JKC
     logger.info("   ✅ Multi-Plant Support & Tenant Isolation")
     
     return platform
+
+
+def main() -> int:
+    """Command-line entrypoint for the unified JK Cement platform."""
+
+    parser = argparse.ArgumentParser(
+        description="Initialize the JK Cement Digital Twin Platform."
+    )
+    parser.add_argument(
+        "--config-file",
+        default="config/plant_config.yml",
+        help="Path to the plant configuration YAML file.",
+    )
+    args = parser.parse_args()
+
+    create_unified_platform(args.config_file)
+    logger.info("JK Cement Digital Twin Platform initialized successfully")
+    return 0

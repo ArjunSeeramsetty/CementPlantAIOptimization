@@ -8,8 +8,11 @@ from typing import Dict, List, Optional, Any
 import math
 import numpy as np
 import warnings
+import logging
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 
 class AdvancedKilnModel:
@@ -43,8 +46,8 @@ class AdvancedKilnModel:
         self.coal_volatile_matter = 35.0  # %
         self.fuel_nitrogen_content = 1.5  # %
         
-        print("🔥 Advanced Kiln Model initialized")
-        print("📊 Industrial-grade burnability and NOx models loaded")
+        logger.info("🔥 Advanced Kiln Model initialized")
+        logger.info("📊 Industrial-grade burnability and NOx models loaded")
     
     def calculate_enhanced_burnability_index(self, 
                                           raw_meal_composition: Dict[str, float],

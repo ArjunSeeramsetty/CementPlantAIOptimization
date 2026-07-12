@@ -24,7 +24,7 @@ class ProductionMonitoringSetup:
     
     def __init__(self):
         self.gcp_services = get_production_services()
-        self.project_id = "cement-ai-optimization"
+        self.project_id = self.gcp_services.project_id or "cement-ai-optimization"
         
     def setup_custom_metrics(self):
         """Create custom metric descriptors for cement plant KPIs"""
@@ -36,6 +36,8 @@ class ProductionMonitoringSetup:
         
         try:
             from google.cloud import monitoring_v3
+            from google.api import metric_pb2
+            from google.api import label_pb2
             
             project_name = f"projects/{self.project_id}"
             monitoring_client = self.gcp_services.monitoring_client
@@ -119,16 +121,16 @@ class ProductionMonitoringSetup:
             # Create metric descriptors
             for metric_config in custom_metrics:
                 try:
-                    descriptor = monitoring_v3.MetricDescriptor()
+                    descriptor = metric_pb2.MetricDescriptor()
                     descriptor.type = metric_config["type"]
                     descriptor.display_name = metric_config["display_name"]
                     descriptor.description = metric_config["description"]
-                    descriptor.metric_kind = getattr(monitoring_v3.MetricDescriptor.MetricKind, metric_config["metric_kind"])
-                    descriptor.value_type = getattr(monitoring_v3.MetricDescriptor.ValueType, metric_config["value_type"])
+                    descriptor.metric_kind = getattr(metric_pb2.MetricDescriptor.MetricKind, metric_config["metric_kind"])
+                    descriptor.value_type = getattr(metric_pb2.MetricDescriptor.ValueType, metric_config["value_type"])
                     
                     # Add labels
                     for label_config in metric_config.get("labels", []):
-                        label = monitoring_v3.LabelDescriptor()
+                        label = label_pb2.LabelDescriptor()
                         label.key = label_config["key"]
                         label.description = label_config["description"]
                         descriptor.labels.append(label)
@@ -230,8 +232,8 @@ Free lime has exceeded 2.0% for more than 5 minutes, indicating incomplete burni
                         {
                             "display_name": "Free lime > 2.0%",
                             "condition_threshold": {
-                                "filter": 'metric.type="custom.googleapis.com/cement_plant/free_lime_deviation"',
-                                "comparison": "COMPARISON_GREATER_THAN",
+                                "filter": 'resource.type="global" AND metric.type="custom.googleapis.com/cement_plant/free_lime_deviation"',
+                                "comparison": "COMPARISON_GT",
                                 "threshold_value": 2.0,
                                 "duration": {"seconds": 300}  # 5 minutes
                             }
@@ -275,8 +277,8 @@ Equipment health score has dropped below 0.4, indicating high risk of failure.
                         {
                             "display_name": "Equipment health < 0.4",
                             "condition_threshold": {
-                                "filter": 'metric.type="custom.googleapis.com/cement_plant/equipment_health"',
-                                "comparison": "COMPARISON_LESS_THAN",
+                                "filter": 'resource.type="global" AND metric.type="custom.googleapis.com/cement_plant/equipment_health"',
+                                "comparison": "COMPARISON_LT",
                                 "threshold_value": 0.4,
                                 "duration": {"seconds": 600}  # 10 minutes
                             }
@@ -320,8 +322,8 @@ Energy efficiency has dropped below 85% for more than 15 minutes.
                         {
                             "display_name": "Energy efficiency < 85%",
                             "condition_threshold": {
-                                "filter": 'metric.type="custom.googleapis.com/cement_plant/energy_efficiency"',
-                                "comparison": "COMPARISON_LESS_THAN",
+                                "filter": 'resource.type="global" AND metric.type="custom.googleapis.com/cement_plant/energy_efficiency"',
+                                "comparison": "COMPARISON_LT",
                                 "threshold_value": 0.85,
                                 "duration": {"seconds": 900}  # 15 minutes
                             }

@@ -5,6 +5,7 @@ import time
 import subprocess
 import os
 import random
+import logging
 from typing import Dict, List, Optional, Any
 from dataclasses import dataclass
 from datetime import datetime
@@ -15,6 +16,8 @@ import pandas as pd
 import streamlit as st
 import plotly.graph_objects as go
 import plotly.express as px
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class DWSIMScenario:
@@ -32,17 +35,18 @@ class DWSIMIntegrationEngine:
     with Google Cloud Pub/Sub and storage integration
     """
     
-    def __init__(self, project_id: str = "cement-ai-optimization"):
-        self.project_id = project_id
+    def __init__(self, project_id: str = None):
+        import os
+        self.project_id = project_id or os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-opt-38517"
         
         # Initialize Google Cloud clients
         try:
             self.publisher = pubsub_v1.PublisherClient()
-            self.storage_client = storage.Client(project=project_id)
-            self.bq_client = bigquery.Client(project=project_id)
+            self.storage_client = storage.Client(project=self.project_id)
+            self.bq_client = bigquery.Client(project=self.project_id)
             self.cloud_available = True
         except Exception as e:
-            print(f"⚠️ Google Cloud services not available: {e}")
+            logger.warning("Google Cloud services not available: %s", e)
             self.publisher = None
             self.storage_client = None
             self.bq_client = None
@@ -148,7 +152,7 @@ class DWSIMIntegrationEngine:
             # Create scenario library in Cloud Storage
             self._setup_scenario_library()
         
-        print("✅ DWSIM integration system initialized")
+        logger.info("DWSIM integration system initialized")
     
     def _create_pubsub_topics(self):
         """Create Pub/Sub topics for DWSIM communication"""
@@ -156,12 +160,12 @@ class DWSIMIntegrationEngine:
         for topic_name, topic_path in self.topics.items():
             try:
                 self.publisher.create_topic(request={"name": topic_path})
-                print(f"✅ Created Pub/Sub topic: {topic_name}")
+                logger.info("Created Pub/Sub topic: %s", topic_name)
             except Exception as e:
                 if "already exists" in str(e).lower():
-                    print(f"ℹ️ Pub/Sub topic already exists: {topic_name}")
+                    logger.info("Pub/Sub topic already exists: %s", topic_name)
                 else:
-                    print(f"❌ Error creating topic {topic_name}: {e}")
+                    logger.error("Error creating topic %s: %s", topic_name, e)
     
     def _setup_scenario_storage(self):
         """Setup BigQuery tables for scenario results storage"""
@@ -183,12 +187,12 @@ class DWSIMIntegrationEngine:
         
         try:
             table = self.bq_client.create_table(table)
-            print("✅ Created DWSIM scenarios table in BigQuery")
+            logger.info("Created DWSIM scenarios table in BigQuery")
         except Exception as e:
             if "already exists" in str(e).lower():
-                print("ℹ️ DWSIM scenarios table already exists")
+                logger.info("DWSIM scenarios table already exists")
             else:
-                print(f"❌ Error creating scenarios table: {e}")
+                logger.error("Error creating scenarios table: %s", e)
     
     def _setup_scenario_library(self):
         """Setup Cloud Storage bucket for scenario files"""
@@ -197,12 +201,12 @@ class DWSIMIntegrationEngine:
         
         try:
             bucket = self.storage_client.create_bucket(bucket_name)
-            print(f"✅ Created DWSIM scenarios bucket: {bucket_name}")
+            logger.info("Created DWSIM scenarios bucket: %s", bucket_name)
         except Exception as e:
             if "already exists" in str(e).lower():
-                print(f"ℹ️ DWSIM scenarios bucket already exists: {bucket_name}")
+                logger.info("DWSIM scenarios bucket already exists: %s", bucket_name)
             else:
-                print(f"❌ Error creating scenarios bucket: {e}")
+                logger.error("Error creating scenarios bucket: %s", e)
     
     def execute_scenario(self, scenario: DWSIMScenario, plant_id: str = "demo_plant") -> Dict:
         """Execute a DWSIM simulation scenario"""
@@ -238,7 +242,7 @@ class DWSIMIntegrationEngine:
             }
             
         except Exception as e:
-            print(f"❌ Error executing scenario {scenario.scenario_id}: {e}")
+            logger.error("Error executing scenario %s: %s", scenario.scenario_id, e)
             return {
                 'success': False,
                 'scenario_id': scenario.scenario_id,
@@ -263,9 +267,9 @@ class DWSIMIntegrationEngine:
         try:
             future = self.publisher.publish(self.topics['scenario_requests'], message_data)
             future.result()  # Wait for publish to complete
-            print(f"📤 Published scenario request: {scenario.scenario_id}")
+            logger.info("Published scenario request: %s", scenario.scenario_id)
         except Exception as e:
-            print(f"❌ Error publishing scenario request: {e}")
+            logger.error("Error publishing scenario request: %s", e)
     
     def _simulate_dwsim_execution(self, scenario: DWSIMScenario) -> Dict:
         """
@@ -539,14 +543,14 @@ class DWSIMIntegrationEngine:
             )
             
             if not errors:
-                print(f"✅ Stored scenario results in BigQuery: {scenario.scenario_id}")
+                logger.info("Stored scenario results in BigQuery: %s", scenario.scenario_id)
                 return True
             else:
-                print(f"❌ Error storing scenario results: {errors}")
+                logger.error("Error storing scenario results: %s", errors)
                 return False
                 
         except Exception as e:
-            print(f"❌ Error storing scenario results: {e}")
+            logger.error("Error storing scenario results: %s", e)
             return False
     
     def _publish_simulation_results(self, scenario_id: str, results: Dict):
@@ -564,9 +568,9 @@ class DWSIMIntegrationEngine:
         try:
             future = self.publisher.publish(self.topics['simulation_results'], message_data)
             future.result()
-            print(f"📤 Published simulation results: {scenario_id}")
+            logger.info("Published simulation results: %s", scenario_id)
         except Exception as e:
-            print(f"❌ Error publishing simulation results: {e}")
+            logger.error("Error publishing simulation results: %s", e)
     
     def get_scenario_history(self, plant_id: str = None, limit: int = 50) -> List[Dict]:
         """Get scenario execution history from BigQuery"""
@@ -626,5 +630,5 @@ class DWSIMIntegrationEngine:
             return history
             
         except Exception as e:
-            print(f"❌ Error retrieving scenario history: {e}")
+            logger.error("Error retrieving scenario history: %s", e)
             return []

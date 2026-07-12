@@ -17,41 +17,90 @@ import threading
 import queue
 from typing import Dict, List, Any
 
+from cement_ai_platform.simulation.kiln_gym_env import KilnCoolerGymEnv
+from cement_ai_platform.models.agents.unified_kiln_cooler_controller import UnifiedKilnCoolerController
+
 class DynamicPlantTwin:
     """
     Real-time dynamic plant digital twin for live POC demonstration
+    Uses parallel physics-informed simulator runs to compare heuristic PID vs SOTA RL.
     """
     
     def __init__(self):
-        # Initialize plant state with realistic values
+        self.controller = UnifiedKilnCoolerController()
+        
+        # Initialize parallel environments
+        self.baseline_env = KilnCoolerGymEnv()
+        self.rl_env = KilnCoolerGymEnv()
+        
+        # Reset environments
+        self.baseline_obs = self.baseline_env.reset()
+        self.rl_obs = self.rl_env.reset()
+        
+        # Default plant_state (will be bound dynamically)
         self.plant_state = {
-            'kiln_temp_c': 1450,
+            'kiln_temp_c': 1450.0,
             'free_lime_pct': 1.2,
-            'feed_rate_tph': 167,
-            'fuel_rate_tph': 16.5,
-            'kiln_speed_rpm': 3.5,
+            'feed_rate_tph': 200.0,
+            'fuel_rate_tph': 15.0,
+            'kiln_speed_rpm': 3.0,
             'o2_percent': 3.2,
-            'production_rate_tph': 165,
-            'energy_efficiency_pct': 92,
-            'nox_mg_nm3': 480,
-            'preheater_temp_c': 880,
-            'cooler_temp_c': 95,
+            'production_rate_tph': 196.0,
+            'energy_efficiency_pct': 92.0,
+            'nox_mg_nm3': 500.0,
+            'preheater_temp_c': 550.0,
+            'cooler_temp_c': 95.0,
             'vibration_mm_s': 4.5,
-            'power_consumption_mw': 45
+            'power_consumption_mw': 54.0
         }
         
         # Historical data for trends
         self.history_length = 100
         self.time_history = []
-        self.data_history = {key: [] for key in self.plant_state.keys()}
+        
+        # Histories for both controllers
+        self.baseline_history = {
+            'kiln_temp_c': [],
+            'free_lime_pct': [],
+            'feed_rate_tph': [],
+            'fuel_rate_tph': [],
+            'kiln_speed_rpm': [],
+            'nox_mg_nm3': [],
+            'preheater_temp_c': [],
+            'production_rate_tph': [],
+            'energy_efficiency_pct': [],
+            'vibration_mm_s': [],
+            'power_consumption_mw': []
+        }
+        
+        self.rl_history = {
+            'kiln_temp_c': [],
+            'free_lime_pct': [],
+            'feed_rate_tph': [],
+            'fuel_rate_tph': [],
+            'kiln_speed_rpm': [],
+            'nox_mg_nm3': [],
+            'preheater_temp_c': [],
+            'production_rate_tph': [],
+            'energy_efficiency_pct': [],
+            'vibration_mm_s': [],
+            'power_consumption_mw': []
+        }
+        
+        # Cumulative savings tracking
+        self.cumulative_savings = {
+            'fuel_tons_saved': 0.0,
+            'co2_tons_avoided': 0.0,
+            'cost_usd_saved': 0.0
+        }
         
         # Plant equipment status
         self.equipment_status = {
-            'kiln': {'status': 'Running', 'efficiency': 95, 'maintenance_due': 45},
-            'raw_mill': {'status': 'Running', 'efficiency': 88, 'maintenance_due': 12},
-            'cement_mill': {'status': 'Running', 'efficiency': 92, 'maintenance_due': 30},
-            'id_fan': {'status': 'Running', 'efficiency': 87, 'maintenance_due': 8},
-            'cooler': {'status': 'Running', 'efficiency': 91, 'maintenance_due': 22}
+            'kiln': {'status': 'Running', 'efficiency': 95.0, 'maintenance_due': 45},
+            'raw_mill': {'status': 'Running', 'efficiency': 88.0, 'maintenance_due': 12},
+            'cement_mill': {'status': 'Running', 'efficiency': 92.0, 'maintenance_due': 30},
+            'id_fan': {'status': 'Running', 'efficiency': 87.0, 'maintenance_due': 8},
+            'cooler': {'status': 'Running', 'efficiency': 91.0, 'maintenance_due': 22}
         }
         
         # Anomaly flags and AI recommendations
@@ -60,116 +109,178 @@ class DynamicPlantTwin:
         
         # Initialize history
         self._initialize_history()
-    
+
     def _initialize_history(self):
-        """Initialize historical data with realistic patterns"""
+        """Initialize historical data by pre-running both environments"""
         base_time = datetime.now() - timedelta(minutes=self.history_length)
+        
+        # Ensure reset
+        self.baseline_obs = self.baseline_env.reset()
+        self.rl_obs = self.rl_env.reset()
         
         for i in range(self.history_length):
             timestamp = base_time + timedelta(minutes=i)
             self.time_history.append(timestamp)
             
-            for key, base_value in self.plant_state.items():
-                # Add realistic variation with some correlation
-                if key == 'kiln_temp_c':
-                    variation = np.sin(i * 0.1) * 10 + np.random.normal(0, base_value * 0.02)
-                elif key == 'free_lime_pct':
-                    # Free lime inversely correlated with temperature
-                    temp_variation = np.sin(i * 0.1) * 10
-                    variation = -temp_variation * 0.01 + np.random.normal(0, base_value * 0.03)
-                else:
-                    variation = np.random.normal(0, base_value * 0.02)
-                
-                self.data_history[key].append(base_value + variation)
-    
-    def update_plant_state(self):
-        """Update plant state with realistic dynamics and correlations"""
+            # Step environments
+            self._step_simulation_run(use_rl=False)
+            self._step_simulation_run(use_rl=True)
+            
+            # Save step data to histories
+            self._record_history_step(use_rl=False)
+            self._record_history_step(use_rl=True)
+            
+            # Calculate savings history
+            baseline_fuel = self.baseline_history['fuel_rate_tph'][-1] / 60.0
+            rl_fuel = self.rl_history['fuel_rate_tph'][-1] / 60.0
+            fuel_saved = max(0.0, baseline_fuel - rl_fuel)
+            
+            self.cumulative_savings['fuel_tons_saved'] += fuel_saved
+            self.cumulative_savings['cost_usd_saved'] += fuel_saved * 120.0
+            self.cumulative_savings['co2_tons_avoided'] += fuel_saved * 2.42
+
+        # Bind initial active state
+        self.bind_active_state(use_rl=False)
+
+    def _step_simulation_run(self, use_rl: bool):
+        """Execute one step in the simulator using either baseline or RL control setpoints"""
+        env = self.rl_env if use_rl else self.baseline_env
+        obs = self.rl_obs if use_rl else self.baseline_obs
         
-        current_time = datetime.now()
+        # Map flat observation array to sensor data dictionary
+        sensor_data = {
+            'burning_zone_temp_c': float(obs[0]),
+            'fuel_rate_tph': float(obs[1]),
+            'kiln_speed_rpm': float(obs[2]),
+            'feed_rate_tph': float(obs[3]),
+            'free_lime_percent': float(obs[4]),
+            'nox_mg_nm3': float(obs[5]),
+            'preheater_temp_c': float(obs[6]),
+            # Additional keys for model compatibility
+            'cooler_outlet_temp_c': 95.0,
+            'cooler_air_flow_nm3_h': 150000.0,
+            'gas_flow_nm3_h': 200000.0
+        }
         
-        # Simulate realistic plant dynamics with correlations
+        # Get setpoints from controller
+        output = self.controller.compute_setpoints(sensor_data, use_rl=use_rl)
         
-        # Temperature oscillation with slow trend
-        temp_trend = np.sin(time.time() * 0.001) * 5  # Slow temperature oscillation
-        temp_noise = np.random.normal(0, 2)
-        self.plant_state['kiln_temp_c'] += temp_trend + temp_noise
-        self.plant_state['kiln_temp_c'] = np.clip(self.plant_state['kiln_temp_c'], 1430, 1470)
+        # Calculate adjustments (actions) to step the gym environment
+        target_speed = output['kiln_setpoints']['kiln_speed_rpm']
+        target_fuel = output['kiln_setpoints']['fuel_rate_tph']
+        target_feed = output['kiln_setpoints']['feed_rate_tph']
         
-        # Free lime inversely correlated with temperature
-        temp_deviation = (self.plant_state['kiln_temp_c'] - 1450)
-        lime_effect = temp_deviation * -0.01
-        lime_noise = np.random.normal(0, 0.05)
-        self.plant_state['free_lime_pct'] += lime_effect + lime_noise
-        self.plant_state['free_lime_pct'] = np.clip(self.plant_state['free_lime_pct'], 0.8, 2.5)
+        current_speed = float(obs[2])
+        current_fuel = float(obs[1])
+        current_feed = float(obs[3])
         
-        # Feed rate affects production
-        feed_variation = np.random.normal(0, 2)
-        self.plant_state['feed_rate_tph'] += feed_variation
-        self.plant_state['feed_rate_tph'] = np.clip(self.plant_state['feed_rate_tph'], 150, 180)
+        speed_adj = target_speed - current_speed
+        fuel_adj = target_fuel - current_fuel
+        feed_adj = target_feed - current_feed
         
-        # Production correlated with feed rate (98% efficiency)
-        self.plant_state['production_rate_tph'] = (
-            self.plant_state['feed_rate_tph'] * 0.98 + np.random.normal(0, 2)
-        )
+        action = np.array([speed_adj, fuel_adj, feed_adj], dtype=np.float32)
         
-        # Fuel rate responds to free lime (control logic)
-        if self.plant_state['free_lime_pct'] > 1.8:
-            self.plant_state['fuel_rate_tph'] += np.random.normal(0.2, 0.1)
-        elif self.plant_state['free_lime_pct'] < 1.0:
-            self.plant_state['fuel_rate_tph'] += np.random.normal(-0.1, 0.1)
+        # Step Gym environment
+        next_obs, reward, done, info = env.step(action)
+        
+        # If the environment trips or is done, reset it
+        if done:
+            next_obs = env.reset()
+            
+        if use_rl:
+            self.rl_obs = next_obs
         else:
-            self.plant_state['fuel_rate_tph'] += np.random.normal(0, 0.05)
+            self.baseline_obs = next_obs
+
+    def _record_history_step(self, use_rl: bool):
+        """Log state fields into history dictionary"""
+        obs = self.rl_obs if use_rl else self.baseline_obs
+        history = self.rl_history if use_rl else self.baseline_history
         
-        self.plant_state['fuel_rate_tph'] = np.clip(self.plant_state['fuel_rate_tph'], 14, 20)
+        kiln_temp_c = float(obs[0])
+        fuel_rate_tph = float(obs[1])
+        kiln_speed_rpm = float(obs[2])
+        feed_rate_tph = float(obs[3])
+        free_lime_pct = float(obs[4])
+        nox_mg_nm3 = float(obs[5])
+        preheater_temp_c = float(obs[6])
         
-        # Kiln speed with slight variation
-        self.plant_state['kiln_speed_rpm'] += np.random.normal(0, 0.05)
-        self.plant_state['kiln_speed_rpm'] = np.clip(self.plant_state['kiln_speed_rpm'], 3.0, 4.0)
+        production_rate_tph = feed_rate_tph * 0.98
+        energy_efficiency_pct = 92.0 - abs(free_lime_pct - 1.2) * 2.0
+        vibration_mm_s = 4.5 + np.random.normal(0, 0.05)
+        power_consumption_mw = production_rate_tph * 0.27
         
-        # Oxygen percentage
-        self.plant_state['o2_percent'] += np.random.normal(0, 0.1)
-        self.plant_state['o2_percent'] = np.clip(self.plant_state['o2_percent'], 2.5, 4.5)
-        
-        # Energy efficiency affected by operations
-        efficiency_base = 92 - abs(self.plant_state['free_lime_pct'] - 1.2) * 2
-        self.plant_state['energy_efficiency_pct'] = efficiency_base + np.random.normal(0, 1)
-        self.plant_state['energy_efficiency_pct'] = np.clip(self.plant_state['energy_efficiency_pct'], 80, 98)
-        
-        # Environmental parameters
-        self.plant_state['nox_mg_nm3'] += np.random.normal(0, 15)
-        self.plant_state['nox_mg_nm3'] = np.clip(self.plant_state['nox_mg_nm3'], 400, 600)
-        
-        self.plant_state['preheater_temp_c'] += np.random.normal(0, 5)
-        self.plant_state['preheater_temp_c'] = np.clip(self.plant_state['preheater_temp_c'], 850, 920)
-        
-        self.plant_state['cooler_temp_c'] += np.random.normal(0, 3)
-        self.plant_state['cooler_temp_c'] = np.clip(self.plant_state['cooler_temp_c'], 85, 110)
-        
-        # Vibration with equipment degradation
-        self.plant_state['vibration_mm_s'] += np.random.normal(0, 0.2)
-        self.plant_state['vibration_mm_s'] = np.clip(self.plant_state['vibration_mm_s'], 3.0, 8.0)
-        
-        # Power consumption correlated with production
-        self.plant_state['power_consumption_mw'] = (
-            self.plant_state['production_rate_tph'] * 0.27 + np.random.normal(0, 1)
-        )
-        
-        # Update history
-        self.time_history.append(current_time)
-        for key, value in self.plant_state.items():
-            self.data_history[key].append(value)
+        history['kiln_temp_c'].append(kiln_temp_c)
+        history['fuel_rate_tph'].append(fuel_rate_tph)
+        history['kiln_speed_rpm'].append(kiln_speed_rpm)
+        history['feed_rate_tph'].append(feed_rate_tph)
+        history['free_lime_pct'].append(free_lime_pct)
+        history['nox_mg_nm3'].append(nox_mg_nm3)
+        history['preheater_temp_c'].append(preheater_temp_c)
+        history['production_rate_tph'].append(production_rate_tph)
+        history['energy_efficiency_pct'].append(energy_efficiency_pct)
+        history['vibration_mm_s'].append(vibration_mm_s)
+        history['power_consumption_mw'].append(power_consumption_mw)
         
         # Maintain history length
-        if len(self.time_history) > self.history_length:
-            self.time_history = self.time_history[-self.history_length:]
-            for key in self.data_history:
-                self.data_history[key] = self.data_history[key][-self.history_length:]
+        for key in history:
+            if len(history[key]) > self.history_length:
+                history[key] = history[key][-self.history_length:]
+
+    def bind_active_state(self, use_rl: bool):
+        """Sync the primary plant_state dictionary to either RL or Baseline metrics"""
+        obs = self.rl_obs if use_rl else self.baseline_obs
+        history = self.rl_history if use_rl else self.baseline_history
         
-        # Check for anomalies and generate recommendations
+        self.plant_state = {
+            'kiln_temp_c': float(obs[0]),
+            'fuel_rate_tph': float(obs[1]),
+            'kiln_speed_rpm': float(obs[2]),
+            'feed_rate_tph': float(obs[3]),
+            'free_lime_pct': float(obs[4]),
+            'nox_mg_nm3': float(obs[5]),
+            'preheater_temp_c': float(obs[6]),
+            'production_rate_tph': history['production_rate_tph'][-1],
+            'energy_efficiency_pct': history['energy_efficiency_pct'][-1],
+            'vibration_mm_s': history['vibration_mm_s'][-1],
+            'power_consumption_mw': history['power_consumption_mw'][-1],
+            'o2_percent': 3.2,
+            'cooler_temp_c': 95.0
+        }
+        
+        # Check for anomalies and generate recommendations based on the active state
         self._check_anomalies()
         self._generate_ai_recommendations()
         self._update_equipment_status()
-    
+
+    def update_plant_state(self):
+        """Update plant state with realistic dynamics and correlations"""
+        current_time = datetime.now()
+        
+        # Step both baseline and RL simulations
+        self._step_simulation_run(use_rl=False)
+        self._step_simulation_run(use_rl=True)
+        
+        # Record histories
+        self._record_history_step(use_rl=False)
+        self._record_history_step(use_rl=True)
+        
+        # Append time
+        self.time_history.append(current_time)
+        if len(self.time_history) > self.history_length:
+            self.time_history = self.time_history[-self.history_length:]
+            
+        # Calculate cumulative savings:
+        # Save dt = 1 minute = 1/60 hours
+        baseline_fuel = self.baseline_history['fuel_rate_tph'][-1] / 60.0
+        rl_fuel = self.rl_history['fuel_rate_tph'][-1] / 60.0
+        fuel_saved = max(0.0, baseline_fuel - rl_fuel)
+        
+        # Cumulative updates
+        self.cumulative_savings['fuel_tons_saved'] += fuel_saved
+        self.cumulative_savings['cost_usd_saved'] += fuel_saved * 120.0
+        self.cumulative_savings['co2_tons_avoided'] += fuel_saved * 2.42
+
     def _check_anomalies(self):
         """Check for plant anomalies and create alerts"""
         current_anomalies = []
@@ -291,39 +402,38 @@ class DynamicPlantTwin:
     
     def _update_equipment_status(self):
         """Update equipment status based on plant conditions"""
-        
         # Raw mill affected by vibration
         if self.plant_state['vibration_mm_s'] > 6.0:
-            self.equipment_status['raw_mill']['efficiency'] = max(75, 
-                self.equipment_status['raw_mill']['efficiency'] - 1)
+            self.equipment_status['raw_mill']['efficiency'] = max(75.0, 
+                self.equipment_status['raw_mill']['efficiency'] - 1.0)
         else:
-            self.equipment_status['raw_mill']['efficiency'] = min(95,
+            self.equipment_status['raw_mill']['efficiency'] = min(95.0,
                 self.equipment_status['raw_mill']['efficiency'] + 0.5)
         
         # Kiln efficiency affected by temperature control
-        temp_deviation = abs(self.plant_state['kiln_temp_c'] - 1450)
-        if temp_deviation > 15:
-            self.equipment_status['kiln']['efficiency'] = max(85,
+        temp_deviation = abs(self.plant_state['kiln_temp_c'] - 1450.0)
+        if temp_deviation > 15.0:
+            self.equipment_status['kiln']['efficiency'] = max(85.0,
                 self.equipment_status['kiln']['efficiency'] - 0.5)
         else:
-            self.equipment_status['kiln']['efficiency'] = min(98,
+            self.equipment_status['kiln']['efficiency'] = min(98.0,
                 self.equipment_status['kiln']['efficiency'] + 0.2)
         
         # ID fan efficiency based on oxygen levels
         o2_deviation = abs(self.plant_state['o2_percent'] - 3.2)
         if o2_deviation > 0.5:
-            self.equipment_status['id_fan']['efficiency'] = max(80,
+            self.equipment_status['id_fan']['efficiency'] = max(80.0,
                 self.equipment_status['id_fan']['efficiency'] - 0.3)
         else:
-            self.equipment_status['id_fan']['efficiency'] = min(95,
+            self.equipment_status['id_fan']['efficiency'] = min(95.0,
                 self.equipment_status['id_fan']['efficiency'] + 0.1)
         
         # Cooler efficiency based on temperature
-        if self.plant_state['cooler_temp_c'] > 105:
-            self.equipment_status['cooler']['efficiency'] = max(80,
+        if self.plant_state['cooler_temp_c'] > 105.0:
+            self.equipment_status['cooler']['efficiency'] = max(80.0,
                 self.equipment_status['cooler']['efficiency'] - 0.4)
         else:
-            self.equipment_status['cooler']['efficiency'] = min(96,
+            self.equipment_status['cooler']['efficiency'] = min(96.0,
                 self.equipment_status['cooler']['efficiency'] + 0.1)
         
         # Decrease maintenance days
@@ -331,6 +441,32 @@ class DynamicPlantTwin:
             self.equipment_status[equipment]['maintenance_due'] -= 0.01
             if self.equipment_status[equipment]['maintenance_due'] < 0:
                 self.equipment_status[equipment]['maintenance_due'] = random.randint(30, 60)
+
+    def inject_high_temp(self):
+        self.baseline_env.burning_zone_temp = 1560.0
+        self.rl_env.burning_zone_temp = 1560.0
+        self.baseline_obs[0] = 1560.0
+        self.rl_obs[0] = 1560.0
+        
+    def inject_quality_issue(self):
+        self.baseline_env.free_lime = 2.5
+        self.rl_env.free_lime = 2.5
+        self.baseline_obs[4] = 2.5
+        self.rl_obs[4] = 2.5
+        
+    def inject_vibration_alert(self):
+        self.baseline_history['vibration_mm_s'][-1] = 7.5
+        self.rl_history['vibration_mm_s'][-1] = 7.5
+        
+    def inject_environmental_issue(self):
+        self.baseline_env.nox = 750.0
+        self.rl_env.nox = 750.0
+        self.baseline_obs[5] = 750.0
+        self.rl_obs[5] = 750.0
+        
+    def reset_normal(self):
+        self.baseline_obs = self.baseline_env.reset()
+        self.rl_obs = self.rl_env.reset()
 
 def launch_dynamic_plant_twin():
     """Launch dynamic plant twin dashboard"""
@@ -359,6 +495,7 @@ def launch_dynamic_plant_twin():
         padding: 1rem;
         margin: 0.5rem 0;
         background: #fff3f3;
+        color: #1a1a1a;
         border-radius: 0 8px 8px 0;
         animation: pulse 2s infinite;
     }
@@ -374,11 +511,13 @@ def launch_dynamic_plant_twin():
         padding: 1rem;
         margin: 0.5rem 0;
         background: #f0f8ff;
+        color: #1a1a1a;
         border-radius: 0 8px 8px 0;
     }
     
     .equipment-card {
         background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+        color: #1a1a1a;
         padding: 1rem;
         border-radius: 10px;
         text-align: center;
@@ -405,30 +544,35 @@ def launch_dynamic_plant_twin():
         auto_update = st.checkbox("🔄 Auto Update", value=True, help="Automatically update plant data")
         update_interval = st.slider("Update Interval (seconds)", 1, 10, 3, help="How often to refresh data")
         
+        st.header("🧠 SOTA RL Control Mode")
+        use_rl = st.toggle("Enable SOTA RL Control Mode", value=False, help="Enable prescriptive PyTorch RL control of the Sintering Zone.")
+        
         st.header("🎯 Scenario Injection")
         st.markdown("*Inject realistic plant scenarios for demonstration*")
         
         if st.button("🔥 Inject High Temperature", help="Simulate kiln overheating"):
-            plant_twin.plant_state['kiln_temp_c'] = 1475
+            plant_twin.inject_high_temp()
+            plant_twin.bind_active_state(use_rl)
             st.success("High temperature scenario injected!")
         
         if st.button("⚠️ Inject Quality Issue", help="Simulate free lime elevation"):
-            plant_twin.plant_state['free_lime_pct'] = 2.3
+            plant_twin.inject_quality_issue()
+            plant_twin.bind_active_state(use_rl)
             st.warning("Quality issue scenario injected!")
         
         if st.button("📳 Inject Vibration Alert", help="Simulate equipment vibration"):
-            plant_twin.plant_state['vibration_mm_s'] = 7.5
+            plant_twin.inject_vibration_alert()
+            plant_twin.bind_active_state(use_rl)
             st.error("Vibration alert scenario injected!")
         
         if st.button("🌪️ Inject Environmental Issue", help="Simulate high NOx emissions"):
-            plant_twin.plant_state['nox_mg_nm3'] = 580
+            plant_twin.inject_environmental_issue()
+            plant_twin.bind_active_state(use_rl)
             st.error("Environmental issue scenario injected!")
         
         if st.button("🔄 Reset to Normal", help="Reset all parameters to normal"):
-            plant_twin.plant_state['kiln_temp_c'] = 1450
-            plant_twin.plant_state['free_lime_pct'] = 1.2
-            plant_twin.plant_state['vibration_mm_s'] = 4.5
-            plant_twin.plant_state['nox_mg_nm3'] = 480
+            plant_twin.reset_normal()
+            plant_twin.bind_active_state(use_rl)
             st.info("Plant state reset to normal!")
         
         st.header("📊 Display Options")
@@ -436,9 +580,44 @@ def launch_dynamic_plant_twin():
         show_equipment = st.checkbox("Show Equipment Status", value=True)
         show_anomalies = st.checkbox("Show Anomaly Alerts", value=True)
         show_recommendations = st.checkbox("Show AI Recommendations", value=True)
+
+    # Bind metrics to selected controller mode
+    plant_twin.bind_active_state(use_rl)
     
     # Main dashboard layout
     
+    if use_rl:
+        st.subheader("🧠 SOTA RL Prescriptive Control Active")
+        
+        # Check if RL agent weights were loaded
+        if plant_twin.controller.rl_model_loaded:
+            st.success("🔌 Custom PyTorch Actor-Critic PPO policy loaded successfully from `models/kiln_rl_actor.pt`")
+        else:
+            st.warning("⚠️ RL Model weights not found. Falling back to baseline PID heuristic controls.")
+            
+        # Render Cumulative Savings summary
+        st.markdown("#### 💰 Cumulative Sustainability & Savings Benefits")
+        save_col1, save_col2, save_col3 = st.columns(3)
+        with save_col1:
+            st.metric(
+                label="🌿 Cumulative CO₂ Avoided",
+                value=f"{plant_twin.cumulative_savings['co2_tons_avoided']:.2f} Tons",
+                delta="Reduced carbon footprint"
+            )
+        with save_col2:
+            st.metric(
+                label="🔥 Fuel Coal Saved",
+                value=f"{plant_twin.cumulative_savings['fuel_tons_saved']:.2f} Tons",
+                delta="Reduced thermal energy input"
+            )
+        with save_col3:
+            st.metric(
+                label="💵 Cumulative Cost Savings",
+                value=f"${plant_twin.cumulative_savings['cost_usd_saved']:.2f} USD",
+                delta="Saved on fuel cost"
+            )
+        st.markdown("---")
+
     # Top-level KPIs
     st.subheader("📈 Live Plant KPIs")
     
@@ -497,114 +676,226 @@ def launch_dynamic_plant_twin():
     if show_history:
         st.subheader("📊 Real-Time Process Trends")
         
-        # Create subplot with multiple charts
-        fig = make_subplots(
-            rows=2, cols=2,
-            subplot_titles=('Process Variables', 'Quality & Production', 'Energy & Environment', 'Equipment Health'),
-            specs=[[{"secondary_y": True}, {"secondary_y": True}],
-                   [{"secondary_y": True}, {"secondary_y": True}]]
-        )
-        
-        # Process variables
-        fig.add_trace(
-            go.Scatter(
-                x=plant_twin.time_history,
-                y=plant_twin.data_history['kiln_temp_c'],
-                name='Kiln Temp (°C)',
-                line=dict(color='red', width=2),
-                mode='lines'
-            ),
-            row=1, col=1
-        )
-        
-        fig.add_trace(
-            go.Scatter(
-                x=plant_twin.time_history,
-                y=[temp/10 for temp in plant_twin.data_history['preheater_temp_c']],
-                name='Preheater Temp (°C/10)',
-                line=dict(color='orange', width=2),
-                mode='lines'
-            ),
-            row=1, col=1, secondary_y=True
-        )
-        
-        # Quality & Production
-        fig.add_trace(
-            go.Scatter(
-                x=plant_twin.time_history,
-                y=plant_twin.data_history['free_lime_pct'],
-                name='Free Lime (%)',
-                line=dict(color='green', width=2),
-                mode='lines'
-            ),
-            row=1, col=2
-        )
-        
-        fig.add_trace(
-            go.Scatter(
-                x=plant_twin.time_history,
-                y=[rate/100 for rate in plant_twin.data_history['production_rate_tph']],
-                name='Production (t/h/100)',
-                line=dict(color='blue', width=2),
-                mode='lines'
-            ),
-            row=1, col=2, secondary_y=True
-        )
-        
-        # Energy & Environment
-        fig.add_trace(
-            go.Scatter(
-                x=plant_twin.time_history,
-                y=plant_twin.data_history['energy_efficiency_pct'],
-                name='Energy Efficiency (%)',
-                line=dict(color='purple', width=2),
-                mode='lines'
-            ),
-            row=2, col=1
-        )
-        
-        fig.add_trace(
-            go.Scatter(
-                x=plant_twin.time_history,
-                y=[nox/10 for nox in plant_twin.data_history['nox_mg_nm3']],
-                name='NOx (mg/Nm³/10)',
-                line=dict(color='brown', width=2),
-                mode='lines'
-            ),
-            row=2, col=1, secondary_y=True
-        )
-        
-        # Equipment health
-        fig.add_trace(
-            go.Scatter(
-                x=plant_twin.time_history,
-                y=plant_twin.data_history['vibration_mm_s'],
-                name='Vibration (mm/s)',
-                line=dict(color='red', width=2),
-                mode='lines'
-            ),
-            row=2, col=2
-        )
-        
-        fig.add_trace(
-            go.Scatter(
-                x=plant_twin.time_history,
-                y=[power*2 for power in plant_twin.data_history['power_consumption_mw']],
-                name='Power (MW*2)',
-                line=dict(color='navy', width=2),
-                mode='lines'
-            ),
-            row=2, col=2, secondary_y=True
-        )
-        
-        fig.update_layout(
-            title="Real-Time Plant Process Trends (Last 100 Minutes)",
-            showlegend=True,
-            height=600,
-            hovermode='x unified'
-        )
-        
-        st.plotly_chart(fig, use_container_width=True)
+        if use_rl:
+            # Create subplot with multiple charts comparing Baseline vs RL
+            fig = make_subplots(
+                rows=2, cols=2,
+                subplot_titles=('Burning Zone Temperature (°C)', 'Free Lime Quality Index (%)', 'Thermal Fuel Input Rate (t/h)', 'NOx Emissions (mg/Nm³)')
+            )
+            
+            # Burning Zone Temperature comparison
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.baseline_history['kiln_temp_c'],
+                    name='Baseline Temp',
+                    line=dict(color='rgba(255, 0, 0, 0.4)', width=2, dash='dash'),
+                    mode='lines'
+                ),
+                row=1, col=1
+            )
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.rl_history['kiln_temp_c'],
+                    name='RL Temp',
+                    line=dict(color='red', width=2),
+                    mode='lines'
+                ),
+                row=1, col=1
+            )
+            
+            # Free Lime comparison
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.baseline_history['free_lime_pct'],
+                    name='Baseline Free Lime',
+                    line=dict(color='rgba(0, 128, 0, 0.4)', width=2, dash='dash'),
+                    mode='lines'
+                ),
+                row=1, col=2
+            )
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.rl_history['free_lime_pct'],
+                    name='RL Free Lime',
+                    line=dict(color='green', width=2),
+                    mode='lines'
+                ),
+                row=1, col=2
+            )
+            
+            # Fuel Rate comparison
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.baseline_history['fuel_rate_tph'],
+                    name='Baseline Fuel',
+                    line=dict(color='rgba(255, 165, 0, 0.4)', width=2, dash='dash'),
+                    mode='lines'
+                ),
+                row=2, col=1
+            )
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.rl_history['fuel_rate_tph'],
+                    name='RL Fuel',
+                    line=dict(color='orange', width=2),
+                    mode='lines'
+                ),
+                row=2, col=1
+            )
+            
+            # NOx comparison
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.baseline_history['nox_mg_nm3'],
+                    name='Baseline NOx',
+                    line=dict(color='rgba(128, 0, 128, 0.4)', width=2, dash='dash'),
+                    mode='lines'
+                ),
+                row=2, col=2
+            )
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.rl_history['nox_mg_nm3'],
+                    name='RL NOx',
+                    line=dict(color='purple', width=2),
+                    mode='lines'
+                ),
+                row=2, col=2
+            )
+            
+            # Add horizontal target lines
+            # Target Temp = 1450 C
+            fig.add_shape(type="line", x0=plant_twin.time_history[0], y0=1450, x1=plant_twin.time_history[-1], y1=1450,
+                          line=dict(color="black", width=1, dash="dot"), row=1, col=1)
+            # Target Free Lime = 1.2%
+            fig.add_shape(type="line", x0=plant_twin.time_history[0], y0=1.2, x1=plant_twin.time_history[-1], y1=1.2,
+                          line=dict(color="black", width=1, dash="dot"), row=1, col=2)
+            # Target NOx = 520
+            fig.add_shape(type="line", x0=plant_twin.time_history[0], y0=520, x1=plant_twin.time_history[-1], y1=520,
+                          line=dict(color="black", width=1, dash="dot"), row=2, col=2)
+            
+            fig.update_layout(
+                title="Parallel Comparative Run: Baseline PID vs SOTA RL Optimization Agent",
+                showlegend=True,
+                height=600,
+                hovermode='x unified'
+            )
+            
+            st.plotly_chart(fig, use_container_width=True)
+            
+        else:
+            # Original charts (showing only baseline history)
+            fig = make_subplots(
+                rows=2, cols=2,
+                subplot_titles=('Process Variables', 'Quality & Production', 'Energy & Environment', 'Equipment Health'),
+                specs=[[{"secondary_y": True}, {"secondary_y": True}],
+                       [{"secondary_y": True}, {"secondary_y": True}]]
+            )
+            
+            # Process variables
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.baseline_history['kiln_temp_c'],
+                    name='Kiln Temp (°C)',
+                    line=dict(color='red', width=2),
+                    mode='lines'
+                ),
+                row=1, col=1
+            )
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=[temp/10 for temp in plant_twin.baseline_history['preheater_temp_c']],
+                    name='Preheater Temp (°C/10)',
+                    line=dict(color='orange', width=2),
+                    mode='lines'
+                ),
+                row=1, col=1, secondary_y=True
+            )
+            
+            # Quality & Production
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.baseline_history['free_lime_pct'],
+                    name='Free Lime (%)',
+                    line=dict(color='green', width=2),
+                    mode='lines'
+                ),
+                row=1, col=2
+            )
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=[rate/100 for rate in plant_twin.baseline_history['production_rate_tph']],
+                    name='Production (t/h/100)',
+                    line=dict(color='blue', width=2),
+                    mode='lines'
+                ),
+                row=1, col=2, secondary_y=True
+            )
+            
+            # Energy & Environment
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.baseline_history['energy_efficiency_pct'],
+                    name='Energy Efficiency (%)',
+                    line=dict(color='purple', width=2),
+                    mode='lines'
+                ),
+                row=2, col=1
+            )
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=[nox/10 for nox in plant_twin.baseline_history['nox_mg_nm3']],
+                    name='NOx (mg/Nm³/10)',
+                    line=dict(color='brown', width=2),
+                    mode='lines'
+                ),
+                row=2, col=1, secondary_y=True
+            )
+            
+            # Equipment health
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=plant_twin.baseline_history['vibration_mm_s'],
+                    name='Vibration (mm/s)',
+                    line=dict(color='red', width=2),
+                    mode='lines'
+                ),
+                row=2, col=2
+            )
+            fig.add_trace(
+                go.Scatter(
+                    x=plant_twin.time_history,
+                    y=[power*2 for power in plant_twin.baseline_history['power_consumption_mw']],
+                    name='Power (MW*2)',
+                    line=dict(color='navy', width=2),
+                    mode='lines'
+                ),
+                row=2, col=2, secondary_y=True
+            )
+            
+            fig.update_layout(
+                title="Real-Time Plant Process Trends (Last 100 Minutes)",
+                showlegend=True,
+                height=600,
+                hovermode='x unified'
+            )
+            
+            st.plotly_chart(fig, use_container_width=True)
     
     # Equipment status
     if show_equipment:

@@ -17,6 +17,11 @@ Welcome to the technical documentation directory. This folder contains structure
   - Predictive maintenance classifier architectures
   - Real-time optimization solvers
   - Real-time telemetry and streaming data pipelines
+- **[Critical Code Review](file:///c:/Users/arjun/Desktop/CementPlantAIOptimization/docs/critical-code-review.md)**
+  - Entry-point and packaging risks
+  - Duplicate module tree analysis
+  - Modularity and orchestration recommendations
+  - Alternative implementation structures
 - **[Computer Vision Module](file:///c:/Users/arjun/Desktop/CementPlantAIOptimization/src/cement_ai_platform/vision/README.md)**
   - Perimeter safety and YOLO-based compliance auditing
   - Kiln flame scan and HSV color-space temperature segmentation

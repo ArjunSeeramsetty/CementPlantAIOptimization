@@ -40,8 +40,9 @@ class CementPlantPubSubSimulator:
             Stops the streaming simulation
     """
     
-    def __init__(self, project_id: str = "cement-ai-optimization"):
-        self.project_id = project_id
+    def __init__(self, project_id: str = None):
+        import os
+        self.project_id = project_id or os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-opt-38517"
         self.publisher = pubsub_v1.PublisherClient()
         self.subscriber = SubscriberClient()
         self.streaming = False
@@ -88,21 +89,24 @@ class CementPlantPubSubSimulator:
                     self._publish_emissions_data(sensor_data['emissions'])
                     self._publish_equipment_health(sensor_data['equipment'])
                     
-                    print(f"📡 Streaming data at {time.strftime('%H:%M:%S')}: "
-                          f"Free Lime: {sensor_data['process']['free_lime_percent']:.2f}%, "
-                          f"Kiln Temp: {sensor_data['process']['burning_zone_temp_c']:.0f}°C")
+                    logger.info(
+                        "Streaming data at %s: Free Lime: %.2f%%, Kiln Temp: %.0fC",
+                        time.strftime('%H:%M:%S'),
+                        sensor_data['process']['free_lime_percent'],
+                        sensor_data['process']['burning_zone_temp_c'],
+                    )
                     
                     time.sleep(interval_seconds)
                     
                 except Exception as e:
-                    print(f"❌ Streaming error: {e}")
+                    logger.error("Streaming error: %s", e)
                     time.sleep(5)
         
         # Start streaming in background thread
         streaming_thread = threading.Thread(target=stream_data, daemon=True)
         streaming_thread.start()
         
-        print(f"🚀 Started real-time streaming simulation (interval: {interval_seconds}s)")
+        logger.info("Started real-time streaming simulation (interval: %ss)", interval_seconds)
         return streaming_thread
     
     def _generate_sensor_snapshot(self) -> Dict[str, Dict]:
@@ -188,7 +192,7 @@ class CementPlantPubSubSimulator:
             future = self.publisher.publish(self.topics['process-variables'], message_data)
             return future.result()
         except Exception as e:
-            print(f"❌ Error publishing process data: {e}")
+            logger.error("Error publishing process data: %s", e)
     
     def _publish_quality_data(self, data: Dict):
         """Publish quality data to Pub/Sub"""
@@ -202,7 +206,7 @@ class CementPlantPubSubSimulator:
             future = self.publisher.publish(self.topics['quality-data'], message_data)
             return future.result()
         except Exception as e:
-            print(f"❌ Error publishing quality data: {e}")
+            logger.error("Error publishing quality data: %s", e)
     
     def _publish_energy_data(self, data: Dict):
         """Publish energy consumption data to Pub/Sub"""
@@ -216,7 +220,7 @@ class CementPlantPubSubSimulator:
             future = self.publisher.publish(self.topics['energy-consumption'], message_data)
             return future.result()
         except Exception as e:
-            print(f"❌ Error publishing energy data: {e}")
+            logger.error("Error publishing energy data: %s", e)
     
     def _publish_emissions_data(self, data: Dict):
         """Publish emissions data to Pub/Sub"""
@@ -230,7 +234,7 @@ class CementPlantPubSubSimulator:
             future = self.publisher.publish(self.topics['emissions-data'], message_data)
             return future.result()
         except Exception as e:
-            print(f"❌ Error publishing emissions data: {e}")
+            logger.error("Error publishing emissions data: %s", e)
     
     def _publish_equipment_health(self, data: Dict):
         """Publish equipment health data to Pub/Sub"""
@@ -244,7 +248,7 @@ class CementPlantPubSubSimulator:
             future = self.publisher.publish(self.topics['equipment-health'], message_data)
             return future.result()
         except Exception as e:
-            print(f"❌ Error publishing equipment health data: {e}")
+            logger.error("Error publishing equipment health data: %s", e)
     
     def subscribe_to_stream(self, topic_name: str, callback: Callable[[Dict], None]):
         """Subscribe to a data stream and process messages with callback"""
@@ -261,12 +265,12 @@ class CementPlantPubSubSimulator:
                     "topic": self.topics[topic_name]
                 }
             )
-            print(f"✅ Created subscription: {topic_name}-subscription")
+            logger.info("Created subscription: %s-subscription", topic_name)
         except Exception as e:
             if "already exists" in str(e).lower():
-                print(f"ℹ️ Subscription already exists: {topic_name}-subscription")
+                logger.info("Subscription already exists: %s-subscription", topic_name)
             else:
-                print(f"❌ Error creating subscription: {e}")
+                logger.error("Error creating subscription: %s", e)
         
         def message_handler(message):
             try:
@@ -274,19 +278,19 @@ class CementPlantPubSubSimulator:
                 callback(data)
                 message.ack()
             except Exception as e:
-                print(f"❌ Error processing message: {e}")
+                logger.error("Error processing message: %s", e)
                 message.nack()
         
         # Start listening
         streaming_pull_future = self.subscriber.subscribe(subscription_path, callback=message_handler)
-        print(f"📥 Listening for messages on {topic_name}...")
+        logger.info("Listening for messages on %s...", topic_name)
         
         return streaming_pull_future
     
     def stop_streaming(self):
         """Stop the streaming simulation"""
         self.streaming = False
-        print("⏹️ Stopped streaming simulation")
+        logger.info("Stopped streaming simulation")
 
 # Real-time data processor
 class RealTimeDataProcessor:
@@ -313,7 +317,7 @@ class RealTimeDataProcessor:
                 'anomaly_detector': PlantAnomalyDetector()
             }
         except ImportError as e:
-            print(f"⚠️ Agent import warning: {e}")
+            logger.warning("Agent import warning: %s", e)
             return {'controller': None, 'anomaly_detector': None}
     
     def process_process_variables(self, data: Dict):
@@ -327,25 +331,31 @@ class RealTimeDataProcessor:
         burning_zone_temp = data.get('burning_zone_temp_c', 1450)
         
         if free_lime > self.alert_thresholds['free_lime_high']:
-            print(f"🚨 CRITICAL ALERT: Free lime high ({free_lime:.2f}%) - Triggering controller")
+            logger.critical("CRITICAL ALERT: Free lime high (%.2f%%) - Triggering controller", free_lime)
             
             if self.agents['controller']:
                 # Get control recommendations
                 control_response = self.agents['controller'].compute_unified_setpoints(data)
                 
-                print(f"🤖 AI Controller Response:")
-                print(f"   Recommended fuel rate: {control_response['setpoints']['fuel_rate_tph']:.2f} t/h")
-                print(f"   Recommended kiln speed: {control_response['setpoints']['kiln_speed_rpm']:.2f} rpm")
-                print(f"   Predicted correction time: {control_response['performance_prediction']['time_to_stabilize']} minutes")
+                logger.info("AI Controller Response:")
+                logger.info("   Recommended fuel rate: %.2f t/h", control_response['setpoints']['fuel_rate_tph'])
+                logger.info("   Recommended kiln speed: %.2f rpm", control_response['setpoints']['kiln_speed_rpm'])
+                logger.info(
+                    "   Predicted correction time: %s minutes",
+                    control_response['performance_prediction']['time_to_stabilize'],
+                )
         
         if burning_zone_temp < self.alert_thresholds['temperature_low']:
-            print(f"⚠️ WARNING: Burning zone temperature low ({burning_zone_temp:.0f}°C)")
+            logger.warning("WARNING: Burning zone temperature low (%.0fC)", burning_zone_temp)
         
         # Always run anomaly detection if available
         if self.agents['anomaly_detector']:
             anomaly_results = self.agents['anomaly_detector'].detect_anomalies(data)
             if anomaly_results['overall_anomaly_score'] > 0.3:
-                print(f"🔍 Anomalies detected (score: {anomaly_results['overall_anomaly_score']:.2f})")
+                logger.info(
+                    "Anomalies detected (score: %.2f)",
+                    anomaly_results['overall_anomaly_score'],
+                )
     
     def process_equipment_health(self, data: Dict):
         """Process equipment health data and trigger maintenance alerts"""
@@ -356,4 +366,8 @@ class RealTimeDataProcessor:
         for key, value in data.items():
             if 'vibration' in key and value > self.alert_thresholds['vibration_high']:
                 equipment_name = key.replace('_vibration_mm_s', '')
-                print(f"🔧 MAINTENANCE ALERT: {equipment_name} high vibration ({value:.1f} mm/s)")
+                logger.warning(
+                    "MAINTENANCE ALERT: %s high vibration (%.1f mm/s)",
+                    equipment_name,
+                    value,
+                )

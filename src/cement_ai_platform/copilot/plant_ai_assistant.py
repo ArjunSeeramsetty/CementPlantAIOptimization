@@ -14,6 +14,7 @@ from datetime import datetime
 import random
 import html
 import os
+import logging
 from dotenv import load_dotenv
 
 # Load environment variables from .env file
@@ -24,7 +25,9 @@ try:
     GEMINI_AVAILABLE = True
 except ImportError:
     GEMINI_AVAILABLE = False
-    print("Google Generative AI not available - using simulation mode")
+    logging.getLogger(__name__).warning("Google Generative AI not available - using simulation mode")
+
+logger = logging.getLogger(__name__)
 
 class PlantAIAssistant:
     """
@@ -39,21 +42,30 @@ class PlantAIAssistant:
         if self.api_key and GEMINI_AVAILABLE:
             try:
                 genai.configure(api_key=self.api_key)
-                self.model = genai.GenerativeModel('gemini-2.5-pro')
+                self.model = genai.GenerativeModel('gemini-1.5-pro')
                 # Test the API key with a simple request
                 test_response = self.model.generate_content("Hello")
-                print(f"✅ Gemini API initialized successfully with key: {self.api_key[:10]}...")
+                logger.info("Gemini API initialized successfully with key prefix: %s...", self.api_key[:10])
             except Exception as e:
-                print(f"❌ Failed to initialize Gemini with API key: {e}")
-                print("Falling back to simulation mode")
+                logger.error("Failed to initialize Gemini with API key: %s", e)
+                logger.warning("Falling back to simulation mode")
                 self.model = None
                 self.api_key = None
         else:
             # Fallback simulation for demo
             self.model = None
             if GEMINI_AVAILABLE:
-                print("⚠️  No Gemini API key found. Using simulation mode.")
-                print("💡 Set GOOGLE_GEMINI_API_KEY or GOOGLE_API_KEY in your .env file")
+                logger.warning("No Gemini API key found. Using simulation mode.")
+                logger.info("Set GOOGLE_GEMINI_API_KEY or GOOGLE_API_KEY in your .env file")
+                
+        # Initialize Vertex AI as alternative/fallback
+        try:
+            from cement_ai_platform.gcp.production_services import get_production_services
+            self.gcp_services = get_production_services()
+            self.vertex_available = self.gcp_services.gcp_available
+        except Exception:
+            self.gcp_services = None
+            self.vertex_available = False
         
         # Plant knowledge base
         self.plant_knowledge = {
@@ -126,7 +138,7 @@ class PlantAIAssistant:
     def generate_response(self, query: str, context: Dict = None) -> str:
         """Generate AI response using Gemini or fallback simulation"""
         
-        if self.model:
+        if self.model or (hasattr(self, 'vertex_available') and self.vertex_available):
             return self._generate_gemini_response(query, context)
         else:
             return self._generate_simulated_response(query, context)
@@ -160,11 +172,24 @@ class PlantAIAssistant:
         User query: {query}
         """
         
-        try:
-            response = self.model.generate_content(system_prompt)
-            return response.text
-        except Exception as e:
-            print(f"Error generating Gemini response: {e}")
+        # Try Vertex AI first if available
+        if hasattr(self, 'gcp_services') and self.gcp_services and self.vertex_available:
+            try:
+                res = self.gcp_services.query_gemini_pro(system_prompt)
+                if res and res.get('success'):
+                    return res['response']
+            except Exception as e:
+                logger.warning("Vertex AI query failed in plant assistant: %s", e)
+
+        # Try public API key
+        if self.model:
+            try:
+                response = self.model.generate_content(system_prompt)
+                return response.text
+            except Exception as e:
+                logger.error("Error generating Gemini response: %s", e)
+                return self._generate_simulated_response(query, context)
+        else:
             return self._generate_simulated_response(query, context)
     
     def _generate_simulated_response(self, query: str, context: Dict = None) -> str:
@@ -527,7 +552,7 @@ def launch_plant_ai_assistant():
                 
                 # User message
                 st.markdown(f"""
-                <div style="background: #e3f2fd; padding: 1rem; border-radius: 10px; margin: 0.5rem 0;">
+                <div style="background: #e3f2fd; color: #1a1a1a; padding: 1rem; border-radius: 10px; margin: 0.5rem 0;">
                     <strong>You ({timestamp}):</strong><br>
                     {html.escape(query)}
                 </div>
@@ -535,7 +560,7 @@ def launch_plant_ai_assistant():
                 
                 # AI response
                 st.markdown(f"""
-                <div style="background: #f5f5f5; padding: 1rem; border-radius: 10px; margin: 0.5rem 0;">
+                <div style="background: #f5f5f5; color: #1a1a1a; padding: 1rem; border-radius: 10px; margin: 0.5rem 0;">
                     <strong>🤖 Plant AI Assistant:</strong><br>
                     {html.escape(response)}
                 </div>

@@ -14,10 +14,6 @@ from sklearn.model_selection import train_test_split
 from sklearn.metrics import mean_squared_error, r2_score, mean_absolute_error
 import joblib
 from pathlib import Path
-import sys
-
-# Add the src directory to the Python path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from cement_ai_platform.data_sourcing.bigquery_data_loader import BigQueryDataLoader
 

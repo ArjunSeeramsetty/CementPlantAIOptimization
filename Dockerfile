@@ -8,6 +8,7 @@ ENV STREAMLIT_SERVER_HEADLESS=true
 ENV STREAMLIT_BROWSER_GATHER_USAGE_STATS=false
 ENV PYTHONUNBUFFERED=1
 ENV PYTHONDONTWRITEBYTECODE=1
+ENV PYTHONPATH=/app/src
 
 # Create app directory
 WORKDIR /app
@@ -25,8 +26,12 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir --upgrade pip setuptools wheel
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Copy application code
+# Copy package installation files and source
+COPY setup.py .
+COPY README.md .
 COPY src/ src/
+RUN pip install --no-cache-dir .
+
 COPY scripts/ scripts/
 COPY config/ config/
 

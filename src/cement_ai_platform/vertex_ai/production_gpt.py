@@ -6,8 +6,11 @@ Replaces mock implementations with enterprise-grade Google Cloud services.
 import os
 import json
 import time
+import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 # Production Google Cloud imports
 try:
@@ -18,7 +21,7 @@ try:
     VERTEX_AI_AVAILABLE = True
 except ImportError:
     VERTEX_AI_AVAILABLE = False
-    print("Warning: Vertex AI not available. Using enhanced fallback.")
+    logger.warning("Vertex AI not available. Using enhanced fallback.")
 
 class ProductionCementPlantGPT:
     """
@@ -27,7 +30,7 @@ class ProductionCementPlantGPT:
     """
     
     def __init__(self, project_id: str = None, location: str = "us-central1"):
-        self.project_id = project_id or os.getenv('GOOGLE_CLOUD_PROJECT', 'cement-ai-optimization')
+        self.project_id = project_id or os.getenv('CEMENT_GCP_PROJECT') or os.getenv('GOOGLE_CLOUD_PROJECT') or 'cement-ai-optimization'
         self.location = location
         
         if VERTEX_AI_AVAILABLE:
@@ -42,7 +45,7 @@ class ProductionCementPlantGPT:
             vertexai.init(project=self.project_id, location=self.location)
             
             # Production Gemini Pro model
-            self.model = GenerativeModel("gemini-2.5-pro")
+            self.model = GenerativeModel("gemini-1.5-pro")
             
             # Enterprise safety settings
             self.safety_settings = {
@@ -68,17 +71,17 @@ class ProductionCementPlantGPT:
             # AI Platform client for model management
             self.aiplatform_client = aiplatform.gapic.ModelServiceClient()
             
-            print(f"✅ Vertex AI initialized for project: {self.project_id}")
+            logger.info("Vertex AI initialized for project: %s", self.project_id)
             
         except Exception as e:
-            print(f"⚠️ Vertex AI initialization failed: {e}")
+            logger.warning("Vertex AI initialization failed: %s", e)
             self._initialize_fallback()
     
     def _initialize_fallback(self):
         """Enhanced fallback implementation"""
         self.model = None
         self.logger = None
-        print("🔄 Using enhanced fallback GPT implementation")
+        logger.warning("Using enhanced fallback GPT implementation")
     
     def query_with_enterprise_features(self, prompt: str, context_data: Dict = None) -> Dict:
         """
@@ -135,7 +138,7 @@ class ProductionCementPlantGPT:
                     'completion_tokens': response.usage_metadata.candidates_token_count if response.usage_metadata else 0,
                     'total_tokens': response.usage_metadata.total_token_count if response.usage_metadata else 0
                 },
-                    'model_version': "gemini-2.5-pro",
+                'model_version': "gemini-1.5-pro",
                 'generation_time_ms': generation_time * 1000,
                 'timestamp': datetime.now().isoformat(),
                 'enterprise_features': True

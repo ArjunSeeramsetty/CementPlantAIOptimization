@@ -7,8 +7,11 @@ and integration with Gemini for generating safety reports.
 import os
 import json
 import time
+import logging
 from typing import Dict, List, Optional, Any, Tuple
 from datetime import datetime
+
+logger = logging.getLogger(__name__)
 
 # Lazy load dependencies to ensure dashboard doesn't crash if they are installing
 try:
@@ -30,7 +33,7 @@ class SafetyMonitor:
     """Handles perimeter safety and PPE compliance analysis."""
 
     def __init__(self, project_id: str = None):
-        self.project_id = project_id or os.getenv('GOOGLE_CLOUD_PROJECT', 'cement-ai-optimization')
+        self.project_id = project_id or os.getenv('CEMENT_GCP_PROJECT') or os.getenv('GOOGLE_CLOUD_PROJECT') or 'cement-ai-opt-38517'
         self._initialize_gemini()
 
     def _initialize_gemini(self) -> None:
@@ -43,10 +46,10 @@ class SafetyMonitor:
             try:
                 genai.configure(api_key=api_key)
                 self.gemini_model = genai.GenerativeModel("gemini-1.5-flash")
-                print("✅ SafetyMonitor: Gemini initialized via API Key")
+                logger.info("SafetyMonitor: Gemini initialized via API Key")
                 return
             except Exception as e:
-                print(f"⚠️ SafetyMonitor: API Key initialization failed: {e}")
+                logger.warning("SafetyMonitor: API Key initialization failed: %s", e)
 
         # Fallback to Vertex AI if available
         if GEMINI_AVAILABLE:
@@ -54,9 +57,9 @@ class SafetyMonitor:
                 import vertexai
                 vertexai.init(project=self.project_id, location="us-central1")
                 self.gemini_model = GenerativeModel("gemini-1.5-flash")
-                print("✅ SafetyMonitor: Gemini initialized via Vertex AI")
+                logger.info("SafetyMonitor: Gemini initialized via Vertex AI")
             except Exception as e:
-                print(f"⚠️ SafetyMonitor: Vertex AI initialization failed: {e}")
+                logger.warning("SafetyMonitor: Vertex AI initialization failed: %s", e)
 
     def check_boundary_violation(self, frame_id: int) -> Dict[str, Any]:
         """

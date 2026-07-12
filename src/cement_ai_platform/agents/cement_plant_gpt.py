@@ -1,3 +1,4 @@
+import logging
 import os
 import yaml
 import json
@@ -11,14 +12,16 @@ try:
     PRODUCTION_GPT_AVAILABLE = True
 except ImportError:
     PRODUCTION_GPT_AVAILABLE = False
-    print("Warning: Production GPT not available. Using fallback implementation.")
+    logger = logging.getLogger(__name__)
+    logger.warning("Production GPT not available. Using fallback implementation.")
     
     # Fallback implementation
     class ProductionCementPlantGPT:
         def __init__(self, project_id=None, location="us-central1"):
-            self.project_id = project_id or "cement-ai-optimization"
+            import os
+            self.project_id = project_id or os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-opt-38517"
             self.location = location
-            print("🔄 Using fallback GPT implementation")
+            logging.getLogger(__name__).warning("Using fallback GPT implementation")
         
         def query_with_enterprise_features(self, prompt, context_data=None):
             return self._fallback_response(prompt, context_data)

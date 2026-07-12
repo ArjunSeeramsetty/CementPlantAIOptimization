@@ -19,7 +19,9 @@ try:
     PRODUCTION_SERVICES_AVAILABLE = True
 except ImportError:
     PRODUCTION_SERVICES_AVAILABLE = False
-    print("Warning: Production GCP services not available. Using fallback BigQuery client.")
+    logging.getLogger(__name__).warning(
+        "Production GCP services not available. Using fallback BigQuery client."
+    )
 
 logger = logging.getLogger(__name__)
 
@@ -34,7 +36,7 @@ class BigQueryDataLoader:
     - Global cement assets data (global_cement_assets table)
     """
     
-    def __init__(self, project_id: str = 'cement-ai-optimization', dataset_id: str = 'cement_analytics'):
+    def __init__(self, project_id: str = None, dataset_id: str = 'cement_analytics'):
         """
         Initialize BigQuery Data Loader with production GCP services.
         
@@ -42,7 +44,8 @@ class BigQueryDataLoader:
             project_id: GCP project ID
             dataset_id: BigQuery dataset ID
         """
-        self.project_id = project_id
+        import os
+        self.project_id = project_id or os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-opt-38517"
         self.dataset_id = dataset_id
         self.client = None
         self.gcp_services = None

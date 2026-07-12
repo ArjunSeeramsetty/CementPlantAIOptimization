@@ -8,8 +8,11 @@ from typing import Dict, List, Optional, Any
 import numpy as np
 import pandas as pd
 import warnings
+import logging
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 from .grinding_systems import GrindingCircuitSimulator, create_grinding_circuit_simulator
 from .alternative_fuels import AlternativeFuelProcessor, FuelProperties, create_alternative_fuel_processor
@@ -36,10 +39,10 @@ class UnifiedCementProcessPlatform:
         self.kiln_simulator = DWSIMCementSimulator(seed)
         self.seed = seed
         
-        print("🏭 Unified Cement Process Platform initialized")
-        print("🔧 Advanced grinding circuit simulation available")
-        print("🔥 Alternative fuel processing system available")
-        print("⚗️ Enhanced DWSIM pyroprocessing simulation available")
+        logger.info("🏭 Unified Cement Process Platform initialized")
+        logger.info("🔧 Advanced grinding circuit simulation available")
+        logger.info("🔥 Alternative fuel processing system available")
+        logger.info("⚗️ Enhanced DWSIM pyroprocessing simulation available")
     
     def simulate_complete_plant(self, plant_config: Dict[str, Any], 
                               operating_conditions: Dict[str, Any]) -> Dict[str, Any]:
@@ -106,7 +109,7 @@ class UnifiedCementProcessPlatform:
         except Exception as e:
             results['simulation_status'] = 'error'
             results['error_message'] = str(e)
-            print(f"❌ Plant simulation error: {e}")
+            logger.error(f"❌ Plant simulation error: {e}")
         
         return results
     

@@ -1,4 +1,5 @@
 # FILE: src/cement_ai_platform/copilot/enhanced_ai_assistant.py
+import logging
 import google.generativeai as genai
 from typing import Dict, List, Optional, Any
 import json
@@ -10,6 +11,8 @@ from dotenv import load_dotenv
 # Load environment variables
 load_dotenv()
 
+logger = logging.getLogger(__name__)
+
 class CementPlantCopilot:
     """Enhanced AI Copilot with cement domain expertise"""
 
@@ -18,14 +21,26 @@ class CementPlantCopilot:
         self.current_kpis = current_kpis
         self.knowledge_base = self._initialize_knowledge_base()
 
-        # Initialize Gemini
+        # Initialize Gemini via public API key
         api_key = os.getenv('GOOGLE_GEMINI_API_KEY') or os.getenv('GOOGLE_API_KEY')
         if api_key:
-            genai.configure(api_key=api_key)
-            self.model = genai.GenerativeModel('gemini-1.5-pro')
-            self.gemini_available = True
+            try:
+                genai.configure(api_key=api_key)
+                self.model = genai.GenerativeModel('gemini-1.5-pro')
+                self.gemini_available = True
+            except Exception:
+                self.gemini_available = False
         else:
             self.gemini_available = False
+
+        # Initialize Vertex AI as alternative/fallback
+        try:
+            from cement_ai_platform.gcp.production_services import get_production_services
+            self.gcp_services = get_production_services()
+            self.vertex_available = self.gcp_services.gcp_available
+        except Exception:
+            self.gcp_services = None
+            self.vertex_available = False
 
     def _initialize_knowledge_base(self) -> Dict:
         """Initialize cement plant knowledge base"""
@@ -120,7 +135,24 @@ class CementPlantCopilot:
         # Analyze query intent
         intent = self._analyze_query_intent(query)
 
-        if self.gemini_available:
+        # Try Vertex AI first if available
+        if self.vertex_available and self.gcp_services:
+            try:
+                context_prompt = self._build_expert_prompt(query, intent)
+                res = self.gcp_services.query_gemini_pro(context_prompt)
+                if res and res.get('success'):
+                    enhanced_response = self._enhance_with_plant_context(res['response'], intent)
+                    return {
+                        'answer': enhanced_response['answer'],
+                        'confidence': enhanced_response['confidence'],
+                        'plant_specific_actions': enhanced_response['actions'],
+                        'related_kpis': enhanced_response['related_kpis'],
+                        'recommendations': enhanced_response['recommendations']
+                    }
+            except Exception as e:
+                logger.warning("Vertex AI query failed in enhanced copilot: %s", e)
+
+        if self.gemini_available and hasattr(self, 'model') and self.model:
             # Build context-rich prompt
             context_prompt = self._build_expert_prompt(query, intent)
 

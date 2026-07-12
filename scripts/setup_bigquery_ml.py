@@ -26,7 +26,7 @@ class BigQueryMLModelManager:
     
     def __init__(self):
         self.gcp_services = get_production_services()
-        self.project_id = "cement-ai-optimization"
+        self.project_id = self.gcp_services.project_id or "cement-ai-optimization"
         self.dataset_id = "cement_analytics"
         
     def create_sample_data(self):

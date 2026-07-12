@@ -8,8 +8,11 @@ from typing import Dict, List, Optional, Any, Tuple
 import time
 import numpy as np
 import warnings
+import logging
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 
 class PIController:
@@ -51,7 +54,7 @@ class PIController:
         # Anti-windup
         self.integral_windup_limit = 50.0
         
-        print(f"🎛️ PI Controller initialized: SP={setpoint}, Deadtime={deadtime_minutes}min")
+        logger.info(f"🎛️ PI Controller initialized: SP={setpoint}, Deadtime={deadtime_minutes}min")
     
     def update(self, measurement: float, current_time: float) -> float:
         """
@@ -111,7 +114,7 @@ class PIController:
     def set_setpoint(self, new_setpoint: float):
         """Update controller setpoint."""
         self.setpoint = new_setpoint
-        print(f"🎯 Setpoint updated to: {new_setpoint}")
+        logger.info(f"🎯 Setpoint updated to: {new_setpoint}")
     
     def reset(self):
         """Reset controller state."""
@@ -200,9 +203,9 @@ class CementPlantController:
             'kiln_speed_change': 0.0
         }
         
-        print("🏭 Cement Plant Controller initialized")
-        print("🎛️ Control loops: Free Lime, BZT, Draft, Feed Rate")
-        print("⏱️ Time delays and interactions modeled")
+        logger.info("🏭 Cement Plant Controller initialized")
+        logger.info("🎛️ Control loops: Free Lime, BZT, Draft, Feed Rate")
+        logger.info("⏱️ Time delays and interactions modeled")
     
     def get_control_actions(self, measurements: Dict[str, float], current_time: float) -> Dict[str, float]:
         """
@@ -322,7 +325,7 @@ class CementPlantController:
             'kiln_speed_change': 0.0
         }
         
-        print("🔄 All controllers reset")
+        logger.info("🔄 All controllers reset")
 
 
 class ProcessControlSimulator:
@@ -367,8 +370,8 @@ class ProcessControlSimulator:
         
         self.simulation_time = 0.0
         
-        print("🔄 Process Control Simulator initialized")
-        print("⏱️ Process dynamics and time delays modeled")
+        logger.info("🔄 Process Control Simulator initialized")
+        logger.info("⏱️ Process dynamics and time delays modeled")
     
     def simulate_control_cycle(self, 
                               disturbances: Optional[Dict[str, float]] = None,

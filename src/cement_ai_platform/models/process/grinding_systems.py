@@ -9,8 +9,11 @@ from dataclasses import dataclass
 import numpy as np
 import pandas as pd
 import warnings
+import logging
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 @dataclass
 class MillConfiguration:
@@ -54,9 +57,9 @@ class GrindingCircuitSimulator:
             20000, 15000, 10000, 5000, 2000, 1000, 500, 200, 100, 50, 20, 10, 5
         ])
 
-        print("🔧 Enhanced Grinding Circuit Simulator initialized")
-        print(f"📊 Material database: {list(self.bond_work_indices.keys())}")
-        print(f"📏 PSD modeling: {len(self.sieve_sizes)} size classes")
+        logger.info("🔧 Enhanced Grinding Circuit Simulator initialized")
+        logger.info(f"📊 Material database: {list(self.bond_work_indices.keys())}")
+        logger.info(f"📏 PSD modeling: {len(self.sieve_sizes)} size classes")
 
     def calculate_bond_work_energy(self, material: str, feed_f80: float, 
                                  product_p80: float, correction_factors: Optional[Dict] = None) -> float:

@@ -6,8 +6,11 @@ Enterprise-grade monitoring with custom metrics, alerting, and logging.
 import os
 import time
 import json
+import logging
 from typing import Dict, List, Optional, Any
 from datetime import datetime, timedelta
+
+logger = logging.getLogger(__name__)
 
 # Production Google Cloud imports
 try:
@@ -17,7 +20,7 @@ try:
     MONITORING_AVAILABLE = True
 except ImportError:
     MONITORING_AVAILABLE = False
-    print("Warning: Cloud Monitoring not available. Using mock implementation.")
+    logger.warning("Cloud Monitoring not available. Using mock implementation.")
 
 class ProductionMonitoring:
     """
@@ -26,7 +29,7 @@ class ProductionMonitoring:
     """
     
     def __init__(self, project_id: str = None):
-        self.project_id = project_id or os.getenv('GOOGLE_CLOUD_PROJECT', 'cement-ai-optimization')
+        self.project_id = project_id or os.getenv('CEMENT_GCP_PROJECT') or os.getenv('GOOGLE_CLOUD_PROJECT') or 'cement-ai-opt-38517'
         
         if MONITORING_AVAILABLE:
             self._initialize_monitoring()
@@ -47,10 +50,10 @@ class ProductionMonitoring:
             # Project name for API calls
             self.project_name = f"projects/{self.project_id}"
             
-            print(f"✅ Production monitoring initialized for project: {self.project_id}")
+            logger.info("Production monitoring initialized for project: %s", self.project_id)
             
         except Exception as e:
-            print(f"⚠️ Monitoring initialization failed: {e}")
+            logger.warning("Monitoring initialization failed: %s", e)
             self._initialize_mock()
     
     def _initialize_mock(self):
@@ -60,7 +63,7 @@ class ProductionMonitoring:
         self.logging_client = None
         self.logger = None
         self.project_name = f"projects/{self.project_id}"
-        print("🔄 Using mock monitoring implementation")
+        logger.warning("Using mock monitoring implementation")
     
     def create_custom_metrics(self):
         """Create custom metrics for cement plant KPIs"""
@@ -156,14 +159,14 @@ class ProductionMonitoring:
                         name=self.project_name,
                         metric_descriptor=descriptor
                     )
-                    print(f"✅ Created metric: {metric_config['type']}")
+                    logger.info("Created metric: %s", metric_config["type"])
                 except Exception as e:
-                    print(f"⚠️ Metric already exists or error: {e}")
+                    logger.warning("Metric already exists or error: %s", e)
             
-            print("✅ Custom metrics creation completed")
+            logger.info("Custom metrics creation completed")
             
         except Exception as e:
-            print(f"❌ Custom metrics creation failed: {e}")
+            logger.error("Custom metrics creation failed: %s", e)
             return self._mock_metric_creation()
     
     def send_metric(self, metric_type: str, value: float, labels: Dict[str, str],
@@ -218,10 +221,10 @@ class ProductionMonitoring:
                 time_series=[series]
             )
             
-            print(f"✅ Sent metric: {metric_type} = {value}")
+            logger.info("Sent metric: %s = %s", metric_type, value)
             
         except Exception as e:
-            print(f"❌ Failed to send metric: {e}")
+            logger.error("Failed to send metric: %s", e)
             self._mock_send_metric(metric_type, value, labels)
     
     def log_plant_event(self, event_type: str, data: Dict[str, Any], 
@@ -249,11 +252,11 @@ class ProductionMonitoring:
         if self.logger:
             try:
                 self.logger.log_struct(log_entry, severity=severity)
-                print(f"✅ Logged event: {event_type} ({severity})")
+                logger.info("Logged event: %s (%s)", event_type, severity)
             except Exception as e:
-                print(f"❌ Failed to log event: {e}")
+                logger.error("Failed to log event: %s", e)
         else:
-            print(f"🔄 Mock logging: {event_type} - {data}")
+            logger.info("Mock logging: %s - %s", event_type, data)
     
     def create_production_alerts(self):
         """Create critical production alert policies"""
@@ -371,14 +374,14 @@ class ProductionMonitoring:
                         name=self.project_name,
                         alert_policy=policy
                     )
-                    print(f"✅ Created alert policy: {created_policy.display_name}")
+                    logger.info("Created alert policy: %s", created_policy.display_name)
                 except Exception as e:
-                    print(f"⚠️ Alert policy creation error: {e}")
+                    logger.warning("Alert policy creation error: %s", e)
             
-            print("✅ Production alerts creation completed")
+            logger.info("Production alerts creation completed")
             
         except Exception as e:
-            print(f"❌ Production alerts creation failed: {e}")
+            logger.error("Production alerts creation failed: %s", e)
             return self._mock_alert_creation()
     
     def get_metric_data(self, metric_type: str, start_time: datetime, 
@@ -435,7 +438,7 @@ class ProductionMonitoring:
             return data_points
             
         except Exception as e:
-            print(f"❌ Failed to retrieve metric data: {e}")
+            logger.error("Failed to retrieve metric data: %s", e)
             return self._mock_get_metric_data(metric_type)
     
     def _get_notification_channels(self) -> List[str]:
@@ -446,15 +449,15 @@ class ProductionMonitoring:
     
     def _mock_metric_creation(self):
         """Mock metric creation for development"""
-        print("🔄 Mock: Custom metrics created")
+        logger.info("Mock: Custom metrics created")
     
     def _mock_send_metric(self, metric_type: str, value: float, labels: Dict[str, str]):
         """Mock metric sending for development"""
-        print(f"🔄 Mock: Sent metric {metric_type} = {value} with labels {labels}")
+        logger.info("Mock: Sent metric %s = %s with labels %s", metric_type, value, labels)
     
     def _mock_alert_creation(self):
         """Mock alert creation for development"""
-        print("🔄 Mock: Production alerts created")
+        logger.info("Mock: Production alerts created")
     
     def _mock_get_metric_data(self, metric_type: str) -> List[Dict]:
         """Mock metric data retrieval for development"""

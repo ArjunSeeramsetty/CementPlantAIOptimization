@@ -7,12 +7,16 @@ and start the service back up when needed.
 """
 
 import sys
+# Configure UTF-8 encoding for Windows consoles to prevent emoji print errors
+if hasattr(sys.stdout, 'reconfigure'):
+    sys.stdout.reconfigure(encoding='utf-8')
 import subprocess
 import argparse
 import json
 
 # Configuration Defaults (can be overridden via CLI arguments)
-DEFAULT_PROJECT_ID = "cement-ai-optimization"
+import os
+DEFAULT_PROJECT_ID = os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-optimization"
 DEFAULT_REGION = "us-central1"
 SERVICE_NAMES = ["cement-plant-digital-twin", "cement-digital-twin"]
 

@@ -8,8 +8,11 @@ from typing import Dict, List, Optional, Any, Tuple
 import math
 import numpy as np
 import warnings
+import logging
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 
 class IndustrialQualityPredictor:
@@ -55,8 +58,8 @@ class IndustrialQualityPredictor:
             'optimal_range': (0.5, 1.5) # Optimal SO3 range (%)
         }
         
-        print("🏗️ Industrial Quality Predictor initialized")
-        print("📊 Multi-age strength prediction and gypsum optimization available")
+        logger.info("🏗️ Industrial Quality Predictor initialized")
+        logger.info("📊 Multi-age strength prediction and gypsum optimization available")
     
     def predict_compressive_strength(self,
                                    clinker_composition: Dict[str, float],

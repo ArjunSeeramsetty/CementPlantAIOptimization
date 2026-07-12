@@ -217,4 +217,4 @@ echo 🌐 Service URL: %SERVICE_URL%
 echo 📊 Monitoring: https://console.cloud.google.com/monitoring/overview?project=%PROJECT_ID%
 echo 📈 BigQuery: https://console.cloud.google.com/bigquery?project=%PROJECT_ID%
 
-pause
+echo Deployment script completed.

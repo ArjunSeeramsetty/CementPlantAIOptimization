@@ -7,8 +7,11 @@ from __future__ import annotations
 from typing import Dict, List, Optional, Any, Tuple
 import numpy as np
 import warnings
+import logging
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 
 class PreheaterTower:
@@ -48,9 +51,9 @@ class PreheaterTower:
             'Cl': 0.9      # 90% of Cl volatilizes
         }
         
-        print(f"🏗️ Preheater Tower Model initialized ({num_stages} stages)")
-        print("📊 Heat exchange and alkali circulation modeling active")
-        print("📐 Barth equation for cyclone pressure drop calculations available")
+        logger.info(f"🏗️ Preheater Tower Model initialized ({num_stages} stages)")
+        logger.info("📊 Heat exchange and alkali circulation modeling active")
+        logger.info("📐 Barth equation for cyclone pressure drop calculations available")
     
     def calculate_heat_and_mass_balance(self,
                                        raw_meal_flow: float,

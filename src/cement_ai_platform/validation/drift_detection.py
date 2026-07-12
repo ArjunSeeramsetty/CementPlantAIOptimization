@@ -1,13 +1,28 @@
+import logging
 import numpy as np
 import pandas as pd
 from typing import Dict, List, Optional, Tuple
 from datetime import datetime, timedelta
 from scipy.stats import ks_2samp, chi2_contingency
-from google.cloud import bigquery
-from google.cloud import monitoring_v3
 import streamlit as st
 import plotly.graph_objects as go
 import plotly.express as px
+
+try:
+    from google.cloud import bigquery
+    BIGQUERY_AVAILABLE = True
+except ImportError:
+    bigquery = None  # type: ignore[assignment]
+    BIGQUERY_AVAILABLE = False
+
+try:
+    from google.cloud import monitoring_v3
+    MONITORING_AVAILABLE = True
+except ImportError:
+    monitoring_v3 = None  # type: ignore[assignment]
+    MONITORING_AVAILABLE = False
+
+logger = logging.getLogger(__name__)
 
 class DataDriftDetector:
     """
@@ -15,19 +30,30 @@ class DataDriftDetector:
     with Google Cloud integration for cement plant data
     """
     
-    def __init__(self, project_id: str = "cement-ai-optimization"):
-        self.project_id = project_id
+    def __init__(self, project_id: str = None):
+        import os
+        self.project_id = project_id or os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-opt-38517"
         
-        try:
-            self.bq_client = bigquery.Client(project=project_id)
-        except Exception as e:
-            print(f"⚠️ BigQuery client warning: {e}")
+        if BIGQUERY_AVAILABLE and bigquery is not None:
+            try:
+                self.bq_client = bigquery.Client(
+                    project=self.gcp_services.project_id if hasattr(self, 'gcp_services') else self.project_id
+                )
+            except Exception as e:
+                logger.warning("BigQuery client warning: %s", e)
+                self.bq_client = None
+        else:
+            logger.warning("BigQuery client library not available; using local-only drift detection mode")
             self.bq_client = None
         
-        try:
-            self.monitoring_client = monitoring_v3.MetricServiceClient()
-        except Exception as e:
-            print(f"⚠️ Monitoring client warning: {e}")
+        if MONITORING_AVAILABLE and monitoring_v3 is not None:
+            try:
+                self.monitoring_client = monitoring_v3.MetricServiceClient()
+            except Exception as e:
+                logger.warning("Monitoring client warning: %s", e)
+                self.monitoring_client = None
+        else:
+            logger.warning("Cloud Monitoring library not available; monitoring export disabled")
             self.monitoring_client = None
         
         # Drift detection thresholds
@@ -56,7 +82,7 @@ class DataDriftDetector:
             'nox_mg_nm3': (300, 700)
         }
         
-        print("✅ Data drift detection system initialized")
+        logger.info("Data drift detection system initialized")
     
     def create_reference_snapshot(self, data: pd.DataFrame, snapshot_name: str = "baseline") -> bool:
         """Create reference snapshot for drift detection"""
@@ -93,11 +119,11 @@ class DataDriftDetector:
             
             self.reference_snapshots[snapshot_name] = reference_stats
             
-            print(f"✅ Created reference snapshot: {snapshot_name}")
+            logger.info("Created reference snapshot: %s", snapshot_name)
             return True
             
         except Exception as e:
-            print(f"❌ Error creating reference snapshot: {e}")
+            logger.error("Error creating reference snapshot: %s", e)
             return False
     
     def detect_data_drift(self, current_data: pd.DataFrame, 
@@ -373,10 +399,10 @@ class DataDriftDetector:
                 time_series=[series]
             )
             
-            print(f"✅ Drift alert sent to Cloud Monitoring (score: {drift_score:.3f})")
+            logger.info("Drift alert sent to Cloud Monitoring (score: %.3f)", drift_score)
             
         except Exception as e:
-            print(f"❌ Error sending drift alert: {e}")
+            logger.error("Error sending drift alert: %s", e)
     
     def trigger_model_retraining(self, drift_summary: Dict) -> Dict:
         """Trigger model retraining pipeline based on drift detection"""
@@ -393,7 +419,7 @@ class DataDriftDetector:
                 'pipeline_id': f"retrain_{datetime.now().strftime('%Y%m%d_%H%M%S')}"
             }
             
-            print(f"🔄 Triggering model retraining pipeline: {retraining_config['pipeline_id']}")
+            logger.info("Triggering model retraining pipeline: %s", retraining_config["pipeline_id"])
             
             return {
                 'retraining_triggered': True,

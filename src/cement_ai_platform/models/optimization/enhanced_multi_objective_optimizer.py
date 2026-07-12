@@ -5,8 +5,11 @@ import pandas as pd
 from typing import Dict, List, Optional, Tuple, Any, Callable
 from dataclasses import dataclass
 import warnings
+import logging
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 try:
     from pymoo.algorithms.moo.nsga2 import NSGA2
@@ -240,7 +243,7 @@ class EnhancedMultiObjectiveOptimizer:
                 "hypervolume": self._calculate_hypervolume(res.F)
             }
         except Exception as e:
-            print(f"NSGA2 optimization failed: {e}")
+            logger.warning(f"NSGA2 optimization failed: {e}")
             return self._optimize_fallback()
     
     def _optimize_fallback(self) -> Dict[str, Any]:

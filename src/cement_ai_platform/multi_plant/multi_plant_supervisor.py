@@ -19,11 +19,12 @@ class MultiPlantSupervisor:
     Provides centralized coordination, aggregation, and cross-plant decision making
     """
     
-    def __init__(self, project_id: str = "cement-ai-optimization"):
-        self.project_id = project_id
+    def __init__(self, project_id: str = None):
+        import os
+        self.project_id = project_id or os.getenv("CEMENT_GCP_PROJECT") or os.getenv("GOOGLE_CLOUD_PROJECT") or "cement-ai-opt-38517"
         
         # Initialize plant manager
-        self.manager = MultiPlantManager(project_id)
+        self.manager = MultiPlantManager(self.project_id)
         
         # Plant-level agents and processors
         self.plant_processors = {}

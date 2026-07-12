@@ -10,10 +10,6 @@ import yaml
 import logging
 from typing import Dict, List, Optional, Tuple, Any
 from pathlib import Path
-import sys
-
-# Add the src directory to the Python path
-sys.path.insert(0, str(Path(__file__).parent.parent.parent))
 
 from cement_ai_platform.data_sourcing.bigquery_data_loader import BigQueryDataLoader
 

@@ -5,8 +5,11 @@ import pandas as pd
 from typing import Dict, List, Optional, Tuple, Any
 from dataclasses import dataclass
 import warnings
+import logging
 
 warnings.filterwarnings("ignore")
+
+logger = logging.getLogger(__name__)
 
 try:
     from ydata_synthetic.synthesizers.timeseries import TimeGAN
@@ -112,7 +115,7 @@ class AdvancedCementTimeGAN:
             }
             
         except Exception as e:
-            print(f"TimeGAN training failed: {e}")
+            logger.warning(f"TimeGAN training failed, using statistical fallback: {e}")
             return self._train_statistical_fallback(sequences)
     
     def _train_statistical_fallback(self, sequences: np.ndarray) -> Dict[str, Any]:
@@ -163,7 +166,7 @@ class AdvancedCementTimeGAN:
             flat_samples = self.synthesizer.sample(n_samples)
             return flat_samples.reshape(n_samples, self.config.seq_len, self.config.n_seq)
         except Exception as e:
-            print(f"TimeGAN sampling failed: {e}")
+            logger.warning(f"TimeGAN sampling failed: {e}")
             return self._sample_statistical(n_samples)
     
     def _sample_statistical(self, n_samples: int) -> np.ndarray:
